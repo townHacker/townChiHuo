@@ -8,9 +8,9 @@ from mako.template import Template
 from mako.lookup import TemplateLookup
 from settings import settings
 
-#tmplLookup = TemplateLookup(directories=settings['TemplateLookupDir'], \
-#                       module_directory=['MakoModuleDir'])
-tmplLookup = TemplateLookup(directories=settings['TemplateLookupDir'])
+tmplLookup = TemplateLookup(directories=settings['TemplateLookupDir'], \
+                       module_directory=settings['MakoModuleDir'])
+
 def mako_render(tmpl_name, **args):
     tmpl = tmplLookup.get_template(tmpl_name)
     return tmpl.render(**args)
