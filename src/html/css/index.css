@@ -1,0 +1,44 @@
+body {
+}
+
+.page {
+	width: 960px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.header {
+	position: relative;
+}
+
+.header-left {
+	display: inline-block;
+}
+
+.header-right {
+	float: right;
+}
+
+.nav-bar {
+	clear: both;
+}
+
+.nav-bar .nav-bar-titlegrp {
+	display: inline-block;
+}
+
+.sign-up-area {
+	text-align: right;
+}
+
+.body {
+	clear: both;
+}
+
+.body-left {
+	display: inline-block;
+}
+
+.body-right {
+	float: right;
+}
