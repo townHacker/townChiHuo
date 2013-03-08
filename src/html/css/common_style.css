@@ -1,0 +1,38 @@
+* {
+	color: #666666;
+	margin: 0px;
+	padding: 0px;
+	font-size: 14px;
+	letter-spacing: .1em;
+}
+
+input {
+	height: 25px;
+	line-height: 25px;
+}
+
+a {
+	text-decoration: none;
+}
+
+.button {
+	font-size: 12px;
+	display: inline-block;
+#	width: 75px;
+	height: 23px;
+	line-height: 23px;
+#	text-align: justify;
+	vertical-align: top;
+	text-indent: .5em;
+	letter-spacing: .5em;
+	text-shadow: 1px 1px 1px #FEFEFE;
+	font-weight: bold;
+	border: 1px solid #C2C2C2;
+	border-right: 1px solid #A3A3A3;
+	border-bottom: 1px solid #A3A3A3;
+	background-color: #8BE28B;
+}
+
+a.a_link:hover {
+	text-decoration: underline;
+}
