@@ -8,11 +8,13 @@
 * {
     margin: 0px;
     padding: 0px;
+    vertical-align: baseline;
 }
 
 html body {
     color: #444444;
-    font-size: 14px;
+    background-color: rgb(250, 250, 250);
+    font-size: 13px;
     #	letter-spacing: .1em;
 
     font-family: Tahoma, sans-serif, serif;
@@ -47,12 +49,19 @@ a {
     #	letter-spacing: .5em;
     #	word-spacing: .5em;
     text-shadow: 1px 1px 1px #FEFEFE;
-    font-weight: bold;
     border: 1px solid #C2C2C2;
     border-right: 1px solid #A3A3A3;
     border-bottom: 1px solid #A3A3A3;
-    background-color: #8BE28B;
-    padding: 0 5px 0 5px;
+    background-color: #FD9800;
+    padding: 0 .8em 0 .8em;
+}
+
+.button:hover {
+    color: #000000 !important;
+}
+
+.button:active {
+    line-height: 25px;
 }
 
 a.a-link:hover {
@@ -71,4 +80,8 @@ a.a-link:hover {
 
 .relative {
     position: relative;
+}
+
+.text-center {
+    text-align: center;
 }
