@@ -12,5 +12,6 @@ sys.path.append(sys.prefix)
 
 if __name__ == '__main__':
     print urls
+    print sys.path
     app = web.application(urls, globals())
     app.run()

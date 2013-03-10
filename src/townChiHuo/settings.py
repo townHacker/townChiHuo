@@ -14,7 +14,11 @@ settings = {
     "TemplateLookupDir": [
         os.path.join(root_dir, "template")
         ],
-    "MakoModuleDir": os.path.join(root_dir, "mako_module"), 
+    "MakoModuleDir": os.path.join(root_dir, "mako_module"),
+    'mongodb.host': 'localhost',
+    'mongodb.port': 27017,
+    'mongodb.db': 'townChiHuo',
+    'password.md5key': '704f8303-85e5-4eac-ab54-49d7f301500e'
 }
 
 if __name__ == '__main__':

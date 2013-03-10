@@ -1,0 +1,113 @@
+
+.page-width-960 {
+    width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.header {
+    position: relative;
+    margin: 10px 0 10px 0;
+}
+
+.header-left {
+    display: inline-block;
+}
+
+.header-right {
+
+    float: right;
+}
+
+.nav-bar {
+    margin: 10px 0 10px 0;
+    clear: both;
+    border: none;
+    border-top: 1px solid #C2C2C2;
+    border-bottom: 1px solid #A3A3A3;
+    background-color: #8BE28B;
+    padding: 5px;
+}
+
+.nav-bar .nav-bar-titlegrp {
+    display: inline-block;
+    margin: 0 5px 0 5px;
+}
+
+.nav-bar .nav-bar-titlegrp dt {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.nav-bar .nav-bar-titlegrp dd {
+    text-indent: 1em;
+}
+
+.nav-bar a {
+    color: #3380E8 !important;
+}
+
+.body {
+    clear: both;
+    margin: 10px 0 20px 0;
+    position: relative;
+}
+
+.body-left {
+    display: block;
+    width: 740px;
+    border: none;
+    border-top: 1px solid #C2C2C2;
+    padding: 2px 2px 0 0;
+
+    min-height: 300px;
+}
+
+.body-right {
+    position: absolute;
+    top: 0px;
+    left: 760px;
+    display: block;
+    width: 196px;
+    border: none;
+    border-top: 1px solid #C2C2C2;
+    border-left: 1px solid #C2C2C2;
+    padding: 2px 0 0 2px;
+}
+
+.sign-up-area {
+    height: 25px;
+    text-align: right;
+}
+
+.sign-up-area a {
+    line-height: 25px;
+    color: #FD9800 !important;
+    margin: 0 5px 0 5px;
+}
+
+.footer {
+    padding: 5px 0 20px 0; 
+}
+
+.goods-snapshot {
+    position: relative;
+    float: left;
+    margin: 10px;
+    
+    width: 165px;
+}
+
+.goods-snapshot img {
+    width: 165px;
+    max-height: 200px;
+}
+
+.goods-snapshot .goods-snapshot-describe {
+    
+}
+
+.goods-snapshot-describe .goods-price {
+    text-align: center;
+    color: red;
+}

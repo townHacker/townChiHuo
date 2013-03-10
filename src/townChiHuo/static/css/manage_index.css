@@ -1,0 +1,37 @@
+
+.page-width-960 {
+    width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.header {
+    position: relative;
+    margin: 10px 0 10px 0;
+}
+
+.header-left {
+    display: inline-block;
+}
+
+.header-right {
+
+    float: right;
+}
+
+
+.sign-up-area {
+    height: 25px;
+    text-align: right;
+}
+
+.sign-up-area a {
+    line-height: 25px;
+    color: #FD9800 !important;
+    margin: 0 5px 0 5px;
+}
+
+.body {
+    border: none;
+    border-top: 2px solid #FD9800;
+}

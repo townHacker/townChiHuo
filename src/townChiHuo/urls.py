@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from controller import *
-
 # urls config
 
 urls = (
-    '/', 'controller.index.index'
+    '/(?P<file>.*.css|.*.jpg)', 'controller.static_file.StaticFile',
+    '/manage/(.*)', 'controller.manage_index.Index',
+    '/(.*)', 'controller.index.index', 
 )
