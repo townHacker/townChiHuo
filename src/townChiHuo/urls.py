@@ -6,5 +6,6 @@
 urls = (
     '/(?P<file>.*.css|.*.jpg)', 'controller.static_file.StaticFile',
     '/manage/(.*)', 'controller.manage_index.Index',
-    '/(.*)', 'controller.index.index', 
+    '/(.*)', 'controller.index.index',
+    '/login/(.*)','controller.login.login'
 )
