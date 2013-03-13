@@ -1,16 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# start the web for test
-
 import sys
+import os
 
 import web
 from urls import urls
 
-sys.path.append(sys.prefix)
+sys.path.append(os.path.dirname( \
+        os.path.dirname(os.path.abspath(__file__))))
+
 
 if __name__ == '__main__':
+    import townChiHuo.models
+    print sys.prefix
     print urls
     print sys.path
     app = web.application(urls, globals())

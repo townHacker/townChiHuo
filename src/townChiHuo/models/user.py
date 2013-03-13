@@ -6,10 +6,13 @@ __metaclass__ = type
 import uuid
 import datetime
 import time
-from hashlib import md5
 
-from townChiHuo.mongodb_hack import mongodb_hack as db_hack
 from townChiHuo.models import model
+from townChiHuo.util import encrypt
+from townChiHuo.util import mongodb_hack as db_hack
+from townChiHuo import settings
+
+__md5key = settings.settings['password.md5key']
 
 class User(model.Model):
     '''
@@ -35,24 +38,26 @@ def login(u_name, password, timestamp=None, record=False):
     record: 是否需要记录登录时间戳
     '''
     users = db_hack.connect(collection='users')
-    user = users.find_one( \
-        {'name': u_name, \
-             'password': password})
+    user = users.find_one({'name': unicode(u_name), \
+             'password': encrypt.md5(password, __md5key)})
     if user is None:
         # 用户名密码不正确或用户不存在
         return False
     else:
         # 验证登录时间戳
+        user = model.model(user) # User object
         is_succeed = False
-        if user.login_info.login_timestamp is not None:
-            is_succeed = user.login_info.login_timestamp == timestamp
+        if user.login_info and \
+                user.login_info.get('login_timestamp'):
+            is_succeed = user.login_info['login_timestamp'] == timestamp
         else:
             is_succeed = True
             
-            if is_succeed:
-                update_login_info(user, record)
-                users.save(user)
-            return is_succeed
+        if is_succeed:
+            update_login_info(user, record)
+            model.save(users, user)
+            
+        return is_succeed
 
         
 def register(email, password):
@@ -63,34 +68,23 @@ def register(email, password):
     '''
     
     user = User()
-    user.email, user.name = email, email
-    user.password = md5(password)
+    user.email, user.name = unicode(email), unicode(email)
+    user.password = encrypt.md5(unicode(password), __md5key)
     users = db_hack.connect(collection='users')
 
     if None is not \
-            users.find_one({'email': email}):
+            users.find_one({'email': unicode(email)}):
         raise Exception('该邮箱已经注册过，请使用其它邮箱注册.')
     else:
-        objectId = users.insert(user)
+        objectId = model.insert(users, user)
         return users.find({'_id': objectId})
-    
-            
-        
-def md5(password):
-    '''
-    生成md5加密后的密码，返回加密后的密码
-    '''
-    md5key = settings.settings['password.md5key']
-    m = md5()
-    m.update(md5key + password)
-    return m.digest()
     
                 
 def update_login_info(user, record=False):
     '''
     更新最后登录时间， 登录时间戳
     '''
-    user.login_info.last_login_dt = datetime.datetime.now()
+    user.login_info = {'last_login_dt': datetime.datetime.now()}
     if record:
         user.login_info.login_timestamp = \
             time.mktime(user.login_info.last_login_dt.timetuple())

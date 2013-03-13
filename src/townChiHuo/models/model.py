@@ -19,28 +19,27 @@ def query(collection, **kwargs):
         yield model(doc)
 
 
-def insert(collection, model):
+def insert(collection, m):
     '''
     插入
     '''
-    return collection.insert(model.__dict__['_doc'])
+    return collection.insert(m.__dict__['_doc'])
 
-def remove(collection, model):
+def remove(collection, m):
     '''
     删除
     '''
-    doc = collection.remove(model.__dict__['_doc'])
-    m_fun = global model
+    doc = collection.remove(m.__dict__['_doc'])
     if doc:
-        doc = m_fun(doc)
+        doc = model(doc)
     return doc
 
 
-def save(collection, model):
+def save(collection, m):
     '''
     若存在_id则更新, 否则添加
     '''
-    return collection.save(model.__dict__['_doc'])
+    return collection.save(m.__dict__['_doc'])
     
 
 class Model:

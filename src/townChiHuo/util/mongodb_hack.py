@@ -23,7 +23,7 @@ def connect(host=None, port=None, db=None, collection=None):
         port = __port
     if db is None:
         db = __db_name
-    mongo_conn = MongoClient(host, port) # 创建连接
+    mongo_conn = pymongo.MongoClient(host, port) # 创建连接
     database = mongo_conn[db]
     if collection:
         return database[collection]
