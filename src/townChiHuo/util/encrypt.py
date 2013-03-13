@@ -9,10 +9,12 @@ def md5(password, key):
     '''
     m = hashlib.md5()
     m.update(key + password)
-    return unicode(m.digest(), errors='replace')
+    return m.hexdigest()
+
 
 if __name__ == '__main__':
     import sys
+    print unicode(md5('123', 'abc'))
     print unicode(md5('123', 'abc'), errors='replace')
     print sys.getdefaultencoding()
     print sys.getfilesystemencoding()
