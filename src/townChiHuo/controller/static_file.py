@@ -19,7 +19,7 @@ class CheckCode:
             all_char = string.letters + string.digits
             val = ''
             for i in range(4):
-                val += all_char[random.randint(0, len(all_char))]
+                val += all_char[random.randint(0, len(all_char)-1)]
             return val
 
         s = get_val()

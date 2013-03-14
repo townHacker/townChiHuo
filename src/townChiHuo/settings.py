@@ -26,7 +26,7 @@ settings = {
     'checkcode.md5key': '0841f736-58cc-42e3-bf87-7bc21f08f963',
 
     # 字体
-    'font': os.path.join(root_dir, 'static/fonts/wqy-zenhei.ttc'),
+    'font': os.path.join(root_dir, 'static/fonts/TSCu_Comic.ttf'),
 }
 
 if __name__ == '__main__':
