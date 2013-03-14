@@ -1,10 +1,29 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import string, random
 import web
+
+from townChiHuo.util import draw, encrypt
+from townChiHuo import settings
 
 __metaclass__ = type
 
 class StaticFile:
     def GET(self, file):
         raise web.seeother('/static/' + file)
+
+class CheckCode:
+    def GET(self, *path):
+        def get_val():
+            all_char = string.letters + string.digits
+            val = ''
+            for i in range(4):
+                val += all_char[random.randint(0, len(all_char))]
+            return val
+
+        s = get_val()
+        web.header('Content-Type', 'image/png')
+        web.header('code_ref', \
+                       encrypt.md5(s, settings.settings['checkcode.md5key']))
+        return draw.check_code(s, font_file=settings.settings['font'])
