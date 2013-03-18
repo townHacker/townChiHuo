@@ -5,7 +5,7 @@ __metaclass__ = type
 
 import web
 
-from mako_render import mako_render
+from townChiHuo.util.mako_render import mako_render
 
 class Index:
     def GET(self, *path):

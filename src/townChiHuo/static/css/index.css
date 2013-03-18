@@ -47,6 +47,10 @@
     color: #3380E8 !important;
 }
 
+.sign-up-area {
+    text-align: right;
+}
+
 .body {
     clear: both;
     margin: 10px 0 20px 0;
@@ -77,7 +81,6 @@
 
 .sign-up-area {
     height: 25px;
-    text-align: right;
 }
 
 .sign-up-area a {
