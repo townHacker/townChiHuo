@@ -5,9 +5,9 @@
 # MakoModuleDir :　mako module 缓存的目录
 
 import os
+import sys
 
-#root_dir = sys.path[0]
-root_dir = os.path.dirname(os.path.abspath(__file__))
+root_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
 
 settings = {
     "RootDir": root_dir,
