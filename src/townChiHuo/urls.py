@@ -4,6 +4,7 @@
 # urls config
 
 urls = (
+    '/checkcode/?(.*)', 'controller.static_file.CheckCode',
     '/(?P<file>.*.css|.*.jpg)', 'controller.static_file.StaticFile',
     '/manage/(.*)', 'controller.manage_index.Index',
     '/login/?(.*)', 'controller.index.Login',
