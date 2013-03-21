@@ -5,7 +5,7 @@
 
 urls = (
     '/checkcode/?(.*)', 'controller.static_file.CheckCode',
-    '/(?P<file>.*.css|.*.jpg|.*.gif)', 'controller.static_file.StaticFile',
+    '/(?P<file>.*.css|.*.jpg|.*.gif|.*.png)', 'controller.static_file.StaticFile',
     
     '/manage/user_add/?(.*)', 'controller.manage.user.Add', 
     '/manage/user/?(.*)', 'controller.manage.user.Index',
