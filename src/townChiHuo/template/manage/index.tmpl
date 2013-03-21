@@ -2,14 +2,20 @@
 <html lang="zh-cn">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>首页</title>
+    <title>后台管理</title>
     <link type="text/css" rel="stylesheet" href="/css/common_style.css" />
     <link type="text/css" rel="stylesheet" href="/css/manage/main.css" />
+    <link type="text/css" rel="stylesheet" href="/css/manage/div_box.css" />
+    <%block name="style">
+    </%block>
+
+<%block name="javascript">
+</%block>
   </head>
   <body>
     <!-- 页面顶部 -->
     <div class="page-top">
-      <a href="/manage/index"><img alt="ekucard logo" src="/images/logo.gif" title="ekucard.com" width="200px" height="50px" /></a>
+      <a href="index.html"><img alt="ekucard logo" src="/images/logo.gif" title="ekucard.com" width="200px" height="50px" /></a>
       <span style="line-heigth: 20px; vertical-align: top; float: right; font-weight: bold;">2013/3/1 10:10:10</span>
     </div>
 
@@ -17,7 +23,7 @@
     <div class="left-page">
       <div class="lc_main_menu">
     	<ul>
-          <li><a href="#">xx x xx x</a></li>
+          <li><a href="/manage/user">用户</a></li>
           <li><a href="#">xxx xxx xx</a></li>
           <li><a href="#">xxx xxx xxx xx</a></li>
           <li><a href="#">xxxxxxxx</a></li>
@@ -39,12 +45,14 @@
       <div class="main-page-body">
 	<!-- 主体部分的顶部菜单 -->
 	<div class="mc-top-menu">
+      <%block name="top_menu">
     	  <ul>
             <li><a href="#" class="button">功能1</a></li>
             <li><a href="#" class="button">功能2</a></li>
             <li><a href="#" class="button">功能3</a></li>
           </ul>
-          
+      </%block>
+
           <form class="mc-top-search" name="search_form" method="get">
             <input type="text" class="input-text" />
             <input type="submit" class="input-button" value="搜索" />
@@ -52,10 +60,7 @@
 	</div>
 
 	<div class="mc-body">
-	  <!-- 主体部分左列 -->
-	  <div class="mc-left-col">
-	  </div>
-	  
+      
 	  <!-- 主体部分右列 -->
 	  <div class="mc-right-col">
     	    <div class="mc_rc_sidebar">
@@ -89,6 +94,16 @@
 	      </ul>
             </div>    
 	  </div>
+      <!-- 主体部分右列 结束 -->
+
+      
+	  <!-- 主体部分左列 -->
+	  <div class="mc-left-col">
+        <%block name="main_content">
+        </%block>
+	  </div>
+<!-- 主体部分左列 结束 -->
+	  
 	</div>
       </div>
 

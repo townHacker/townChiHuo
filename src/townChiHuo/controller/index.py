@@ -25,7 +25,7 @@ class Register:
         
         i = web.input('email', 'password', 're_password')
         try: 
-            objectId = user.register(email=i.email, \
+            user_new = user.register(email=i.email, \
                                      password=i.password)
         except Exception as e:
             return e[0]

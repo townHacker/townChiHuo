@@ -1,0 +1,36 @@
+## -*- coding: utf-8 -*-
+<%inherit file="index.tmpl" />
+
+<%block name="top_menu">
+<ul>
+  <li><a href="#" class="button">查询用户</a></li>
+  <li><a href="/manage/user_add" class="button">添加用户</a></li>
+  <li><a href="#" class="button">删除用户</a></li>
+</ul>
+</%block>
+
+<%block name="main_content">
+<div class="div-box">
+  <h4 class="div-box-title">用户管理</h4>
+  <div class="div-box-content">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>用户名</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        % for u in users:
+        <tr>
+          <td>${u.id}</td>
+          <td>${u.name}</td>
+          <td></td>
+        </tr>
+        % endfor
+      </tbody>
+    </table>
+  </div>
+</div>
+</%block>

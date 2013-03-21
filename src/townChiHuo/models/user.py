@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 __metaclass__ = type
 
 import uuid
@@ -8,6 +7,7 @@ import datetime
 import time
 
 from townChiHuo.models import model
+from townChiHuo.models.error import GeneralError
 from townChiHuo.util import encrypt
 from townChiHuo.util import mongodb_hack as db_hack
 from townChiHuo import settings
@@ -17,8 +17,8 @@ __md5key = settings.settings['password.md5key']
 class User(model.Model):
     '''
     用户
-    user_id = None
-    user_name # 用户名
+    id = None
+    name # 用户名
     email # 邮箱
     password # 密码
     last_name # 姓
@@ -29,6 +29,28 @@ class User(model.Model):
     login_info # 用户登录信息
     '''
 
+def user_add(name, password):
+    '''
+    添加用户
+    '''
+    users = db_hack.connect(collection='users')
+    name = unicode(name)
+    user = users.find_one({'name': name})
+    if user is not None:
+        # 用户名已存在
+        raise GeneralError(u'用户名已存在')
+    else:
+        # 添加用户
+        user = User()
+        user.name = name
+        user.password = encrypt.md5(password, __md5key)
+    try:
+        objectId = model.insert(users, user)
+        return users.find({'_id': objectId})
+    finally:
+        del users
+        
+       
 def login(u_name, password, timestamp=None, record=False):
     '''
     用户登录
@@ -42,6 +64,7 @@ def login(u_name, password, timestamp=None, record=False):
              'password': encrypt.md5(password, __md5key)})
     if user is None:
         # 用户名密码不正确或用户不存在
+        raise GeneralError(u'用户名密码不正确或用户不存在')
         return False
     else:
         # 验证登录时间戳
@@ -66,18 +89,21 @@ def register(email, password):
     email: 邮箱
     password: 密码
     '''
-    
-    user = User()
-    user.email, user.name = unicode(email), unicode(email)
-    user.password = encrypt.md5(unicode(password), __md5key)
     users = db_hack.connect(collection='users')
-
     if None is not \
             users.find_one({'email': unicode(email)}):
-        raise Exception('该邮箱已经注册过，请使用其它邮箱注册.')
+        raise GeneralError(u'该邮箱已经注册过，请使用其它邮箱注册.')
     else:
-        objectId = model.insert(users, user)
-        return users.find({'_id': objectId})
+        user = User()
+        user.id = unicode(uuid.uuid4())
+        user.email, user.name = unicode(email), unicode(email)
+        user.password = encrypt.md5(unicode(password), __md5key)
+        try:
+            objectId = model.insert(users, user)
+            return users.find({'_id': objectId})
+        finally:
+            del users
+        
     
                 
 def update_login_info(user, record=False):

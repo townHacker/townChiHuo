@@ -10,5 +10,5 @@ from townChiHuo.util.mako_render import mako_render
 class Index:
     def GET(self, *path):
         web.header('Content-Type', 'text/html')
-        return mako_render('/manage_index/index.tmpl')
+        return mako_render('/manage/index.tmpl')
 

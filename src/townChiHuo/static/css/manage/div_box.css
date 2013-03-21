@@ -1,0 +1,25 @@
+/* div box style */
+.div-box {
+    padding: 0;
+    margin: 0;
+}
+
+.div-box .div-box-title {
+    padding: 5px;
+    margin: 0;
+    border: none;
+    border: solid 1px #3B5998;
+    border-bottom: solid 1px #CCCCCC;
+    background-color: #3B5998;
+    color: #FFFFFF !important;
+    vertical-align: middle;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.div-box .div-box-content {
+    border: solid 1px #CCCCCC;
+    border-top: none;
+    position: relative;
+    padding: 2px;
+}

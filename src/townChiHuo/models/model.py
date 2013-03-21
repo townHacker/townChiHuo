@@ -10,6 +10,15 @@ def model(doc):
     return Model(doc=doc)
 
 
+def iter(docs):
+    '''
+    遍历一个mongoDb document集合,
+    返回一个生成器
+    '''
+    for doc in list(docs):
+        yield Model(doc=doc)
+
+
 def query(collection, **kwargs):
     '''
     查询

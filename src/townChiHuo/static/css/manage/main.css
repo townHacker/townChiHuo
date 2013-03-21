@@ -128,20 +128,21 @@
 }
 
 .main-page-body .mc-body {
-    postion: relative;
-    dislay: block;
+    position: relative;
+    display: block;
+    padding: 5px;
 }
 
 .main-page-body .mc-body .mc-left-col {
-    float: left;
+    display: block;
+    margin-right: 210px;
 }
 
 
 .main-page-body .mc-body .mc-right-col {
-    display: inline-block;
-    width: 200px;
     float: right;
-    margin-top: 5px;
+    display: block;
+    width: 200px;
     border-top: solid 5px #3B5998;
 }
 
@@ -163,4 +164,20 @@
     border-top: solid 5px #3B5998;
     text-align: center;
     clear: both;
+}
+
+table {
+    display: block;
+    border-collapse: collapse;
+    padding: 2px;
+}
+
+tr, th, td {
+    border: solid 1px #CCC;
+    padding: 5px;
+}
+
+th {
+    color: #000;
+    background-color: #EEE;
 }
