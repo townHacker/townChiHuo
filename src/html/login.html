@@ -1,17 +1,23 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>SignIn</title>
+    <title>µÇÂ¼</title>
+    <link rel="stylesheet" type="text/css" href="/css/login.css" />
+    <style type="text/css">
+    #btn-sign{ border: none; background-color:#4290FB;color:#fff;}
+    input[type='text']{ width:100px;}
+    </style>
 </head>
 
 <body>
 <form action='/Sign' method='post'>
         <div>
-            username:<input type="text" id="username"></input>
-            password:<input type="password" id="password"></input>
+            ÓÃ»§Ãû:<input type="text" id="username"></input>
+            ÃÜÂë:<input type="password" id="password"></input>
         </div>
-        <input type="submit" value="submit"/></input>
+        <input id="btn-sign" type="submit" value="submit"/></input>
 </form>
 
 </body>

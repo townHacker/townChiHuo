@@ -1,18 +1,27 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <title>SignIn</title>
-  </head>
+<head>
+    <title>登录</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/login.css" />
+</head>
 
-  <body>
-    <form action="/login" method="post">
-      <div>
-        username:<input name="name" type="text" id="username" /><br />
-        password:<input name="password" type="password" id="password" /><br />
-        <input type="submit" value="submit" />
-      </div>
-    </form>
-  </body>
+<body style="background-image: url('images/logn-bg.jpg');">
+<form action='/login' method='post'>
+        <div id="form">        
+	  <div id="welcome-tips">
+	    <h3>欢迎来到吃货的天堂</h3>
+	    <a id="register" href="/register" >加入吃货</a>
+	  </div>
+	  <div id="userinfo">
+            用户名:<input type="text" id="username"></input><br /><br /><br />
+            密&nbsp&nbsp&nbsp码:<input type="password" id="password"></input>
+	    <br /><br /><br />
+	    <input id="btn-sign" type="submit" value="登录"/>
+	  </div>
+        </div>
+</form>
+
+</body>
 </html>
