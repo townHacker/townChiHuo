@@ -1,4 +1,4 @@
-body{ font-family:'Microsoft YaHei';font-size: 14px;color:#fff; margin:0px;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/logn-bg.jpg' ,sizingMethod= 'scale' );background-repeat: no-repeat;background-positon: 100%, 100%;}
+body{ font-family:'Microsoft YaHei';font-size: 14px;color:#fff;background-position: top; margin:0px;background-repeat: no-repeat;background-positon: 100%, 100%;}
 #btn-sign{ border: none; background-color:#FB5151;color:#fff;}
 input[type='text']{ width:170px;height: 20px;}
 input[type='password']{width: 170px;height: 20px;}
