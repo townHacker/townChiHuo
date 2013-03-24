@@ -1,42 +1,62 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-__metaclass__ = type
 
-class permission:
-    '''
-    权限许可
-    '''
-    permission_code = 0 # 许可码
-    def __init__(self, permission_code=0):
-        self.permission_code = permission_code
+READABLE = 0x01 # 可读
+EDITABLE = 0x02 # 可写(编辑)
+DELETABLE = 0x04 # 可删
+EXECUTABLE = 0x08 # 可执行
 
 
-class readable_permission:
+def set_readable(permission_code):
     '''
-    可读权限
+    设置可读
     '''
-    read_mask = 0x01 # 读 掩码
+    return permission_code | READABLE
 
-class editable_permission:
+def set_editable(permission_code):
     '''
-    可编辑权限
+    设置可写(编辑)
     '''
-    edit_mask = 0x02 # 写 掩码
+    return permission_code | EDITABLE
 
-class deletable_permission:
+def set_deletable(permission_code):
     '''
-    可删除权限
+    设置可删除
     '''
-    delete_mask = 0x04 # 删 掩码
-
-class executable_permission:
-    '''
-    可执行权限
-    '''
-    execute_mask = 0x08 # 执行 掩码
+    return permission_code | DELETABLE
     
-class permisssion_group:
+def set_executable(permission_code):
+    '''
+    设置可执行
+    '''
+    return permission_code | EXECUTABLE
+
+def is_readable(permission_code):
+    '''
+    判断是否可读
+    '''
+    return bool(permission_code & READABLE)
+
+def is_editable(permission_code):
+    '''
+    判断是否可写
+    '''
+    return bool(permission_code & EDITABLE)
+
+def is_deletable(permission_code):
+    '''
+    判断是否可删除
+    '''
+    return bool(permission_code & DELETABLE)
+
+def is_executable(permission_code):
+    '''
+    判断是否可执行
+    '''
+    return bool(permission_code & EXECUTABLE)
+
+class PermisssionGroup(object):
     '''
     权限组
     '''
@@ -74,3 +94,4 @@ class permisssion_group:
             # 若列表不存在指定索引
             return
         self.permissions[group_index] = None
+

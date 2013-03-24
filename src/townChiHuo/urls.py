@@ -9,6 +9,8 @@ urls = (
     
     '/manage/user_add/?(.*)', 'controller.manage.user.Add', 
     '/manage/user/?(.*)', 'controller.manage.user.Index',
+    '/manage/action_permission/?(.*)', 'controller.manage.permission.ActionPermission', 
+    '/manage/permission/?(.*)', 'controller.manage.permission.Permission',
     '/manage/?(.*)', 'controller.manage.index.Index',
     
     '/login/?(.*)', 'controller.index.Login',

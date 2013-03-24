@@ -24,6 +24,10 @@ class CheckCode:
 
         s = get_val()
         web.header('Content-Type', 'image/png')
-        web.header('code_ref', \
-                       encrypt.md5(s, settings.settings['checkcode.md5key']))
+        ecode = encrypt.md5(s, settings.settings['checkcode.md5key'])
+        web.header('code_ref', ecode)
+
+        session = web.ctx.session
+        session['code_ref'] = ecode
+        
         return draw.check_code(s, font_file=settings.settings['font'])

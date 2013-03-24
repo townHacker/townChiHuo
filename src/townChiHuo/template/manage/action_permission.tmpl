@@ -1,0 +1,31 @@
+## -*- coding: utf-8 -*-
+
+<%inherit file="permission.tmpl" />
+
+<%block name="main_content">
+<div class="div-box">
+  <h4 class="div-box-title">Action权限</h4>
+  <div class="div-box-content">
+    <table>
+      <thead>
+        <tr>
+          <th>Action ID</th>
+          <th>Action Name</th>
+          <th>Action Code</th>
+          <th>Default Permission</th>
+        </tr>
+      </thead>
+      <tbody>
+        % for a in actions:
+        <tr>
+          <td>${ a['action_id'] }</td>
+          <td>${ a['action_name'] }</td>
+          <td>${ a['action_code'] }</td>
+          <td>${ a['default_permission'] }</td>
+        </tr>
+        % endfor
+      </tbody>
+    </table>
+  </div>
+</div>
+</%block>

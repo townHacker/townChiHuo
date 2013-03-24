@@ -80,7 +80,7 @@ def login(u_name, password, timestamp=None, record=False):
             update_login_info(user, record)
             model.save(users, user)
             
-        return is_succeed
+        return is_succeed, user
 
         
 def register(email, password):

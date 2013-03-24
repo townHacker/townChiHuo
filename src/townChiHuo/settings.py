@@ -27,7 +27,21 @@ settings = {
 
     # 字体
     'font': os.path.join(root_dir, 'static/fonts/TSCu_Comic.ttf'),
+
+    # memcached
+    'memcached.hosts': [
+        '127.0.0.1:11211'
+        ]
 }
+
+# 数据库集合
+db_schema = dict(
+    USER = 'users', # 用户集合
+    ROLE = 'roles', # 角色集合
+)
+
+# Action 认证
+action_auth = dict()
 
 if __name__ == '__main__':
     import sys
