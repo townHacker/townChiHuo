@@ -13,7 +13,6 @@ from townChiHuo.models.error import *
 class Index(object):
     def GET(self, *path):
         s = web.ctx.session
-        s.kill()
         if "curr_user" not in s:
             raise web.seeother('/manage/login')
         curr_user = s['curr_user']
