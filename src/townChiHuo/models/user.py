@@ -65,7 +65,6 @@ def login(u_name, password, timestamp=None, record=False):
     if user is None:
         # 用户名密码不正确或用户不存在
         raise GeneralError(u'用户名密码不正确或用户不存在')
-        return False
     else:
         # 验证登录时间戳
         user = model.model(user) # User object
@@ -80,7 +79,7 @@ def login(u_name, password, timestamp=None, record=False):
             update_login_info(user, record)
             model.save(users, user)
             
-        return is_succeed, user
+        return user
 
         
 def register(email, password):

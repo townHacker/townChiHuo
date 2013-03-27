@@ -86,6 +86,18 @@ class Model:
         else:
             del self.__dict__["_doc"][name]
 
+    def __getstate__(self):
+        '''
+        for pickle, fix python memcached bug
+        '''
+        return self.__dict__["_doc"]
+
+    def __setstate__(self, state):
+        '''
+        for pickle, fix python memcached bug
+        '''
+        self.__dict__["_doc"] = state
+
 
 
 if __name__ == '__main__':
@@ -98,3 +110,9 @@ if __name__ == '__main__':
     global model
     user = model(d)
     print user.name
+    import memcache
+    mc = memcache.Client(['127.0.0.1:11211'])
+    mc.set('model', user)
+    u = mc.get('model')
+    print u
+    print u.name

@@ -11,8 +11,15 @@ try:
 except ImportError:
     import memcache
 
-sys.path.append(os.path.dirname( \
-        os.path.dirname(os.path.abspath(sys.argv[0]))))
+#print sys.argv[0]
+#print __file__
+
+# __file__   # sys.argv[0]
+#sys.path.append(os.path.dirname( \
+#        os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(os.path.dirname(os.path.abspath(os.curdir)))
+
+#print sys.path
 
 import townChiHuo
 
@@ -30,7 +37,7 @@ if __name__ == '__main__':
     mc = memcache.Client(settings.settings['memcached.hosts'])
     mc_store = session.MemcachedStore(mc)
 
-    session = web.session.Session(app, mc_store, initializer={})
+    session = web.session.Session(app, mc_store, initializer={'count', 0})
 
     def session_hook():
         web.ctx.session = session

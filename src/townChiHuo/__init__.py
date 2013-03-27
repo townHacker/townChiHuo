@@ -12,8 +12,7 @@ __all__ = [
 
 
 try:
-    print "import all directory"
-    
+
     from controller import *
     from models import *
     from util import *

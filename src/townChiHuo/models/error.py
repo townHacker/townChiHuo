@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-__metaclass__ = type
+__all__ = [
+    'GeneralError', 
+    ]
 
 class GeneralError(Exception):
     def __init__(self, value):

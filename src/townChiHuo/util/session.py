@@ -21,6 +21,7 @@ class MemcachedStore(Store):
         return True if self._mc.get(key) else False
 
     def __getitem__(self, key):
+        print 'get_session(memcache_key): ', key        
         value = self._mc.get(key)
         if value:
             value['atime'] = time.time()
@@ -28,11 +29,13 @@ class MemcachedStore(Store):
         return value
 
     def __setitem__(self, key, value):
+        print 'set_session(memcache_key): ', key
         now = time.time()
         value['atime'] = now
         self._mc.set(key, value, web.config.session_parameters['timeout'])
         
     def __delitem__(self, key):
+        print 'del_session(memcache_key): ', key
         self._mc.delete(key)
     
 
@@ -43,13 +46,11 @@ class MemcachedStore(Store):
         '''
         encodes session dict as a string
         '''
-        super(MemcachedStore, self).encode(session_dict)
 
     def decode(self, session_data):
         '''
         decodes the data to get back the session dict
         '''
-        super(MemcachedStore, self).decode(session_data)
 
 
 if __name__ == '__main__':

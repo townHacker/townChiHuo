@@ -22,4 +22,5 @@
     border-top: none;
     position: relative;
     padding: 2px;
+    overflow: auto;
 }

@@ -1,9 +1,80 @@
-body{ font-family:'Microsoft YaHei';font-size: 14px;color:#fff;background-position: top; margin:0px;background-repeat: no-repeat;background-positon: 100%, 100%;}
-#btn-sign{ border: none; background-color:#FB5151;color:#fff;}
-input[type='text']{ width:170px;height: 20px;}
-input[type='password']{width: 170px;height: 20px;}
-#form{margin-top:15%;text-align: center;height: 200px;background-color: rgba(21, 112, 166,0.7);padding-top: 80px; width:100%;}
-#btn-sign{font-family: 'Microsoft YaHei';cursor: pointer;font-size: 14px;padding: 5px;width:60px;}
-#welcome-tips{font-family:'Microsoft YaHei'; width: 300px;background-color:rgba(18, 94, 139,0.8);float: left;height: 130px;margin-left: 200px;}
-#userinfo{ text-align:center;margin-left: 200px;}
-#register{font-family: 'Microsoft YaHei';cursor: pointer;text-decoration: none; color:#fff;font-size: 14px;padding: 5px;width:100px;background-color:#FB5151;border: none;float: right;margin-bottom:-10px; }
+body {
+    font-family:'Microsoft YaHei';
+    font-size: 14px;
+    color:#fff;
+    background-position: top;
+    margin:0px;
+    background-repeat: no-repeat;
+    background-positon: 100%, 100%;
+}
+
+#btn-sign {
+    border: none;
+    background-color:#FB5151;
+    color:#fff;
+}
+
+input[type='text'] {
+    width:170px;
+    height: 20px;
+}
+
+input[type='password'] {
+    width: 170px;
+    height: 20px;
+}
+#form {
+    margin-top:15%;
+    text-align: center;
+    height: 200px;
+    background-color: rgba(21, 112, 166, 0.7);
+    padding-top: 80px;
+    width:100%;
+}
+
+#btn-sign {
+    font-family: 'Microsoft YaHei';
+    cursor: pointer;
+    font-size: 14px;
+    padding: 5px;
+    width:60px;
+}
+
+#welcome-tips {
+    font-family:'Microsoft YaHei';
+    width: 300px;
+    background-color:rgba(18, 94, 139,0.8);
+    float: left;
+    height: 130px;
+    margin-left: 200px;
+}
+
+#userinfo {
+    text-align: center;
+    margin-left: 200px;
+}
+
+#register{
+    font-family: 'Microsoft YaHei';
+    cursor: pointer;
+    text-decoration: none;
+    color:#fff;
+    font-size: 14px;
+    padding: 5px;
+    width:100px;
+    background-color:#FB5151;
+    border: none;
+    float: right;
+    margin-bottom:-10px;
+}
+
+label.form-label {
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+    margin-right: 5px;
+}
+
+.form-line {
+    margin: 5px 0 5px 0;
+}
