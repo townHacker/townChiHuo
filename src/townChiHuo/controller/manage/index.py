@@ -6,7 +6,8 @@ import web
 
 from townChiHuo.util.mako_render import mako_render
 from townChiHuo.util import mongodb_hack as db_hack
-
+import townChiHuo.util.encrypt as encrypt
+from townChiHuo.settings import settings
 from townChiHuo.models import user
 from townChiHuo.models.error import *
 
@@ -25,12 +26,23 @@ class Login(object):
         return mako_render('/manage/login.tmpl')
 
     def POST(self, *path):
-        i = web.input('name', 'password')
+        i = web.input('name', 'password', 'checkcode')
         try:
+            s = web.ctx.session # 获取session
+
+            if 'code_ref' not in s:
+                raise GeneralError(u"验证码失效")
+                
+            code_ref = s['code_ref'] # 获取 验证码md5
+            cc = i.checkcode.lower()
+            if code_ref != encrypt.md5(cc, settings["checkcode.md5key"]):
+                raise GeneralError(u"验证码错误")
+            
             curr_user = user.login(u_name=i.name, \
                                        password=i.password)
-            s = web.ctx.session # 获取session
+
             s['curr_user'] = curr_user # session中保存当前用户
+            del s['code_ref'] # 删除验证码
             result = dict(
                 isSucceed = True,
                 msg = '登录成功'

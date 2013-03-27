@@ -35,21 +35,25 @@ if __name__ == '__main__':
 
     # use memcached for session store
     mc = memcache.Client(settings.settings['memcached.hosts'])
+
+    print 'clear all sessions...'
+    mc.flush_all()
+        
     mc_store = session.MemcachedStore(mc)
 
-    session = web.session.Session(app, mc_store, initializer={'count', 0})
+    session = web.session.Session(app, mc_store, initializer={'count': 0})
 
+    
     def session_hook():
         web.ctx.session = session
 
     # 添加session处理
     app.add_processor(web.loadhook(session_hook))
 
-    # print
-    print sys.prefix
-    print urls
-    print sys.path
-    print web.ctx
-    print settings.action_auth
+    # print sys.prefix
+    # print urls
+    # print sys.path
+    # print web.ctx
+    # print settings.action_auth
     
     app.run()

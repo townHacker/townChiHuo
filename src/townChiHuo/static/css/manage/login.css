@@ -50,8 +50,8 @@ input[type='password'] {
 }
 
 #userinfo {
-    text-align: center;
-    margin-left: 200px;
+    text-align: left;
+    margin-left: 50%;
 }
 
 #register{
@@ -78,3 +78,4 @@ label.form-label {
 .form-line {
     margin: 5px 0 5px 0;
 }
+
