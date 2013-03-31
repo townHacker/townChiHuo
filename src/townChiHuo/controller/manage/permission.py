@@ -21,7 +21,7 @@ class Permission(object):
                                default_permission=_def_permission)
     def GET(self, *path):
         web.header('Content-Type', 'text/html')
-        return mako_render('/manage/permission.tmpl')
+        return mako_render('/manage/permission/permission.tmpl')
 
 class ActionPermission(object):
     @action_auth_decorator(action_id=u'9adcbdb0-10ac-4870-949e-8dddcd4c9413', \
@@ -36,4 +36,10 @@ class ActionPermission(object):
         actions = get_action()
 
         web.header('Content-Type', 'text/html')
-        return mako_render('/manage/action_permission.tmpl', actions=actions)
+        return mako_render('/manage/permission/action_permission.tmpl', actions=actions)
+
+
+class Role(object):
+    def GET(self, *path):
+        web.header('Content-Type', 'text/html')
+        return mako_render('/manage/permission/role.tmpl')

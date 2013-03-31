@@ -1,10 +1,12 @@
 ## -*- coding: utf-8 -*-
 
-<%inherit file="index.tmpl" />
+<%inherit file="/manage/index.tmpl" />
 
 <%block name="top_menu">
 <ul>
+  <li><a href="/manage/permission" class="button">权限管理</a></li>
   <li><a href="/manage/action_permission" class="button">Action权限</a></li>
+  <li><a href="/manage/role" class="button">角色管理</a></li>
 </ul>
 </%block>
 
@@ -22,7 +24,7 @@
       </thead>
       <tbody>
 
-      <tr>
+        <tr>
           <td></td>
           <td></td>
           <td></td>
