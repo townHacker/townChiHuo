@@ -43,3 +43,9 @@ class Role(object):
     def GET(self, *path):
         web.header('Content-Type', 'text/html')
         return mako_render('/manage/permission/role.tmpl')
+
+
+class AddRole(object):
+    def POST(self, *path):
+        i = web.input('role_name')
+        return u''

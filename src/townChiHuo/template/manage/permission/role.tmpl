@@ -1,23 +1,31 @@
-## coding=utf-8
+## -*- coding: utf-8 -*-
 
 <%inherit file="permission.tmpl" />
 
+<%block name="style">
+</%block>
+
 <%block name="main_content">
 <div class="div-box">
-  <h4 class="div-box-title">��ɫ����</h4>
+  <h4 class="div-box-title">角色管理</h4>
   <div class="div-box-content">
     <table>
       <thead>
         <tr>
           <th>ID</th>
-          <th>��ɫ����</th>
-          <th>����</th>
+          <th>角色名称</th>
+          <th>操作</th>
       </thead>
       <tbody>
         <tr>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td colspan="3">
+            <div>
+              &lt; 1/100 &gt;
+              <a href="#" class="button">下一页</a>
+              <a href="#" class="button">上一页</a>
+              <a href="#" class="button">添加角色</a>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>

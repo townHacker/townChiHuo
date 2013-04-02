@@ -18,5 +18,6 @@ class Index(object):
             raise web.seeother('/manage/login')
         curr_user = s['curr_user']
         web.header('Content-Type', 'text/html')
-        return mako_render('/manage/index.tmpl', curr_user=curr_user)
+        return mako_render('/manage/index.tmpl')
+
 

@@ -1,5 +1,13 @@
 ## coding=utf-8
 
+<%
+   import web
+   session = web.ctx.session
+   if 'curr_user' not in session:
+       raise web.seeother('/manage/login')
+   curr_user = session['curr_user']
+%>
+
 <!DOCTYPE HTML>
 <html lang="zh-cn">
   <head>
@@ -8,17 +16,19 @@
     <link type="text/css" rel="stylesheet" href="/css/common_style.css" />
     <link type="text/css" rel="stylesheet" href="/css/manage/main.css" />
     <link type="text/css" rel="stylesheet" href="/css/manage/div_box.css" />
+
+    <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+    
     <%block name="style">
     </%block>
-
-<%block name="javascript">
-</%block>
+    <%block name="javascript">
+    </%block>
   </head>
   <body>
     <!-- 页面顶部 -->
     <div class="page-top">
       <a href="/manage/index"><img alt="TownChiHuo logo" src="/images/logo.gif" title="townChiHuo.com" width="200px" height="50px" /></a>
-      <span style="line-heigth: 20px; vertical-align: top; float: right; font-weight: bold;">2013-3-27 23:11:11</span>
+      <span style="line-heigth: 20px; vertical-align: top; float: right; font-weight: bold;">2013-3-27 23:11:11 ${ curr_user.name }</span>
     </div>
 
     <!-- 页面左部 -->
