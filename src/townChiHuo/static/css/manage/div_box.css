@@ -4,6 +4,10 @@
     margin: 0;
 }
 
+.div-box~.div-box {
+    margin-top: 5px;
+}
+
 .div-box .div-box-title {
     padding: 5px;
     margin: 0;
@@ -23,4 +27,16 @@
     position: relative;
     padding: 2px;
     overflow: auto;
+}
+
+.div-box input, .div-box textarea, .div-box select {
+    vertical-align: middle;
+}
+
+.div-box select {
+    min-width: 150px;
+}
+
+.div-box .box-line {
+    margin: 5px 2px;
 }

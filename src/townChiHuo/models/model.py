@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-__metaclass__ = type
 
-def model(doc):
+def model(doc, m_type=Model):
     '''
     将一个document(mongoDB中的Document)初始为对象
     '''
-    return Model(doc=doc)
+    m = Model(doc=doc)
+    m.__class__ = m_type
+    return m
 
 
 def iter(docs):
@@ -51,7 +52,7 @@ def save(collection, m):
     return collection.save(m.__dict__['_doc'])
     
 
-class Model:
+class Model(object):
     '''
     模型基类，所有的模型类都应该继承该类
     '''
@@ -107,7 +108,7 @@ if __name__ == '__main__':
     print m._doc['a']
     print m._doc
     d = {'name': 'zhouyunchang'}
-    global model
+#    global model
     user = model(d)
     print user.name
     import memcache

@@ -5,30 +5,88 @@
 <%block name="style">
 </%block>
 
+<%block name="javascript">
+</%block>
+
 <%block name="main_content">
+
+<!-- 角色管理 -->
 <div class="div-box">
   <h4 class="div-box-title">角色管理</h4>
   <div class="div-box-content">
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>角色名称</th>
-          <th>操作</th>
-      </thead>
-      <tbody>
-        <tr>
-          <td colspan="3">
-            <div>
-              &lt; 1/100 &gt;
-              <a href="#" class="button">下一页</a>
-              <a href="#" class="button">上一页</a>
-              <a href="#" class="button">添加角色</a>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="div-box-content-left">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>角色名称</th>
+            <th>操作</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="3">
+              <div>
+                &lt; 1/100 &gt;
+                <a href="#" class="button">下一页</a>
+                <a href="#" class="button">上一页</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="div-box-content-right">
+
+    </div>
+    
   </div>
 </div>
+<!-- 角色管理结束 -->
+
+<!-- 角色添加 -->
+<div class="div-box">
+  <h4 class="div-box-title">角色添加</h4>
+  <div class="div-box-content">
+
+    <div class="div-box-content-left">
+      <form action="/manage/role/add" method="post">
+        <div class="box-line">
+          <label for="role_name">角色名称:</label>
+          <input type="text" name="role_name" id="role_name" />
+        </div>
+        <div class="box-line">
+          <label for="parent_role">上级角色:</label>
+          <span>
+            <div class="box-line">
+              <select name="parnet_role" size="5" multiple="multiple">
+                <option value="option_1">Option 1</option>
+                <option value="option_2">Option 2</option>
+              </select>
+              <input type="button" class="button" value="删除" />
+            </div>
+            <div class="box-line">
+              <select name="select_parent_role" size="1">
+                <option value="selected_role">Select Option</option>
+              </select>
+              <input type="button" class="button" value="添加" />
+            </div>
+          </span>
+        </div>
+        <div class="box-line">
+          <input type="submit" class="button" value="添加角色" />
+        </div>
+      </form>
+    </div>
+
+    <div class="div-box-content-right">
+    </div>
+    
+  </div>
+</div>
+<!-- 角色添加结束 -->
+
 </%block>
+
+
+

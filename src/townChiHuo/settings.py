@@ -34,12 +34,6 @@ settings = {
         ]
 }
 
-# 数据库集合
-db_schema = dict(
-    USER = 'users', # 用户集合
-    ROLE = 'roles', # 角色集合
-)
-
 # Action 认证
 action_auth = dict()
 

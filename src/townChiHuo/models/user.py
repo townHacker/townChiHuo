@@ -11,13 +11,14 @@ from townChiHuo.models.error import GeneralError
 from townChiHuo.util import encrypt
 from townChiHuo.util import mongodb_hack as db_hack
 from townChiHuo import settings
+import townChiHuo.db_schema as db_schema
 
 __md5key = settings.settings['password.md5key']
 
 class User(model.Model):
     '''
     用户
-    id = None
+    user_id = None
     name # 用户名
     email # 邮箱
     password # 密码
@@ -33,7 +34,7 @@ def user_add(name, password):
     '''
     添加用户
     '''
-    users = db_hack.connect(collection='users')
+    users = db_hack.connect(collection=db_schema.USER)
     name = unicode(name)
     user = users.find_one({'name': name})
     if user is not None:
@@ -42,11 +43,12 @@ def user_add(name, password):
     else:
         # 添加用户
         user = User()
+        user.user_id = unicode(uuid.uuid4())
         user.name = name
         user.password = encrypt.md5(password, __md5key)
     try:
         objectId = model.insert(users, user)
-        return users.find({'_id': objectId})
+        return model.model(users.find({'_id': objectId}), m_type=User)
     finally:
         del users
         
@@ -59,7 +61,7 @@ def login(u_name, password, timestamp=None, record=False):
     timestamp: 登录时间戳
     record: 是否需要记录登录时间戳
     '''
-    users = db_hack.connect(collection='users')
+    users = db_hack.connect(collection=db_schema.USER)
     user = users.find_one({'name': unicode(u_name), \
              'password': encrypt.md5(password, __md5key)})
     if user is None:
@@ -67,7 +69,7 @@ def login(u_name, password, timestamp=None, record=False):
         raise GeneralError(u'用户名密码不正确或用户不存在')
     else:
         # 验证登录时间戳
-        user = model.model(user) # User object
+        user = model.model(user, m_type=User) # User object
         is_succeed = False
         if user.login_info and \
                 user.login_info.get('login_timestamp'):
@@ -88,13 +90,13 @@ def register(email, password):
     email: 邮箱
     password: 密码
     '''
-    users = db_hack.connect(collection='users')
+    users = db_hack.connect(collection=db_schema.USER)
     if None is not \
             users.find_one({'email': unicode(email)}):
         raise GeneralError(u'该邮箱已经注册过，请使用其它邮箱注册.')
     else:
         user = User()
-        user.id = unicode(uuid.uuid4())
+        user.user_id = unicode(uuid.uuid4())
         user.email, user.name = unicode(email), unicode(email)
         user.password = encrypt.md5(unicode(password), __md5key)
         try:
