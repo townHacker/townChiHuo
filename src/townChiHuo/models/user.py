@@ -24,7 +24,8 @@ class User(model.Model):
     last_name # 姓
     first_name # 名
     sex # 性别
-
+	
+	disabled #禁用/启用
     role # 用户角色
     login_info # 用户登录信息
     '''
@@ -113,7 +114,21 @@ def update_login_info(user, record=False):
     if record:
         user.login_info.login_timestamp = \
             time.mktime(user.login_info.last_login_dt.timetuple())
-    
+			
+			
+			
+def user_disabled(id):
+	users = db_hack.connect(collection='users')
+	user=users.find_one({'id':id})	# mongodb user
+	if user is None:
+		raise GeneralError(u'参数错误.')
+	else:
+		user = model.model(user)	# model user
+		user.disabled=False
+		try:
+			model.save(users,user)
+		finally:
+			del users
 
 class LoginInfo:
     '''

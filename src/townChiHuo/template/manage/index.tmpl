@@ -18,7 +18,34 @@
     <link type="text/css" rel="stylesheet" href="/css/manage/div_box.css" />
 
     <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
-    
+	<script type="text/javascript">
+		$(function(){
+			/*edit user*/
+			$('.edit-user').each(function(){
+				
+			});
+			/*delete user*/
+			$('.disabled-user').each(function(){
+				$(this).click(function(){
+					if(confirm('确定要禁用该用户吗?'))
+						$.post('/manage/userdisabled',
+							{id:$(this).attr("name")},
+							function(r){
+								if(r.Succeed){
+									alert("删除成功！");
+									window.location.reload();
+								}else{
+									alert(r.Message);
+								}
+							},
+							'json'
+						);
+				});
+			});
+		});
+	</script>
+	
+	
     <%block name="style">
     </%block>
     <%block name="javascript">
@@ -126,4 +153,4 @@
     </div>
 
   </body>
-</html>
+  </html>

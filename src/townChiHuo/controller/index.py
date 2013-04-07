@@ -8,6 +8,7 @@ import web
 from townChiHuo.settings import settings
 from townChiHuo.util.mako_render import mako_render
 from townChiHuo.models import user
+from townChiHuo.models.error import *
 from townChiHuo.util.decorator import action_auth_decorator
 from townChiHuo.models.permission import permission
 
