@@ -47,22 +47,24 @@ class Add(object):
         web.header('Content-Type', 'application/json')
         return json.dumps(result)
 
+    
 class Disabled(object):
-	def POST(self,*path):
-		userid=web.input('id')
-		try:
-			user.user_disabled(userid)
-			result=dict( \
-				Succeed=True,
-				Message=u'操作成功！')
-		except GeneralError as err:
-			result=dict( \
-				Succeed=False,
-				Message=unicode(err.value))
-		
-		web.header('Content-Type','application/json')
-		return json.dumps(result)
-		
+    def POST(self,*path):
+        userid=web.input('id')
+        try:
+            user.user_disabled(userid)
+            result=dict( \
+                Succeed=True,
+                Message=u'操作成功！')
+        except GeneralError as err:
+            result=dict( \
+                Succeed=False,
+                Message=unicode(err.value))
+
+        web.header('Content-Type','application/json')
+        return json.dumps(result)
+
+
 class Login(object):
     def GET(self, *path):
         web.header('Content-Type', 'text/html')

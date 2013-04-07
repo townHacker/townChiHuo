@@ -119,18 +119,23 @@ def update_login_info(user, record=False):
 			
 			
 			
-def user_disabled(id):
-	users = db_hack.connect(collection='users')
-	user=users.find_one({'id':id})	# mongodb user
-	if user is None:
-		raise GeneralError(u'参数错误.')
-	else:
-		user = model.model(user)	# model user
-		user.disabled=False
-		try:
-			model.save(users,user)
-		finally:
-			del users
+def user_remove(*user_ids):
+    '''
+    删除用户, 设置 disabled = True
+    '''
+    if user_ids is None:
+        raise GeneralError(u'参数错误.')
+    user_c = db_hack.connect(collection=db_schema.USER)
+    try:
+        result = user_c.update(
+            {'user_id': {'$in': user_ids}},
+            {'$set': {
+                    'disabled': True
+                    }}
+            )
+        return result['n']
+    finally:
+        del user_c
 
 class LoginInfo:
     '''
