@@ -1,6 +1,55 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+class Model(object):
+    '''
+    模型基类，所有的模型类都应该继承该类
+    '''
+    def __init__(self, doc=None):
+        # 单下划线开关的成员变量为保护变量，只有类及子类可以访问
+        if doc is None:
+            doc = {}
+        self.__dict__["_doc"] = doc
+
+    
+    def __setattr__(self, name, value):
+        '''-
+        设置属性
+        '''
+        self.__dict__["_doc"][name] = value
+
+    
+    def __getattr__(self, name):
+        '''
+        获取属性
+        '''
+        # 如果字典中不存在键name, 默认返回None
+        return self.__dict__["_doc"].get(name)
+        
+
+    def __delattr__(self, name):
+        '''
+        删除属性
+        '''
+        if self.__dict__["_doc"].get(name) is None:
+            return
+        else:
+            del self.__dict__["_doc"][name]
+
+    def __getstate__(self):
+        '''
+        for pickle, fix python memcached bug
+        '''
+        return self.__dict__["_doc"]
+
+    def __setstate__(self, state):
+        '''
+        for pickle, fix python memcached bug
+        '''
+        self.__dict__["_doc"] = state
+
+
+
 
 def model(doc, m_type=Model):
     '''
@@ -51,53 +100,6 @@ def save(collection, m):
     '''
     return collection.save(m.__dict__['_doc'])
     
-
-class Model(object):
-    '''
-    模型基类，所有的模型类都应该继承该类
-    '''
-    def __init__(self, doc=None):
-        # 单下划线开关的成员变量为保护变量，只有类及子类可以访问
-        if doc is None:
-            doc = {}
-        self.__dict__["_doc"] = doc
-
-    
-    def __setattr__(self, name, value):
-        '''-
-        设置属性
-        '''
-        self.__dict__["_doc"][name] = value
-
-    
-    def __getattr__(self, name):
-        '''
-        获取属性
-        '''
-        # 如果字典中不存在键name, 默认返回None
-        return self.__dict__["_doc"].get(name)
-        
-
-    def __delattr__(self, name):
-        '''
-        删除属性
-        '''
-        if self.__dict__["_doc"].get(name) is None:
-            return
-        else:
-            del self.__dict__["_doc"][name]
-
-    def __getstate__(self):
-        '''
-        for pickle, fix python memcached bug
-        '''
-        return self.__dict__["_doc"]
-
-    def __setstate__(self, state):
-        '''
-        for pickle, fix python memcached bug
-        '''
-        self.__dict__["_doc"] = state
 
 
 
