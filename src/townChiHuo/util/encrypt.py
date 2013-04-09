@@ -8,8 +8,8 @@ def md5(password, key):
     生成md5加密后的密码，返回加密后的密码
     '''
     m = hashlib.md5()
-    m.update(key + password)
-    return m.hexdigest()
+    m.update(unicode(key) + unicode(password))
+    return unicode(m.hexdigest())[::-1]
 
 
 if __name__ == '__main__':

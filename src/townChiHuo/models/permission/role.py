@@ -19,12 +19,13 @@ class Role(model.Model):
     '''
     role_id = None
     name = None
-    def __init__(self, name, role_id=None, description=None):
+    def __init__(self, name, role_id=None, description=None, doc=None):
         if role_id is None:
             role_id = uuid.uuid4()
         self.role_id = role_id
         self.name = name
         self.description = description
+        super(Role, self).__init__(doc=doc)
         
 
 def get_roles(role_c, *role_parent_ids):
@@ -66,32 +67,9 @@ def role_add(role_name, role_desc, *role_parent_ids):
             # 若无父级角色, 删除该属性
             if role_m.parent_roles.count() <= 0: del role_m.parent_roles
                 
-            object_id = model.insert(role_c, role_m)
-            return model.model(role_c.find_one({'_id': object_id}), \
-                                   m_type=Role)
+            object_id = role_c.insert(role_m.get_doc())
+            return Role(doc=role_c.find_one({'_id': object_id}))
     finally:
         del role_c # 释放集合
 
         
-def role_remove(*role_ids):
-    '''
-    删除角色, 设置 disabled = True
-    '''
-    if role_ids is None:
-        raise GeneralError(u"参数错误")
-    role_c = db_hack.connect(collection=db_schema.ROLE)
-    try:
-        result = role_c.update(
-            {'role_id': {'$in': role_ids}},
-            {'$set': {
-                    'disabled': True
-                    }}
-            )
-        # result:
-        # {u'updatedExisting': True, u'connectionId': 39, u'ok': 1.0, u'err': None, u'n': 1}
-        # {u'updatedExisting': False, u'connectionId': 39, u'ok': 1.0, u'err': None, u'n': 0}
-        return result['n'] # 返回更新数目
-    finally:
-        del role_c
-    
-

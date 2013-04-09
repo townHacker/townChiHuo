@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-class Model(object):
+class Model(dict):
     '''
     模型基类，所有的模型类都应该继承该类
     '''
@@ -11,7 +11,19 @@ class Model(object):
             doc = {}
         self.__dict__["_doc"] = doc
 
-    
+    def __iter__(self):
+        return iter(self.__dict__["_doc"])
+
+    def __getitem__(self, name):
+        return self.__dict__["_doc"].__getitem__(name)
+        
+    def __setitem__(self, name, value):
+        self.__dict__["_doc"].__setitem__(name, value)
+
+    def __delitem__(self, name):
+        self.__dict__["_doc"].__delitem__(name)
+
+        
     def __setattr__(self, name, value):
         '''-
         设置属性
@@ -48,16 +60,14 @@ class Model(object):
         '''
         self.__dict__["_doc"] = state
 
+    def __repr__(self):
+        return repr(self.__dict__["_doc"])
 
+    def __call__(self):
+        return self.__dict__["_doc"]
 
-
-def model(doc, m_type=Model):
-    '''
-    将一个document(mongoDB中的Document)初始为对象
-    '''
-    m = Model(doc=doc)
-    m.__class__ = m_type
-    return m
+    def get_doc(self):
+        return self.__dict__["_doc"]
 
 
 def iter(docs):
@@ -78,30 +88,6 @@ def query(collection, **kwargs):
         yield model(doc)
 
 
-def insert(collection, m):
-    '''
-    插入
-    '''
-    return collection.insert(m.__dict__['_doc'])
-
-def remove(collection, m):
-    '''
-    删除
-    '''
-    doc = collection.remove(m.__dict__['_doc'])
-    if doc:
-        doc = model(doc)
-    return doc
-
-
-def save(collection, m):
-    '''
-    若存在_id则更新, 否则添加
-    '''
-    return collection.save(m.__dict__['_doc'])
-    
-
-
 
 if __name__ == '__main__':
     m = Model()
@@ -112,6 +98,7 @@ if __name__ == '__main__':
     d = {'name': 'zhouyunchang'}
 #    global model
     user = model(d)
+    print 'getDoc():', user.getDoc()
     print user.name
     import memcache
     mc = memcache.Client(['127.0.0.1:11211'])
