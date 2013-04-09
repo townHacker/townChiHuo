@@ -5,7 +5,7 @@ import uuid
 
 from townChiHuo.models import model
 from townChiHuo.models.error import GeneralError
-
+from townChiHuo.util import mongodb_hack as db_hack
 import townChiHuo.db_schema as db_schema
 
 
@@ -19,13 +19,24 @@ class Role(model.Model):
     '''
     role_id = None
     name = None
-    def __init__(self, name, role_id=None, description=None, doc=None):
-        if role_id is None:
-            role_id = uuid.uuid4()
-        self.role_id = role_id
-        self.name = name
-        self.description = description
+    def __init__(self, name=None, role_id=None, description=None, doc=None):
         super(Role, self).__init__(doc=doc)
+        if not doc: 
+            if role_id is None:
+                role_id = unicode(uuid.uuid4())
+            self.role_id = role_id
+            self.name = name
+            self.description = description
+        
+
+
+def get_role(role_c, role_id):
+    '''
+    获取指定role_id的Role对象
+    '''
+    return role_c.find_one({
+        'role_id': role_id
+        })
         
 
 def get_roles(role_c, *role_parent_ids):
@@ -51,7 +62,7 @@ def role_add(role_name, role_desc, *role_parent_ids):
     '''
     添加角色
     '''
-    role_c =  db_hack.connect(collection=db_schema.ROLE) # 获取role集合
+    role_c = db_hack.connect(collection=db_schema.ROLE) # 获取role集合
     try:
         if role_c.find_one({'name': role_name}) \
                 is not None:
@@ -65,7 +76,7 @@ def role_add(role_name, role_desc, *role_parent_ids):
                 role.parent_roles.append(p_role.role_id)
 
             # 若无父级角色, 删除该属性
-            if role_m.parent_roles.count() <= 0: del role_m.parent_roles
+            if len(role_m.parent_roles) <= 0: del role_m.parent_roles
                 
             object_id = role_c.insert(role_m.get_doc())
             return Role(doc=role_c.find_one({'_id': object_id}))

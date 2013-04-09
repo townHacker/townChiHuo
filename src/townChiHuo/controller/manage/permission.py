@@ -11,6 +11,8 @@ from townChiHuo.settings import action_auth
 from townChiHuo.models.permission import permission
 from townChiHuo.models.permission import role
 
+from townChiHuo.models.error import GeneralError
+
 _def_permission = 0 \
     | permission.READABLE \
     | permission.EDITABLE \
@@ -52,12 +54,17 @@ class AddRole(object):
     '''
     添加角色
     '''
+    @action_auth_decorator(action_id=u'bc0ae985-43af-4a29-aec2-5edba5384e3d', \
+                               action_name=u'角色添加', \
+                               action_code=u'permission.AddRole.POST', \
+                               default_permission=_def_permission)
     def POST(self, *path):
         try :
-            i = web.input('role_name', role_desc=None, role_parent_ids=[])
-            new_role = role.role_add(role_name=i.role_name, \
-                                         role_desc=i.role_desc, \
-                                         *i.role_parent_ids)
+            i = web.input('role_name', role_desc=None, parent_role=[])
+            print i.role_desc
+            new_role = role.role_add(i.role_name, \
+                                         i.role_desc, \
+                                         *i.parent_role)
             result = dict(
                 isSucceed= True,
                 msg= u"添加角色成功",
