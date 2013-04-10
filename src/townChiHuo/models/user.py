@@ -153,17 +153,7 @@ def user_edit(user_id,name,email,password,last_name,first_name,sex):
 	user=user_c.find_one({'user_id':user_id})
 	if user is None:
 		raise GeneralError(u'用户不存在')
-	try:
-		pass
 	
-
-class LoginInfo:
-    '''
-    登录信息
-    last_login_dt  # 最后一次登录时间
-    login_timestamp  # 登录时间戳
-    '''
-    
     
 if __name__ == '__main__':
     register('admin', '123456')
