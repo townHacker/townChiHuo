@@ -25,11 +25,17 @@ class Role(model.Model):
             self.role_id = role_id
             self.name = name
             self.description = description
-        
 
-def get_roles():
+def get_roles_count():
+    return db_hack.connect(collection=db_schema.ROLE).count()
+
+def get_roles(limit=None, skip=0):
     role_c = db_hack.connect(collection=db_schema.ROLE)
-    for r_doc in role_c.find():
+    if limit or limit == 0:
+        cursor = role_c.find().limit(limit).skip(skip)
+    else:
+        cursor = role_c.find().skip(skip)
+    for r_doc in cursor:
         yield Role(doc=r_doc)
             
 

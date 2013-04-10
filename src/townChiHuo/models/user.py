@@ -146,13 +146,13 @@ def user_remove(*user_ids):
         del user_c
 
 def user_edit(user_id,name,email,password,last_name,first_name,sex):
-	'''
-	编辑用户
-	'''
-	user_c = db_hack.connect(collection=db_schema.USER)
-	user=user_c.find_one({'user_id':user_id})
-	if user is None:
-		raise GeneralError(u'用户不存在')
+    '''
+    编辑用户
+    '''
+    user_c = db_hack.connect(collection=db_schema.USER)
+    user=user_c.find_one({'user_id':user_id})
+    if user is None:
+        raise GeneralError(u'用户不存在')
 	
     
 if __name__ == '__main__':

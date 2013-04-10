@@ -47,13 +47,24 @@ class ActionPermission(object):
 
 class Role(object):
     def GET(self, *path):
-        a_roles = role.get_roles()
+        i = web.input(page=0, size=10) 
+        i.page, i.size = int(i.page), int(i.size)
+        count = role.get_roles_count()
+        import math
+        page_count = int(math.ceil(float(count) / i.size)) 
+
+        i.page = i.page if i.page >= 0 else 0
+        i.page = i.page if i.page < page_count else page_count-1
+
+        limit, skip = i.size, i.page * i.size
+        a_roles = role.get_roles(limit=limit, skip=skip)
         all_roles = role.get_roles()
         web.header('Content-Type', 'text/html')
         return mako_render('/manage/permission/role.tmpl', \
                                roles=a_roles, \
-                               all_roles=all_roles)
-
+                               all_roles=all_roles, \
+                               page_count=page_count, \
+                               page=i.page)
 
 class AddRole(object):
     '''

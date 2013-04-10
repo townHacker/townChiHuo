@@ -34,13 +34,11 @@
           <tr>
             <td colspan="3">
               <div>
-                &lt; 1/100 &gt;
-                <a href="#" class="button">下一页</a>
-                <a href="#" class="button">上一页</a>
+                &lt; ${ page + 1 } / ${ page_count } &gt;
+                <a href="/manage/role?page=${page-1}" class="button">上一页</a>
+                <a href="/manage/role?page=${page+1}" class="button">下一页</a>
               </div>
             </td>
-          </tr>
-        </tbody>
       </table>
     </div>
 
