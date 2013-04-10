@@ -26,12 +26,67 @@
         <tr>
           <td>${u.user_id}</td>
           <td>${u.name}</td>
-          <td><a class="edit-user" href="javascript:void(0);" name="${u.id}">编辑</a>|<a class="disabled-user" href="javascript:void(0);" name="${u.id}">禁用</a></td>
+          <td><a class="edit-user" href="javascript:void(0);" name="${u.id}">编辑</a>|
+			<a class="disabled-user" href="javascript:void(0);" name="${u.id}">禁用</a>
+		  </td>
         </tr>
         % endfor
       </tbody>
     </table>
   </div>
+  <div id="edit-box">
+		用户名:<input type="text" id="edit-username" />
+  </div>
 </div>
 </%block>
+<script type="text/javascript">
+	$(function(){
 	
+		/*edit user*/
+		$('.edit-user').each(function(){
+			$(this).click(function(){
+				$('#edit-box').dialog({
+					title:'编辑用户',
+					height:300,
+					width:400,
+					modal:true,
+					buttons:{
+						'确定':funciton(){
+							$.post('',
+							{},
+							function(r){
+								if(r.Succeed){
+									
+								}
+								else{
+									alert(r.Message);
+								}
+							},'json');
+						},
+						'取消':function(){
+							$(this).dialog('close');
+						}
+					}
+				});
+			});
+		});
+		
+		/*delete user*/
+		$('.disabled-user').each(function(){
+			$(this).click(function(){
+				if(confirm('确定要禁用该用户吗?'))
+					$.post('/manage/userdisabled',
+						{id:$(this).attr("name")},
+						function(r){
+							if(r.Succeed){
+								alert("删除成功！");
+								window.location.reload();
+							}else{
+								alert(r.Message);
+							}
+						}, 'json'
+					);
+			}); 
+		});
+	});
+</script>

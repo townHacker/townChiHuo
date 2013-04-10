@@ -40,3 +40,7 @@
 .div-box .box-line {
     margin: 5px 2px;
 }
+
+#edit-box{
+	display:none;
+}
