@@ -11,6 +11,8 @@ from townChiHuo.settings import action_auth
 from townChiHuo.models.permission import permission
 from townChiHuo.models.permission import role
 
+from townChiHuo.models.error import GeneralError
+
 _def_permission = 0 \
     | permission.READABLE \
     | permission.EDITABLE \
@@ -39,25 +41,35 @@ class ActionPermission(object):
         actions = get_action()
 
         web.header('Content-Type', 'text/html')
-        return mako_render('/manage/permission/action_permission.tmpl', actions=actions)
+        return mako_render('/manage/permission/action_permission.tmpl', \
+                actions=actions)
 
 
 class Role(object):
     def GET(self, *path):
+        a_roles = role.get_roles()
+        all_roles = role.get_roles()
         web.header('Content-Type', 'text/html')
-        return mako_render('/manage/permission/role.tmpl')
+        return mako_render('/manage/permission/role.tmpl', \
+                               roles=a_roles, \
+                               all_roles=all_roles)
 
 
 class AddRole(object):
     '''
     添加角色
     '''
+    @action_auth_decorator(action_id=u'bc0ae985-43af-4a29-aec2-5edba5384e3d', \
+                               action_name=u'角色添加', \
+                               action_code=u'permission.AddRole.POST', \
+                               default_permission=_def_permission)
     def POST(self, *path):
         try :
-            i = web.input('role_name', role_desc=None, role_parent_ids=[])
-            new_role = role.role_add(role_name=i.role_name, \
-                                         role_desc=i.role_desc, \
-                                         *i.role_parent_ids)
+            i = web.input('role_name', role_desc=None, parent_role=[])
+            print i.role_desc
+            new_role = role.role_add(i.role_name, \
+                                         i.role_desc, \
+                                         *i.parent_role)
             result = dict(
                 isSucceed= True,
                 msg= u"添加角色成功",
@@ -75,6 +87,10 @@ class DeleteRole(object):
     '''
     删除角色
     '''
+    @action_auth_decorator(action_id=u'd5ea0a06-a531-4301-ac2d-41083a62403b', \
+                               action_name=u'角色删除', \
+                               action_code=u'permission.DeleteRole.POST', \
+                               default_permission=_def_permission)
     def POST(self, *path):
         try :
             i = web.input('role_id')

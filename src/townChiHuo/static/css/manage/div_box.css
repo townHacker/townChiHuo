@@ -37,10 +37,26 @@
     min-width: 150px;
 }
 
-.div-box .box-line {
-    margin: 5px 2px;
+
+/*************** Simple Form Style **************/
+.simple-form {
+	margin: 5px;
+}
+
+.simple-form-line {
+	margin-bottom: 2px;
+	display: block;
+	vertical-align: middle;
+}
+
+.simple-form-cell {
+	margin-bottom: 2px;
+	display: inline-block;
+	vertical-align: top;
+	text-align: left;
 }
 
 #edit-box{
 	display:none;
 }
+
