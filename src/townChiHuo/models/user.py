@@ -137,6 +137,18 @@ def user_remove(*user_ids):
     finally:
         del user_c
 
+def user_edit(user_id,name,email,password,last_name,first_name,sex):
+	'''
+	编辑用户
+	'''
+	user_c = db_hack.connect(collection=db_schema.USER)
+	user=user_c.find_one({'user_id':user_id})
+	if user is None:
+		raise GeneralError(u'用户不存在.')
+	try:
+		pass
+	
+
 class LoginInfo:
     '''
     登录信息
