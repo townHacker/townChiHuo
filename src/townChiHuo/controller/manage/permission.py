@@ -41,13 +41,18 @@ class ActionPermission(object):
         actions = get_action()
 
         web.header('Content-Type', 'text/html')
-        return mako_render('/manage/permission/action_permission.tmpl', actions=actions)
+        return mako_render('/manage/permission/action_permission.tmpl', \
+                actions=actions)
 
 
 class Role(object):
     def GET(self, *path):
+        a_roles = role.get_roles()
+        all_roles = role.get_roles()
         web.header('Content-Type', 'text/html')
-        return mako_render('/manage/permission/role.tmpl')
+        return mako_render('/manage/permission/role.tmpl', \
+                               roles=a_roles, \
+                               all_roles=all_roles)
 
 
 class AddRole(object):
@@ -82,6 +87,10 @@ class DeleteRole(object):
     '''
     删除角色
     '''
+    @action_auth_decorator(action_id=u'd5ea0a06-a531-4301-ac2d-41083a62403b', \
+                               action_name=u'角色删除', \
+                               action_code=u'permission.DeleteRole.POST', \
+                               default_permission=_def_permission)
     def POST(self, *path):
         try :
             i = web.input('role_id')

@@ -1,8 +1,7 @@
 
 .page-width-960 {
-    width: 960px;
-    margin-left: auto;
-    margin-right: auto;
+	margin: 0 auto;
+	width: 960px;
 }
 
 .header {
@@ -15,8 +14,11 @@
 }
 
 .header-right {
-
-    float: right;
+	position: absolute;
+	width: 200px;
+	left: 760px;
+	top: 0;
+	text-align: right;
 }
 
 .nav-bar {

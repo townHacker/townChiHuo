@@ -22,13 +22,13 @@
         </tr>
       </thead>
       <tbody>
-        % for u in users:
+        %for u in users:
         <tr>
           <td>${u.user_id}</td>
           <td>${u.name}</td>
           <td><a class="edit-user" href="javascript:void(0);" name="${u.id}">编辑</a>|<a class="disabled-user" href="javascript:void(0);" name="${u.id}">禁用</a></td>
         </tr>
-        % endfor
+        %endfor
       </tbody>
     </table>
   </div>

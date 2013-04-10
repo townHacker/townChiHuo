@@ -17,8 +17,6 @@ class Role(model.Model):
     description # 角色描述
     parent_roles # 父级角色
     '''
-    role_id = None
-    name = None
     def __init__(self, name=None, role_id=None, description=None, doc=None):
         super(Role, self).__init__(doc=doc)
         if not doc: 
@@ -29,8 +27,13 @@ class Role(model.Model):
             self.description = description
         
 
+def get_roles():
+    role_c = db_hack.connect(collection=db_schema.ROLE)
+    for r_doc in role_c.find():
+        yield Role(doc=r_doc)
+            
 
-def get_role(role_c, role_id):
+def _get_role(role_c, role_id):
     '''
     获取指定role_id的Role对象
     '''
@@ -39,7 +42,7 @@ def get_role(role_c, role_id):
         })
         
 
-def get_roles(role_c, *role_parent_ids):
+def _get_roles_without_disabled(role_c, *role_parent_ids):
     '''
     获取指定role_id序列中的所有未禁用的role文档
     '''
@@ -49,7 +52,7 @@ def get_roles(role_c, *role_parent_ids):
             })
 
 
-def get_all_roles(role_c, *role_parent_ids):
+def _get_roles_with_disabled(role_c, *role_parent_ids):
     '''
     获取指定role_id序列中的所有的role文档(包括已禁用的)
     '''
@@ -72,8 +75,9 @@ def role_add(role_name, role_desc, *role_parent_ids):
             # 角色名称不存在, 添加该角色
             role_m = Role(role_name, description=role_desc)
             role_m.parent_roles = [] # 父级角色
-            for p_role in get_roles(role_c, *role_parent_ids):
-                role.parent_roles.append(p_role.role_id)
+            for p_role in \
+                    _get_roles_without_disabled(role_c, *role_parent_ids):
+                role_m.parent_roles.append(p_role['role_id'])
 
             # 若无父级角色, 删除该属性
             if len(role_m.parent_roles) <= 0: del role_m.parent_roles

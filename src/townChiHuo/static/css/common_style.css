@@ -7,8 +7,8 @@
    蓝色: #3B5998
 */
 * {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     vertical-align: baseline;
 }
 
@@ -104,4 +104,12 @@ input[type="button"]:active, input[type="submit"]:active {
 
 .text-center {
     text-align: center;
+}
+
+.float-L {
+	float: left;
+}
+
+.float-R {
+	float: right;
 }

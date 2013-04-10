@@ -21,6 +21,14 @@
             <th>ID</th>
             <th>角色名称</th>
             <th>操作</th>
+		  </tr>
+		  %for r in roles:
+		  <tr>
+			<td>${ r.role_id }</td>
+			<td>${ r.name }</td>
+			<td>&nbsp;</td>
+		  </tr>
+		  %endfor
         </thead>
         <tbody>
           <tr>
@@ -50,30 +58,32 @@
   <div class="div-box-content">
 
     <div class="div-box-content-left">
-      <form action="/manage/role/add" method="post" id="addRole_form">
-        <div class="box-line">
-          <label for="role_name">角色名称:</label>
+      <form action="/manage/role/add" method="post" id="addRole_form" class="simple-form">
+        <div class="simple-form-line">
+          <label for="role_name" class="simple-form-cell">角色名称:</label>
           <input type="text" name="role_name" id="role_name" />
         </div>
-        <div class="box-line">
-          <label for="parent_role">上级角色:</label>
-          <span>
-            <div class="box-line">
-              <select name="parent_role" size="5" multiple="multiple" id="parent_role">
-                <option value="option_1">Option 1</option>
-                <option value="option_2">Option 2</option>
-              </select>
-              <input type="button" class="button" value="删除" id="btn_delParentRole" />
-            </div>
-            <div class="box-line">
-              <select name="select_parent_role" size="1" id="select_parent_role">
-                <option value="selected_role">Select Option</option>
-              </select>
-              <input type="button" class="button" value="添加" id="btn_addParentRole" />
-            </div>
-          </span>
+        <div class="simple-form-line">
+          <label for="parent_role" class="simple-form-cell">上级角色:</label>
+		  <div class="simple-form-cell">
+			<div class="simple-form-line">
+			  <select name="select_parent_role" size="1" id="select_parent_role">
+				%for r in all_roles:
+				<option value="${ r.role_id }">${ r.name }</option>
+				%endfor
+			  </select>
+			  <input type="button" class="button" value="添加" id="btn_addParentRole" />
+			</div>
+
+			<div class="simple-form-line">
+			  <select name="parent_role" size="5" multiple="multiple" id="parent_role">
+			  </select>
+			  <input type="button" class="button" value="删除" id="btn_delParentRole" />
+			</div>
+		  </div>
+		  
         </div>
-        <div class="box-line">
+        <div class="simple-form-line">
           <input type="submit" class="button" value="添加角色" />
         </div>
       </form>
@@ -85,33 +95,50 @@
   </div>
 </div>
 <script type="text/javascript">
-  $('#addRole_form').submit(function() {
-      try {
-          var parent_role = [];
-          $('#parent_role > option').each(function() {
-              parent_role.push($(this).attr('value'));
-          });
-          
-          $.ajax({
-              url: $(this).attr('action'),
-              type: $(this).attr('method'),
-              dataType: 'json',
-              data: { role_name: $('#role_name').val(), parent_role: parent_role },
-              traditional: true, 
-              success: function(data) {
-                  if (data) {
-                      alert(data.msg);
-                  }
-              },
-              error: function() {
-                  alert('AJAX ERROR!!!');
-              }, 
-          });
-      } catch(err) {
-          alert("ERROR : " + err);
-      }
-      return false;
-  });
+	$('#addRole_form').submit(function() {
+		try {
+			var parent_role = [];
+			$('#parent_role > option').each(function() {
+				parent_role.push($(this).attr('value'));
+			});
+			
+			$.ajax({
+				url: $(this).attr('action'),
+				type: $(this).attr('method'),
+				dataType: 'json',
+				data: { role_name: $('#role_name').val(), parent_role: parent_role },
+				traditional: true, 
+				success: function(data) {
+					if (data) {
+						alert(data.msg);
+					}
+				},
+				error: function() {
+					alert('AJAX ERROR!!!');
+				}, 
+			});
+		} catch(err) {
+			alert("ERROR : " + err);
+		}
+		return false;
+	});
+
+$(function() {
+	$('#btn_addParentRole').click(function() {
+		$('#select_parent_role > option:checked').each(function() {
+			new_opt = $('<option>');
+			new_opt.attr('value', $(this).attr('value'));
+			new_opt.html($(this).html());
+			$('#parent_role').append(new_opt);
+		});
+	});
+
+	$('#btn_delParentRole').click(function() {
+		$('#parent_role > option:checked').remove()
+	});
+});
+
+
 </script>
 <!-- 角色添加结束 -->
 
