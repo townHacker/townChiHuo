@@ -22,9 +22,9 @@ class CheckCode:
                 val += all_char[random.randint(0, len(all_char)-1)]
             return val
 
-        s = get_val().lower()
+        s = get_val()
         web.header('Content-Type', 'image/png')
-        ecode = encrypt.md5(s, settings.settings['checkcode.md5key'])
+        ecode = encrypt.md5(s.lower(), settings.settings['checkcode.md5key'])
 #        web.header('code_ref', ecode)
 
         session = web.ctx.session

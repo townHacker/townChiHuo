@@ -3,9 +3,7 @@
 
 <%block name="top_menu">
 <ul>
-  <li><a href="#" class="button">查询用户</a></li>
-  <li><a href="/manage/user_add" class="button">添加用户</a></li>
-  <li><a href="#" class="button">删除用户</a></li>
+  <li><a href="#" class="button">用户管理</a></li>
 </ul>
 </%block>
 
@@ -38,6 +36,58 @@
 		用户名:<input type="text" id="edit-username" />
   </div>
 </div>
+
+<div class="div-box">
+  <h4 class="div-box-title">用户添加</h4>
+  <div class="div-box-content">
+    <form name="add_user_form" class="simple-form" action="/manage/user_add" method="post">
+      <div class="simple-form-line">
+        <label class="simple-form-cell" for="user_name">用户名</label>
+        <input class="simple-form-cell" type="text" name="name" id="user_name" />
+        <span class="simple-form-cell"></span>
+      </div>
+
+      <div class="simple-form-line">
+        <label class="simple-form-cell" for="user_password">密码</label>
+        <input class="simple-form-cell" type="password" name="password" id="user_password" />
+        <span class="simple-form-cell"></span>
+      </div>
+
+      <div class="simple-form-line">
+        <label class="simple-form-cell" for="user_repassword">重复密码</label>
+        <input class="simple-form-cell" type="password" name="repassword" id="user_repassword" />
+        <span class="simple-form-cell"></span>
+      </div>
+      <div class="simple-form-line">
+      <input type="submit" class="button simple-form-cell" value="提交" />
+      </div>
+    </form>
+    
+  </div>
+</div>
+
+<script type="text/javascript">
+	$(function() {
+		$('#add_user_form').submit(function() {
+			$.ajax({
+				url: $(this).attr('action'),
+				type: $(this).attr('method'),
+				data: $(this).serialize(),
+				dataType: 'json',
+				success: function(data) {
+					if (data) {
+						alert(data.msg);
+					}
+				},
+				error: function() {
+					alert('AJAX ERROR!!!');
+				}, 
+			});
+
+			return false;
+		});
+	});
+</script>
 </%block>
 <script type="text/javascript">
 	$(function(){

@@ -1,0 +1,125 @@
+## coding=utf-8
+
+<!DOCTYPE HTML>
+<html lang="zh-cn">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>后台管理</title>
+    <link type="text/css" rel="stylesheet" href="/css/common_style.css" />
+    <link type="text/css" rel="stylesheet" href="/css/manage/main.css" />
+    <link type="text/css" rel="stylesheet" href="/css/manage/div_box.css" />
+
+    <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/js/holder.js"></script>
+    <%block name="style">
+	</%block>
+	<%block name="javascript">
+	</%block>
+</head>
+<body>
+  <!-- 页面顶部 -->
+  <div class="page-top">
+    <a href="/manage/index"><img alt="TownChiHuo logo" src="/images/logo.gif" title="townChiHuo.com" width="200px" height="50px" /></a>
+	<%block name="page_top_left">
+</%block>
+
+</div>
+
+<!-- 页面左部 -->
+<div class="left-page">
+  <div class="lc_main_menu">
+    <ul>
+      <li><a href="/manage/user">用户管理</a></li>
+      <li><a href="/manage/permission">权限管理</a></li>
+      <li><a href="#">xxx xxx xxx xx</a></li>
+      <li><a href="#">xxxxxxxx</a></li>
+      <li><a href="#">xxxxxx </a></li>
+    </ul>
+  </div>
+  
+  <div class="lc_sub_menu">
+    <ul>
+      <li><a href="#">xx xx </a></li>
+      <li><a href="#">xxxx xxx</a></li>
+    </ul>
+  </div>
+  
+</div>
+
+<!-- 页面主要内容 -->
+<div class="main-container">
+  <div class="main-page-body">
+	<!-- 主体部分的顶部菜单 -->
+	<div class="mc-top-menu">
+      <%block name="top_menu">
+      <ul>
+        <li><a href="#" class="button">功能1</a></li>
+        <li><a href="#" class="button">功能2</a></li>
+        <li><a href="#" class="button">功能3</a></li>
+      </ul>
+</%block>
+
+<form class="mc-top-search" name="search_form" method="get">
+  <input type="text" class="input-text" />
+  <input type="submit" class="input-button" value="搜索" />
+</form>
+</div>
+
+<div class="mc-body">
+  
+  <!-- 主体部分右列 -->
+  <div class="mc-right-col">
+    <div class="mc_rc_sidebar">
+	  <p>aaaaa aaaaaaaaa aaa aa</p>
+	  <ul>
+		<li><a href="#">xxxxxx xxxx xx</a></li>
+		<li><a href="#">xxxxxx xxxx xx</a></li>
+		<li><a href="#">xxxxxx xxxx xx</a></li>
+		<li><a href="#">xxxxxx xxxx xx</a></li>
+		<li><a href="#">xxxxxx xxxx xx</a></li>
+	  </ul>
+    </div> 
+    <div class="mc_rc_sidebar">
+	  <p>aaaaa aaa a aaaa aa</p>
+	  <ul>
+		<li><a href="#">xxxxxx xxxx xx</a></li>
+		<li><a href="#">xxxxxx xxxx xx</a></li>
+		<li><a href="#">xxxxxx xxxx xx</a></li>
+		<li><a href="#">xxxxxx xxxx xx</a></li>
+		<li><a href="#">xxxxxx xxxx xx</a></li>
+	  </ul>
+    </div> 
+    <div class="mc_rc_sidebar">
+	  <p>aaaaa aaaaaaa aaaaa aa</p>
+	  <ul>
+		<li><a href="#">xxxxxx xxxx xx</a></li>
+		<li><a href="#">xxxxxx xxxx xx</a></li>
+		<li><a href="#">xxxxxx xxxx xx</a></li>
+		<li><a href="#">xxxxxx xxxx xx</a></li>
+		<li><a href="#">xxxxxx xxxx xx</a></li>
+	  </ul>
+    </div>    
+  </div>
+  <!-- 主体部分右列 结束 -->
+
+  
+  <!-- 主体部分左列 -->
+  <div class="mc-left-col">
+    <%block name="main_content">
+</%block>
+${ self.body() }
+</div>
+<!-- 主体部分左列 结束 -->
+
+</div>
+</div>
+
+<!-- 页面底部 -->
+<div class="page-footer">
+  <p>CopyRight&copy;版权声明</p>
+</div>
+</div>
+
+</body>
+</html>
+

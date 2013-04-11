@@ -5,7 +5,7 @@ import Image, ImageDraw, ImageFont
 import itertools
 import StringIO
 
-def check_code(val, len=4, fmt='PNG', size=(96, 32), font_file=None):
+def check_code(val, len=4, fmt='PNG', size=(98, 36), font_file=None):
     '''
     画图工具，得到指定字符串的验证码图片
     font_file: 指定字体文件。请使用.ttf/.ttc字体
@@ -18,15 +18,15 @@ def check_code(val, len=4, fmt='PNG', size=(96, 32), font_file=None):
             
     val = val[0:len]
     if font_file:
-        font = ImageFont.truetype(font_file, 24)
+        font = ImageFont.truetype(font_file, 30, encoding="unic")
     else :
         font = ImageFont.load_default()
-        font.size = 24
+        font.size = 30
 
     im = Image.new("RGB", size, color=(0, 0, 0)) # 黑色背景
     draw = ImageDraw.Draw(im)
     for s, r in itertools.izip(list(val), region()):
-        draw.text((r[0], r[1]), s, font=font, fill=(0, 255, 0))
+        draw.text((r[0], r[1]), unicode(s), font=font, fill=(0, 255, 0))
 
     del draw
     # return im

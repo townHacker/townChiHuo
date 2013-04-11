@@ -8,10 +8,18 @@ import web
 from townChiHuo.util.mako_render import mako_render
 from townChiHuo.util import mongodb_hack as db_hack
 from townChiHuo.util import encrypt
+from townChiHuo.util.decorator import action_auth_decorator
 from townChiHuo.settings import settings
 import townChiHuo.models.model as model
 import townChiHuo.models.user as user
 from townChiHuo.models.error import GeneralError
+from townChiHuo.models.permission import permission
+
+_def_permission = 0 \
+    | permission.READABLE \
+    | permission.EDITABLE \
+    | permission.DELETABLE \
+    | permission.EXECUTABLE
 
 class Index(object):
     def GET(self, *path):
@@ -22,10 +30,10 @@ class Index(object):
 
 
 class Add(object):
-    def GET(self, *path):
-        web.header('Content-Type', 'text/html')
-        return mako_render('/manage/user/user_add.tmpl')
-
+    @action_auth_decorator(action_id=u'60730b35-5b73-49dd-a116-171fe63d2dc7', \
+                    action_name=u'用户添加', \
+                    action_code=u'user.Add.POST', \
+                    default_permission=_def_permission)
     def POST(self, *path):
         i = web.input('name', 'password', 'repassword')
 
@@ -48,7 +56,7 @@ class Add(object):
         return json.dumps(result)
 
     
-class Disabled(object):
+class Delete(object):
     def POST(self,*path):
         userid=web.input('id')
         try:
