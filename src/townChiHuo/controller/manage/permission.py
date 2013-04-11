@@ -66,6 +66,17 @@ class Role(object):
                                page_count=page_count, \
                                page=i.page)
 
+class EditRole(object):
+    '''
+    编辑角色
+    '''
+    def GET(self, *path):
+        pass
+
+    def POST(self, *path):
+        pass
+
+
 class AddRole(object):
     '''
     添加角色
@@ -100,9 +111,9 @@ class DeleteRole(object):
     '''
     @action_auth_decorator(action_id=u'd5ea0a06-a531-4301-ac2d-41083a62403b', \
                                action_name=u'角色删除', \
-                               action_code=u'permission.DeleteRole.POST', \
+                               action_code=u'permission.DeleteRole.GET', \
                                default_permission=_def_permission)
-    def POST(self, *path):
+    def GET(self, *path):
         try :
             i = web.input('role_id')
             d_num = role.role_remove(i.role_id)

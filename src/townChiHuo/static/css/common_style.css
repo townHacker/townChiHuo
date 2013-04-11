@@ -64,6 +64,10 @@ input[type="button"]:active, input[type="submit"]:active {
     color: #000000;
 }
 
+textarea {
+    resize: none;
+}
+
 .button {
     font-size: 12px;
     display: inline-block;

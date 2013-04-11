@@ -22,13 +22,16 @@
             <th>角色名称</th>
             <th>操作</th>
 		  </tr>
-		  %for r in roles:
+		  % for r in roles:
 		  <tr>
 			<td>${ r.role_id }</td>
 			<td>${ r.name }</td>
-			<td></td>
+			<td>
+              <a href="/manage/role/edit?role_id=${ r.role_id }"><img src="/images/icons/16x16/reply.png" alt="编辑" title="编辑" /></a>
+              <a class="ajax_get_href" href="/manage/role/delete?role_id=${ r.role_id }"><img src="/images/icons/16x16/action_delete.png" alt="删除" title="删除" /></a>
+            </td>
 		  </tr>
-		  %endfor
+		  % endfor
         </thead>
         <tbody>
           <tr>
@@ -48,6 +51,28 @@
     
   </div>
 </div>
+<script type="text/javascript">
+$(function() {
+    $('a.ajax_get_href').each(function() {
+        $(this).click(function() {
+            try {
+                url = $(this).attr('href');
+                $.get(url, function(data) {
+                    if (data) {
+                        alert(data.msg);
+                        if (data.isSucceed)
+                            window.location.reload();
+                    }
+                }, 'json');
+            } catch (err) {
+                alert(err.message);
+            } finally {
+                return false;
+            }
+        });
+    });
+});
+</script>
 <!-- 角色管理结束 -->
 
 <!-- 角色添加 -->
@@ -79,7 +104,10 @@
 			  <input type="button" class="button" value="删除" id="btn_delParentRole" />
 			</div>
 		  </div>
-		  
+        </div>
+        <div class="simple-form-line">
+          <label for="role_desc" class="simple-form-cell">角色描述:</label>
+          <textarea class="simple-form-cell" id="role_desc" name="role_desc" style="width: 300px; height: 80px;"></textarea>
         </div>
         <div class="simple-form-line">
           <input type="submit" class="button" value="添加角色" />

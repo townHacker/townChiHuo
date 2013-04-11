@@ -13,6 +13,7 @@ urls = (
     '/manage/user/?(.*)', 'controller.manage.user.Index',
     '/manage/action_permission/?(.*)', 'controller.manage.permission.ActionPermission',
 
+    '/manage/role/delete/?(.*)', 'controller.manage.permission.DeleteRole', 
     '/manage/role/add/?(.*)', 'controller.manage.permission.AddRole', 
     '/manage/role/?(.*)', 'controller.manage.permission.Role',
 
