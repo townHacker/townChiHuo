@@ -127,9 +127,10 @@ def update_login_info(user, record=False):
 			
 			
 			
-def user_remove(*user_ids):
+def set_user_available(disabled,*user_ids):
     '''
-    删除用户, 设置 disabled = True
+    禁用用户, 设置 disabled = True
+    启用用户, 设置 disabled = False
     '''
     if user_ids is None:
         raise GeneralError(u'参数错误.')
@@ -138,7 +139,7 @@ def user_remove(*user_ids):
         result = user_c.update(
             {'user_id': {'$in': user_ids}},
             {'$set': {
-                    'disabled': True
+                    'disabled': disabled
                     }}
             )
         return result['n']
