@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
   <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>登录</title>
     <link rel="stylesheet" type="text/css" href="/css/manage/login.css" />
     <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
@@ -27,7 +28,7 @@
           <div class="form-line">
             <label for="checkcode" class="form-label">验证码 :</label>
             <input type="text" name="checkcode" id="checkcode" />
-            <img style="vertical-align: middle;" width="64px" height="32px" src="/checkcode" title="验证码" alt="验证码" />
+            <img id="login_checkcode" style="vertical-align: middle;" width="64px" height="32px" src="" title="验证码" alt="验证码" />
           </div>
           <div class="form-line">
 	        <input id="btn-sign" style="margin-left: 100px;" type="submit" value="登录"/>
@@ -36,26 +37,39 @@
       </div>
     </form>
     <script type="text/javascript">
-      $('#login_form').submit(function() {
-          $.ajax({
-              url: $('#login_form').attr('action'),
-              type: $('#login_form').attr('method'),
-              dataType: 'json',
-              data: $('#login_form').serialize(),
-              success: function(data) {
-                  if (data.isSucceed) {
-                      location.href = '/manage';
-                  } else if (!data.isSucceed) {
-                      alert(data.msg);
-                  }
-              },
-              error: function() {
-                  alert('AJAX ERROR !!!');
-              }
-          });
+    $(function() {
+        $('#login_form').submit(function() {
+            $.ajax({
+                url: $('#login_form').attr('action'),
+                type: $('#login_form').attr('method'),
+                dataType: 'json',
+                data: $('#login_form').serialize(),
+                success: function(data) {
+                    if (data.isSucceed) {
+                        location.href = '/manage';
+                    } else if (!data.isSucceed) {
+                        alert(data.msg);
+                    }
+                },
+                error: function() {
+                    alert('AJAX ERROR !!!');
+                }
+            });
+            
+            return false;
+        });
 
-          return false;
-      });
-    </script>
+        // checkcode load
+        function checkcode_reload() {
+            $('#login_checkcode').attr('src', '/checkcode/' + new Date().getTime());
+        }
+
+        $('#login_checkcode').click(function() {
+            checkcode_reload();
+        });
+
+        checkcode_reload();
+    });
+</script>
   </body>
 </html>

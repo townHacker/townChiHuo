@@ -1,11 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import townChiHuo.models.model as model
+
 
 READABLE = 0x01 # 可读
 EDITABLE = 0x02 # 可写(编辑)
 DELETABLE = 0x04 # 可删
 EXECUTABLE = 0x08 # 可执行
+
+__all_permission = READABLE \
+    | EDITABLE \
+    | DELETABLE \
+    | EXECUTABLE
 
 
 def set_readable(permission_code):
@@ -55,6 +62,15 @@ def is_executable(permission_code):
     判断是否可执行
     '''
     return bool(permission_code & EXECUTABLE)
+
+class Permission(model.Model):
+    '''
+    权限
+    resource: 权限针对的资源
+    permission_code: 权限码
+    target: 权限限制的目标
+    '''
+    pass
 
 class PermisssionGroup(object):
     '''

@@ -11,6 +11,8 @@ urls = (
     '/manage/user_add/?(.*)', 'controller.manage.user.Add', 
     '/manage/userdisabled/?(.*)','controller.manage.user.Disabled',
     '/manage/user/?(.*)', 'controller.manage.user.Index',
+
+    '/manage/action_permission/add/?(.*)', 'controller.manage.permission.AddActionPermission', 
     '/manage/action_permission/?(.*)', 'controller.manage.permission.ActionPermission',
 
     '/manage/role/delete/?(.*)', 'controller.manage.permission.DeleteRole', 

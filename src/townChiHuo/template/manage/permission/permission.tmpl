@@ -5,7 +5,7 @@
 <%block name="top_menu">
 <ul>
   <li><a href="/manage/permission" class="button">权限管理</a></li>
-  <li><a href="/manage/action_permission" class="button">Action权限</a></li>
+  <li><a href="/manage/action_permission" class="button">Action管理</a></li>
   <li><a href="/manage/role" class="button">角色管理</a></li>
 </ul>
 </%block>
@@ -17,21 +17,85 @@
     <table>
       <thead>
         <tr>
-          <th>ID</th>
-          <th>用户名</th>
-          <th>操作</th>
+          <th>Role Name</th>
+          <th>Action Name</th>
+          <th>Permission Code</th>
         </tr>
       </thead>
       <tbody>
-
+    % for p_item in permissions:
         <tr>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td>${ p_item["role_name"] }</td>
+          <td>${ p_item["action_name"] }</td>
+          <td>${ p_item["permission_code"] }</td>
         </tr>
-        
+    % endfor
       </tbody>
     </table>
   </div>
 </div>
+
+<div class="div-box">
+  <h4 class="div-box-title">Action权限添加</h4>
+  <div class="div-box-content">
+    <form action="/manage/action_permission/add" class="simple-form" name="permission_add_form" id="permission_add_form" method="post">
+      <div class="simple-form-line">
+        <label for="permission_role" class="simple-form-cell" style="width:80px">角色 :</label>
+        <select name="permission_role" id="permission_role" size="5" multiple="multiple">
+          % for r in roles:
+          <option value="${ r.role_id }">${ r.name }</option>
+          % endfor
+        </select>
+      </div>
+
+      <div class="simple-form-line">
+        <label for="permission_action" class="simple-form-cell" style="width:80px">action :</label>
+        <select name="permission_action" id="permission_action" size="5" multiple="multiple">
+          % for a in actions:
+          <option value="${ a['action_id'] }">${ a['action_name'] }</option>
+          % endfor 
+        </select>
+      </div>
+
+<%
+   from townChiHuo.models.permission import permission
+%>
+      <div class="simple-form-line">
+        <label for="permission_code" class="simple-form-cell" style="width:80px">code :</label>
+        <input type="checkbox" name="permission_code" value="${ permission.READABLE }" class="simple-form-cell">可读</input>
+        <input type="checkbox" name="permission_code" value="${ permission.EDITABLE }" class="simple-form-cell">可写</input>
+        <input type="checkbox" name="permission_code" value="${ permission.DELETABLE }" class="simple-form-cell">可删</input>
+        <input type="checkbox" name="permission_code" value="${ permission.EXECUTABLE }" class="simple-form-cell">可执行</input>
+        </select>
+      </div>
+
+      <div class="simple-form-line">
+        <input type="submit" class="button" value="添加权限" />
+      </div>
+    </form>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(function() {
+      $('#permission_add_form').submit(function() {
+          var form = $(this);
+          $.ajax({
+              url: form.attr('action'),
+              type: form.attr('method'),
+              dataType: 'json',
+              data: form.serialize(),
+              traditional: true,
+              success: function(data) {
+                  if (data)
+                      alert(data.msg);
+              },
+              error: function() {
+                  alert("AJAX ERROR!!!");
+              }, 
+          });
+          return false;
+      });
+  });
+</script>
 </%block>

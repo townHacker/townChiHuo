@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
-
 from townChiHuo.settings import action_auth
+import townChiHuo.db_schema as db_schema
+from townChiHuo.util import mongodb_hack as db_hack
+from townChiHuo.models.permission.action import Action
 
 def action_auth_decorator(action_id, \
                               action_name, \
@@ -11,13 +12,24 @@ def action_auth_decorator(action_id, \
                               default_permission):
     def wrap(func):
 
+        action_c = db_hack.connect(collection=db_schema.ACTION)
+
+        print '----> action_auth_decorator --------------------------'
+        
+        action_doc = action_c.find_one({ 'action_id': action_id })
+        if action_doc:
+            action_m = Action(doc=action_doc)
+        else:
+            action_m = Action()
+            action_m.action_id = action_id
+            action_m.action_name = action_name
+            action_m.action_code = action_code
+            action_m.default_permission = default_permission
+
+            action_c.save(action_m.get_doc())
+
         if action_id not in action_auth:
-            action_auth[action_id] = dict(
-                action_id = action_id,
-                action_name = action_name,
-                action_code = action_code,
-                default_permission = default_permission
-                )
+            action_auth[action_id] = action_m
         
         def wrapped_func(*args):
             return func(*args)
