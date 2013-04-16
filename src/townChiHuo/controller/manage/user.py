@@ -58,9 +58,12 @@ class Add(object):
     
 class Delete(object):
     def POST(self,*path):
-        userid=web.input('id')
+        i=web.input('id')
         try:
-            user.user_disabled(userid)
+            user.user_remove(\
+                False if i.disabled==u"True" else True,
+                i.id)
+
             result=dict( \
                 Succeed=True,
                 Message=u'操作成功！')

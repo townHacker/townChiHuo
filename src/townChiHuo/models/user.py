@@ -127,7 +127,7 @@ def update_login_info(user, record=False):
 			
 			
 			
-def user_remove(*user_ids):
+def user_remove(disabled,*user_ids):
     '''
     删除用户, 设置 disabled = True
     '''
@@ -138,7 +138,7 @@ def user_remove(*user_ids):
         result = user_c.update(
             {'user_id': {'$in': user_ids}},
             {'$set': {
-                    'disabled': True
+                    'disabled': disabled
                     }}
             )
         return result['n']
