@@ -60,7 +60,7 @@ class Delete(object):
     def POST(self,*path):
         i=web.input('id')
         try:
-            user.user_remove(\
+            user.set_user_available(\
                 False if i.disabled==u"True" else True,
                 i.id)
 
