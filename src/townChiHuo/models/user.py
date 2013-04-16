@@ -129,7 +129,8 @@ def update_login_info(user, record=False):
 			
 def set_user_available(disabled,*user_ids):
     '''
-    删除用户, 设置 disabled = True
+    禁用用户, 设置 disabled = True
+    启用用户, 设置 disabled = False
     '''
     if user_ids is None:
         raise GeneralError(u'参数错误.')
