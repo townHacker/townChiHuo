@@ -1,6 +1,19 @@
 ﻿/* 后台管理页面 */
 
-.page-top {
+* {
+	border-radius: 0 !important;
+	-webkit-border-radius: 0 !important;
+	-moz-border-radius: 0 !important;
+}
+
+body {
+	text-shadow: 0 1px 0 rgba(0,0,0,.15);
+	-webkit-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+	-moz-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+	box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+}
+
+#page_top {
     position: relative;
     display: block;
     height: 50px;
@@ -8,14 +21,14 @@
     z-index: 0;
 }
 
-.left-page {
+#page_left {
     position: relative;
     width: 200px;
-    border-top: solid 2px #039;
+    border-top: solid 1px #CCC;
     z-index: 1;
 }
 
-.main-container {
+#main_container {
     position: absolute;
     top: 20px;
     width: 100%;
@@ -23,161 +36,75 @@
     z-index: 0;
 }
 
-.main-page-body {
+#main_page_body {
     margin-left: 200px;
     min-height: 580px;
-    border-left: solid 2px #039;
-    border-top: solid 2px #039;
-    border-bottom: solid 2px #039;
+    border: solid 1px #CCC;
+	border-right: none;
 }
 
 
-.left-page .lc_main_menu {
-    font-size: 12px;
+.side-nav {
     font-weight: bold;
-    color: #FFF;
-    position: relative;
-}
-
-.left-page .lc_sub_menu {
-    font-size: 12px;
-    font-weight: bold;
-    color: #039;
-    position: relative;
-}
-
-.left-page .lc_main_menu ul {
-    list-style: none;
-    margin-top: 10px;
+	margin-top: 10px;
     margin-left: 2em;
 }
 
-.left-page .lc_sub_menu ul {
-    list-style: none;
+.side-subnav {
+    font-size: 12px;
+    font-weight: bold;
     margin-top: 10px;
-    margin-left: 3em;
-    border-top: solid 1px #039;
+    border-top: solid 1px #CCC;
+	margin-left: 20px !important;
 }
 
-.lc_main_menu ul li {
+.side-nav li a {
+	color: #FFF;
     height: 30px;
     background: #3B5998;
     text-align: right;
     line-height: 30px;
     margin-top: 5px;
-    padding-right: .5em;
 }
 
-.lc_sub_menu ul li {
-    height: 29px;
-    border-bottom: solid 1px #039;
-    line-height: 30px;
+.side-nav li a:hover {
+	color: #3B5998;
+}
+
+.side-subnav li a {
+	color: #039;
+    height: 25px;
+    border-bottom: solid 1px #CCC;
+    line-height: 25px;
     text-align: right;
-    padding-right: .5em;
 }
 
-.main-page-body .mc-top-menu {
+#mc_top_menu {
     border-bottom: solid #CCC 1px;
     height: 30px;
-    padding-right: 2px;
 }
 
-.mc-top-menu ul {
-    display: inline-block;
-    list-style: none;
-    color: #039;
-    font-weight: bold;
-    font-size: 12px;
-    overflow: hidden;
+#mc_top_menu a {
+	line-height: 10px;
 }
 
-.mc-top-menu ul li {
-    height: 20px;
-    margin: 4px 0px 4px 5px;
-    line-height: 20px;
-    text-align: center;
-    float: left;
+#mc_sidebar {
+	width: 200px;
+	border-top: solid 2px #CCC;
+    border-bottom: solid 1px #CCC;
+    margin-top: 5px;
 }
 
-.mc-top-menu .mc-top-search {
-    float: right;
-    margin-top: 4px;
-}
-
-.mc-top-search .search_submit {
-    display: inline-block;
-    height: 22px;
-    border: solid 1px #3B5998;
-    margin: 0px;
-    background: #3B5998;
-    color: #FFF;
-    position: relative;
-    left: -5px;
-    font-weight: bold;
-    font-size: 12px;
-    vertical-align: top;
-}
-
-.mc-top-search .search_input {
-    display: inline-block;
-    height: 18px;
-    line-height: 18px;
-    border: solid 1px #333;
-    margin: 0px;
-    vertical-align: top;
-}
-
-.main-page-body .mc-body {
-    position: relative;
-    display: block;
-    padding: 5px;
-}
-
-.main-page-body .mc-body .mc-left-col {
-    display: block;
+#mc_left_col {
+	display: block;
     margin-right: 210px;
 }
 
-
-.main-page-body .mc-body .mc-right-col {
-    float: right;
-    display: block;
-    width: 200px;
-    border-top: solid 5px #3B5998;
-}
-
-.mc-right-col .mc_rc_sidebar {
-    border-bottom: solid 1px #039;
-    margin-top: 5px;
-}
-
-.mc_rc_sidebar ul {
-    list-style: none;
-    margin-left: 5px;
-}
-
-
-.page-footer {
+#page_footer {
     width: 100%;
     display: inline-block;
     margin-top: 20px;
-    border-top: solid 5px #3B5998;
+    border-top: solid 5px #CCC;
     text-align: center;
     clear: both;
-}
-
-table {
-    display: block;
-    border-collapse: collapse;
-    padding: 2px;
-}
-
-tr, th, td {
-    border: solid 1px #CCC;
-    padding: 5px;
-}
-
-th {
-    color: #000;
-    background-color: #EEE;
 }

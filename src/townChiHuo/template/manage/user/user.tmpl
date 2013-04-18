@@ -2,16 +2,14 @@
 <%inherit file="/manage/index.tmpl" />
 
 <%block name="top_menu">
-<ul>
-  <li><a href="#" class="button">用户管理</a></li>
-</ul>
+  <li class="active"><a href="#">用户管理</a></li>
 </%block>
 
 <%block name="main_content">
-<div class="div-box">
-  <h4 class="div-box-title">用户管理</h4>
-  <div class="div-box-content">
-    <table>
+<div>
+  <h4>用户管理</h4>
+  <div>
+    <table class="table table-striped table-hover">
       <thead>
         <tr>
           <th>ID</th>
@@ -45,23 +43,18 @@
       <div class="simple-form-line">
         <label class="simple-form-cell" for="user_name">用户名</label>
         <input class="simple-form-cell" type="text" name="name" id="user_name" />
-        <span class="simple-form-cell"></span>
+        <span class=""></span>
       </div>
 
-      <div class="simple-form-line">
+      <div class="">
         <label class="simple-form-cell" for="user_password">密码</label>
         <input class="simple-form-cell" type="password" name="password" id="user_password" />
         <span class="simple-form-cell"></span>
       </div>
 
-      <div class="simple-form-line">
-        <label class="simple-form-cell" for="user_repassword">重复密码</label>
-        <input class="simple-form-cell" type="password" name="repassword" id="user_repassword" />
-        <span class="simple-form-cell"></span>
-      </div>
-      <div class="simple-form-line">
-      <input type="submit" class="button simple-form-cell" value="提交" />
-      </div>
+        <label class="" for="user_repassword">重复密码</label>
+        <input class="" type="password" name="repassword" id="user_repassword" />
+      <input type="submit" class="btn" value="提交" />
     </form>
     
   </div>
