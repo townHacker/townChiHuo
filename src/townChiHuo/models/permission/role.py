@@ -27,14 +27,15 @@ class Role(model.Model):
             self.description = description
 
 def get_roles_count():
-    return db_hack.connect(collection=db_schema.ROLE).count()
+    return db_hack.connect(collection=db_schema.ROLE) \
+        .find({'disabled': {'$ne': True}}).count()
 
 def get_roles(limit=None, skip=0):
     role_c = db_hack.connect(collection=db_schema.ROLE)
     if limit or limit == 0:
-        cursor = role_c.find().limit(limit).skip(skip)
+        cursor = role_c.find({'disabled': { '$ne': True }}).limit(limit).skip(skip)
     else:
-        cursor = role_c.find().skip(skip)
+        cursor = role_c.find({'disabled': { '$ne': True }}).skip(skip)
     for r_doc in cursor:
         yield Role(doc=r_doc)
             

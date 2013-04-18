@@ -60,9 +60,11 @@
 		</ul>
       </div>
       <div class="span4">
-		<div class="input-append pull-right" style="margin-bottom:0;">
+		<div class="input-append pull-right" style="margin-bottom: 0;">
+          <form class="form-search" name="global_form_search" id="global_form_search" style="margin-bottom: 0;">
 		  <input type="text" placeholder="搜索" />
 		  <button type="button" class="btn"><i class="icon-search"></i></button>
+          </form>
 		</div>
 	  </div>
     </div>
@@ -108,8 +110,10 @@
 	  
 	  <!-- 主体部分左列 -->
 	  <div id="mc_left_col" class="container-fluid">
-		<%block name="main_content"></%block>
-        ${ self.body() }
+        <div class="span12">
+		  <%block name="main_content"></%block>
+           ${ self.body() }
+        </div>
       </div>
       <!-- 主体部分左列 结束 -->
     </div>

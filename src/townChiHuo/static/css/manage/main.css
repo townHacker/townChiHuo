@@ -98,6 +98,8 @@ body {
 #mc_left_col {
 	display: block;
     margin-right: 210px;
+    padding: 5px;
+    padding-bottom: none;
 }
 
 #page_footer {
@@ -107,4 +109,16 @@ body {
     border-top: solid 5px #CCC;
     text-align: center;
     clear: both;
+}
+
+
+
+/* bootstrap */
+.accordion-toggle {
+    background-color: #EFEFEF;
+    margin: 5px;
+}
+
+.pager {
+    margin: 0;
 }

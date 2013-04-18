@@ -2,55 +2,52 @@
 
 <%inherit file="permission.tmpl" />
 
-<%block name="style">
-</%block>
-
-<%block name="javascript">
-</%block>
-
 <%block name="main_content">
 
 <!-- 角色管理 -->
-<div class="div-box">
-  <h4 class="div-box-title">角色管理</h4>
-  <div class="div-box-content">
-    <div class="div-box-content-left">
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>角色名称</th>
-            <th>操作</th>
-		  </tr>
-		  % for r in roles:
-		  <tr>
-			<td>${ r.role_id }</td>
-			<td>${ r.name }</td>
-			<td>
-              <a href="/manage/role/edit?role_id=${ r.role_id }"><img src="/images/icons/16x16/reply.png" alt="编辑" title="编辑" /></a>
-              <a class="ajax_get_href" href="/manage/role/delete?role_id=${ r.role_id }"><img src="/images/icons/16x16/action_delete.png" alt="删除" title="删除" /></a>
-            </td>
-		  </tr>
-		  % endfor
-        </thead>
-        <tbody>
-          <tr>
-            <td colspan="3">
-              <div>
-                &lt; ${ page + 1 } / ${ page_count } &gt;
-                <a href="/manage/role?page=${page-1}" class="button">上一页</a>
-                <a href="/manage/role?page=${page+1}" class="button">下一页</a>
-              </div>
-            </td>
-      </table>
+<div class="accordion" id="accordion_role_manage">
+   
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <h4 class="accordion-toggle" data-toggle="collapse" href="#role_manage">角色管理</h4>
     </div>
-
-    <div class="div-box-content-right">
+    <div id="role_manage" class="accordion-body collapse in">
+      <div class="accordion-inner">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>角色名称</th>
+              <th>操作</th>
+		    </tr>
+          </thead>
+          <tbody>
+		    % for r in roles:
+		    <tr>
+			  <td>${ r.role_id }</td>
+			  <td>${ r.name }</td>
+			  <td>
+                <a href="/manage/role/edit?role_id=${ r.role_id }" title="编辑"><img src="/images/icons/16x16/reply.png" alt="编辑" tilte="编辑" /></a>
+                <a class="ajax_get_href" href="/manage/role/delete?role_id=${ r.role_id }" title="删除"><img src="/images/icons/16x16/action_delete.png" alt="删除" title="删除" /></a>
+              </td>
+		    </tr>
+		    % endfor
+            <tr>
+              <td colspan="3">
+                <ul class="pager">
+                  <li class="previous"><a href="/manage/role?page=${page-1}">上一页</a></li>
+                  <li>&lt; ${ page + 1 } / ${ page_count } &gt;</li>
+                  <li class="next"><a href="/manage/role?page=${page+1}">下一页</a></li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
     </div>
-    
   </div>
-</div>
+
 <script type="text/javascript">
 $(function() {
     $('a.ajax_get_href').each(function() {
@@ -76,50 +73,56 @@ $(function() {
 <!-- 角色管理结束 -->
 
 <!-- 角色添加 -->
-<div class="div-box">
-  <h4 class="div-box-title">角色添加</h4>
-  <div class="div-box-content">
+<div class="accordion-group">
+  <div class="accordion-heading">
+    <h4 class="accordion-toggle" data-toggle="collapse" href="#role_add">角色添加</h4>
+  </div>
+  <div id="role_add" class="accordion-body collapse in">
 
-    <div class="div-box-content-left">
-      <form action="/manage/role/add" method="post" id="addRole_form" class="simple-form">
-        <div class="simple-form-line">
-          <label for="role_name" class="simple-form-cell">角色名称:</label>
-          <input type="text" name="role_name" id="role_name" />
+    <div class="accordion-inner">
+      
+      <form action="/manage/role/add" method="post" id="addRole_form" class="form-horizontal">
+        <div class="control-group">
+          <label for="role_name" class="control-label">角色名称</label>
+          <div class="controls">
+            <input type="text" name="role_name" id="role_name" />
+            <span class="help-inline label label-important">error information 错误信息</span>
+          </div>
         </div>
-        <div class="simple-form-line">
-          <label for="parent_role" class="simple-form-cell">上级角色:</label>
-		  <div class="simple-form-cell">
-			<div class="simple-form-line">
-			  <select name="select_parent_role" size="1" id="select_parent_role">
-				%for r in all_roles:
-				<option value="${ r.role_id }">${ r.name }</option>
-				%endfor
-			  </select>
-			  <input type="button" class="button" value="添加" id="btn_addParentRole" />
-			</div>
+        <div class="control-group" >
+          <label for="parent_role" class="control-label">上级角色</label>
 
-			<div class="simple-form-line">
-			  <select name="parent_role" size="5" multiple="multiple" id="parent_role">
-			  </select>
-			  <input type="button" class="button" value="删除" id="btn_delParentRole" />
-			</div>
-		  </div>
+          <div class="controls">
+		    <select name="select_parent_role" size="1" id="select_parent_role">
+			  % for r in all_roles:
+			  <option value="${ r.role_id }">${ r.name }</option>
+			  % endfor
+		    </select>
+		    <input type="button" class="btn" value="添加" id="btn_addParentRole" />
+          </div>
+          <div class="controls">
+		    <select name="parent_role" size="5" multiple="multiple" id="parent_role"></select>
+		    <input type="button" class="btn" value="删除" id="btn_delParentRole" />
+          </div>
+
         </div>
-        <div class="simple-form-line">
-          <label for="role_desc" class="simple-form-cell">角色描述:</label>
-          <textarea class="simple-form-cell" id="role_desc" name="role_desc" style="width: 300px; height: 80px;"></textarea>
+
+        
+        <div class="control-group">
+          <label for="role_desc" class="control-label">角色描述</label>
+          <div class="controls">
+            <textarea id="role_desc" name="role_desc" style="width: 300px; height: 80px;"></textarea>
+          </div>
         </div>
-        <div class="simple-form-line">
-          <input type="submit" class="button" value="添加角色" />
+        <div class="controls">
+          <input type="submit" class="btn" value="添加角色" />
         </div>
       </form>
     </div>
 
-    <div class="div-box-content-right">
-    </div>
-    
   </div>
 </div>
+
 <script type="text/javascript">
 	$('#addRole_form').submit(function() {
 		try {
@@ -164,9 +167,12 @@ $(function() {
 	});
 });
 
-
 </script>
 <!-- 角色添加结束 -->
+
+
+</div>
+
 
 </%block>
 
