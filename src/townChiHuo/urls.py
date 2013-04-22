@@ -14,14 +14,16 @@ urls = (
 
     '/manage/action_permission/add/?(.*)', 'controller.manage.permission.AddActionPermission', 
     '/manage/action_permission/?(.*)', 'controller.manage.permission.ActionPermission',
-
+    
     '/manage/role/delete/?(.*)', 'controller.manage.permission.DeleteRole', 
     '/manage/role/add/?(.*)', 'controller.manage.permission.AddRole', 
     '/manage/role/?(.*)', 'controller.manage.permission.Role',
 
     '/manage/permission/?(.*)', 'controller.manage.permission.Permission',
-    '/manage/?(.*)', 'controller.manage.index.Index',
+
+    '/manage/commodity/?(.*)', 'controller.manage.commodity.Commodity', 
     
+    '/manage/?(.*)', 'controller.manage.index.Index',
 	
     #'/login/?(.*)', 'controller.index.Login',
     '/register/?(.*)', 'controller.index.Register',

@@ -24,11 +24,11 @@ class User(model.Model):
     password # 密码
     last_name # 姓
     first_name # 名
-    sex # 性别
-	
-	disabled #禁用/启用
+    gender # 性别
     role # 用户角色
     login_info # 用户登录信息
+
+    disabled #禁用/启用
     '''
     def __init__(self, doc=None):
         super(User, self).__init__(doc=doc)
@@ -39,20 +39,21 @@ def user_add(name, password):
     添加用户
     '''
     users = db_hack.connect(collection=db_schema.USER)
-    name = unicode(name)
-    user = users.find_one({'name': name})
-    if user is not None:
-        # 用户名已存在
-        raise GeneralError(u'用户名已存在')
-    else:
-        # 添加用户
-        user = User()
-        user.user_id = unicode(uuid.uuid4())
-        user.name = name
-        user.password = encrypt.md5(password, __md5key)
     try:
-        objectId = users.insert(user.get_doc())
-        return User(doc=users.find({'_id': objectId}))
+        name = unicode(name)
+        user = users.find_one({'name': name})
+        if user is not None:
+            # 用户名已存在
+            raise GeneralError(u'用户名已存在')
+        else:
+            # 添加用户
+            user = User()
+            user.user_id = unicode(uuid.uuid4())
+            user.name = name
+            user.password = encrypt.md5(password, __md5key)
+            
+            objectId = users.insert(user.get_doc())
+            return User(doc=users.find({'_id': objectId}))
     finally:
         del users
         
@@ -100,19 +101,20 @@ def register(email, password):
     password: 密码
     '''
     users = db_hack.connect(collection=db_schema.USER)
-    if None is not \
-            users.find_one({'email': unicode(email)}):
-        raise GeneralError(u'该邮箱已经注册过，请使用其它邮箱注册.')
-    else:
-        user = User()
-        user.user_id = unicode(uuid.uuid4())
-        user.email, user.name = unicode(email), unicode(email)
-        user.password = encrypt.md5(password, __md5key)
-        try:
+    try:
+        if None is not \
+                users.find_one({'email': unicode(email)}):
+            raise GeneralError(u'该邮箱已经注册过，请使用其它邮箱注册.')
+        else:
+            user = User()
+            user.user_id = unicode(uuid.uuid4())
+            user.email, user.name = unicode(email), unicode(email)
+            user.password = encrypt.md5(password, __md5key)
+            
             objectId = users.insert(user.get_doc())
             return User(doc=users.find({'_id': objectId}))
-        finally:
-            del users
+    finally:
+        del users
         
     
                 
