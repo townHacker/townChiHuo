@@ -10,3 +10,9 @@ class Commodity(object):
     def GET(self, *path):
         web.header('Content-Type', 'text/html')
         return mako_render('/manage/commodity.tmpl')
+
+
+class CommodityType(object):
+    def GET(self, *path):
+        web.header('Content-Type', 'text/html')
+        return mako_render('/manage/commodity_type.tmpl')

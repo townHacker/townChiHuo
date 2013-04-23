@@ -2,6 +2,13 @@
 
 <%inherit file="permission.tmpl" />
 
+<%block name="top_menu">
+  <li><a href="/manage/permission">权限管理</a></li>
+  <li class="active"><a href="/manage/action_permission">Action管理</a></li>
+  <li><a href="/manage/role" >角色管理</a></li>
+</%block>
+
+
 <%block name="main_content">
 <div class="accordion" id="accordion_action_manage">
   <div class="accordion-group">

@@ -20,9 +20,10 @@ urls = (
     '/manage/role/?(.*)', 'controller.manage.permission.Role',
 
     '/manage/permission/?(.*)', 'controller.manage.permission.Permission',
-
-    '/manage/commodity/?(.*)', 'controller.manage.commodity.Commodity', 
     
+    '/manage/commodity_type/?(.*)', 'controller.manage.commodity.CommodityType',
+    '/manage/commodity/?(.*)', 'controller.manage.commodity.Commodity',
+        
     '/manage/?(.*)', 'controller.manage.index.Index',
 	
     #'/login/?(.*)', 'controller.index.Login',
