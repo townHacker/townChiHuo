@@ -89,7 +89,7 @@ def commodity_type_add(type_name, type_desc=None, type_parent=None):
             comm_type_m.type_name = type_name
             comm_type_m.type_desc = type_desc
             comm_type_m.type_parent_id = \
-                None if not type_parent else type_parent.commodity_type_id
+                type_parent.commodity_type_id if type_parent else None
             
             objectId = comm_type_c.insert(comm_type_m.get_doc())
             return CommodityType(doc=comm_type_c.find_one({"_id": objectId}))
@@ -97,13 +97,15 @@ def commodity_type_add(type_name, type_desc=None, type_parent=None):
         del comm_type_c
         
 
-def get_commodity_type(*type_parent_id):
+def get_commodity_type(*type_parent_id, **type_id):
     '''
     获取商品类型, 或通过指定的商品类型, 获取所有的子类型
     '''
     comm_type_c = db_hack.connect(collection=db_schema.COMMODITY_TYPE)
     try:
-        if parent_type:
+        if type_id:
+            return comm_type_c.find(type_id)
+        elif type_parent_id:
             return comm_type_c.find({
                     "type_parent_id": { "$in": type_parent_id }, 
                     })
@@ -111,6 +113,8 @@ def get_commodity_type(*type_parent_id):
             return comm_type_c.find()
     finally:
         del comm_type_c
+
+
         
         
 

@@ -66,6 +66,11 @@ class Model(dict):
     def __call__(self):
         return self.__dict__["_doc"]
 
+
+    def __nonzero__(self):
+        return True
+
+
     def get_doc(self):
         return self.__dict__["_doc"]
 
@@ -97,8 +102,8 @@ if __name__ == '__main__':
     print m._doc
     d = {'name': 'zhouyunchang'}
 #    global model
-    user = model(d)
-    print 'getDoc():', user.getDoc()
+    user = Model(d)
+    print 'getDoc():', user.get_doc()
     print user.name
     import memcache
     mc = memcache.Client(['127.0.0.1:11211'])
@@ -106,3 +111,8 @@ if __name__ == '__main__':
     u = mc.get('model')
     print u
     print u.name
+    if Model():
+        print 'True'
+    else:
+        print 'False'
+            

@@ -20,7 +20,8 @@ urls = (
     '/manage/role/?(.*)', 'controller.manage.permission.Role',
 
     '/manage/permission/?(.*)', 'controller.manage.permission.Permission',
-    
+
+    '/manage/commodity_type/add/?(.*)', 'controller.manage.commodity.CommodityTypeAdd', 
     '/manage/commodity_type/?(.*)', 'controller.manage.commodity.CommodityType',
     '/manage/commodity/?(.*)', 'controller.manage.commodity.Commodity',
         

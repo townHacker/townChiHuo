@@ -26,11 +26,13 @@
           </tr>
         </thead>
         <tbody>
+          % for type_item in commodity_type:
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>${ type_item["commodity_type_id"] }</td>
+            <td>${ type_item["type_name"] }</td>
+            <td>${ commodity_type_name.get(type_item["type_parent_id"]) }</td>
           </tr>
+          % endfor
         </tbody>
       </table>
     </div>
@@ -56,14 +58,12 @@
         <div class="control-group">
           <label for="commodity_type_parent" class="control-label">上级类型</label>
           <div class="controls">
-            <select name="type_parent" id="commodity_type_parent" size="1" class="span3" >
-              <option value="#">####</option>
-            </select>
-            <select name="type_parent_1" id="commodity_type_parent_1" size="1" class="span3">
-              <option value="#">####</option>
-            </select>
-            <select name="type_parent_2" id="commodity_type_parent_2" size="1" class="span3">
-              <option value="#">####</option>
+            <input type="hidden" name="type_parent" id="commodity_type_parent" />
+            <select name="type_parent_0" id="commodity_type_parent_0" size="1" class="span3" >
+              <option value=""></option>
+              % for item in commodity_type_root:
+              <option value="${ item['commodity_type_id'] }">${ item['type_name'] }</option>
+              % endfor
             </select>
             <span class="help-inline label label-important"></span>
           </div>
@@ -87,5 +87,93 @@
 </div>
 
 </div>
+
+
+<script type="text/javascript">
+
+$(function() {
+
+    $('#commTypeAdd_form').submit(function() {
+        var form = $(this);
+        $.ajax({
+            url: form.attr('action'),
+            type: form.attr('method'),
+            dataType: 'json',
+            data: {
+                type_name: $('#commodity_type_name').val(),
+                type_parent_id: $('#commodity_type_parent').val(),
+                type_desc: $('#commodity_type_desc').val(),
+                },
+            success: function(data) {
+                if (data) {
+                    alert(data.msg);
+                }
+            },
+            error: function() {
+                alert('AJAX ERROR!!!');
+            },
+        });
+        return false;
+    });
+    
+
+    function createTypeSelect(num, types) {
+        var n_sel = $('<select>');
+        n_sel.attr({
+            name: 'type_parent_' + num,
+            id: 'commodity_type_parent_' + num,
+            class: 'span3',
+        });
+
+        var n_opt = $('<option>');
+        n_opt.val('');
+        n_opt.html('');
+        n_opt.attr('selected', 'selected');
+        n_sel.append(n_opt);
+        for (var i=0; i<types.length; i++) {
+            n_opt = $('<option>');
+            n_opt.val(types[i].id);
+            n_opt.html(types[i].name);
+            n_sel.append(n_opt);
+        }
+        
+        n_sel.change(function() {
+            commTypeChange_event($(this));
+        });
+        return n_sel;
+    }
+
+    function commTypeChange_event(element) {
+        var sel = $(element);
+        sel.nextAll('select').remove();
+        var val = sel.val();
+        if (val) {
+            $.ajax({
+                url: '/manage/commodity_type',
+                type: 'post',
+                dataType: 'json',
+                data: { type_parent_id: val },
+                success: function(data) {
+                    if (data) {
+                        var num = parseInt(sel.attr('name').split('_')[2]);
+                        sel.after(createTypeSelect(num+1, data.types));
+                    }
+                },
+                error: function() {
+                    alert('AJAX ERROR!!!');
+                }, 
+            });
+        } else { // val = '' or val = 0
+            val = sel.prev('select').val();
+        }
+        $('#commodity_type_parent').val(val);
+    }
+                                      
+    $('#commodity_type_parent_0').change(function() {
+        commTypeChange_event($(this));
+    });
+});
+                                      
+</script>
 
 </%block>
