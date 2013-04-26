@@ -56,23 +56,23 @@
           <div class="control-group">
             <label for="commodity_type" class="control-label">商品类型</label>
             <div class="controls">
-              <select name="commodity_type" id="commodity_type" size="1" class="span3">
-                <option value="#">####</option>
+	      <input type="hidden" name="commodity_type" id="commodity_type" />
+              <select name="commodity_type_0" id="commodity_type_0" size="1" class="span4">
+                <option value=""></option>
+		% for t_item in commodity_type_root:
+		<option value="${ t_item['commodity_type_id'] }">${ t_item['type_name'] }</option>
+		% endfor
               </select>
-              <select name="commodity_type_1" id="commodity_type_1" class="span3">
-                <option value="#">####</option>
-              </select>
-              <select name="commodity_type_2" id="commodity_type_2" class="span3">
-                <option value="#">####</option>
-              </select>
+
               <span class="help-inline label label-important"></span>
+	      
             </div>
           </div>
 
           <div class="control-group">
             <label for="commodity_desc" class="control-label">商品描述</label>
             <div class="controls">
-              <textarea class="span6" rows="5" name="commodity_desc" id="commodity_desc"></textarea>
+              <textarea class="span" rows="5" name="commodity_desc" id="commodity_desc"></textarea>
               <span class="help-inline label label-important"></span>
             </div>
           </div>
@@ -103,5 +103,91 @@
 </div>
 
 </div>
+
+<script type="text/javascript">
+$(function() {
+    
+    $('#commodityAdd_form').submit(function() {
+        var form = $(this);
+	$.ajax({
+	    url: form.attr('action'),
+	    type: form.attr('method'),
+	    dataType: 'json',
+	    data: {
+		commodity_name: $('#commodity_name').val(),
+		commodity_type_id: $('#commodity_type').val(),
+		commodity_desc: $('#commodity_desc').val(),
+	    },
+	    success: function(data) {
+		if (data) {
+		    alert(data.msg);
+		}
+	    },
+	    error: function() {
+		alert('AJAX ERROR!!!');
+	    },
+	});
+	return false;
+    });
+    
+    
+    function createTypeSelect(num, types) {
+	var n_sel = $('<select>');
+	n_sel.attr({
+	    name: 'commodity_type_' + num,
+	    id: 'commodity_type_' + num,
+	    class: 'span4',
+	});
+	
+	var n_opt = $('<option>');
+	n_opt.val('');
+	n_opt.html('');
+	n_opt.attr('selected', 'selected');
+	n_sel.append(n_opt);
+	for (var i=0; i<types.length; i++) {
+	    n_opt = $('<option>');
+	    n_opt.val(types[i].id);
+	    n_opt.html(types[i].name);
+	    n_sel.append(n_opt);
+	}
+	
+	n_sel.change(function() {
+	    commTypeChange_event($(this));
+	});
+	return n_sel;
+    }
+    
+    function commTypeChange_event(element) {
+	var sel = $(element);
+	sel.nextAll('select').remove();
+	var val = sel.val();
+	if (val) {
+	    $.ajax({
+		url: '/manage/commodity_type',
+		type: 'post',
+		dataType: 'json',
+		data: { type_parent_id: val },
+		success: function(data) {
+		    if (data) {
+			var num = parseInt(sel.attr('name').split('_')[2]);
+			sel.after(createTypeSelect(num+1, data.types));
+		    }
+		},
+		error: function() {
+		    alert('AJAX ERROR!!!');
+		}, 
+	    });
+	} else { // val = '' or val = 0
+	    val = sel.prev('select').val();
+	}
+	$('#commodity_type').val(val);
+    }
+    
+    $('#commodity_type_0').change(function() {
+	commTypeChange_event($(this));
+    });
+    
+});
+</script>
 
 </%block>

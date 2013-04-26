@@ -44,7 +44,7 @@ class CommodityType(Model):
         super(CommodityType, self).__init__(doc=doc)
 
 
-def commodity_add(comm_name, comm_type, brief_name=None, comm_desc=None, \
+def commodity_add(comm_name, comm_type_id, brief_name=None, comm_desc=None, \
                       *comm_figure, **comm_params):
     '''
     商品添加
@@ -60,6 +60,7 @@ def commodity_add(comm_name, comm_type, brief_name=None, comm_desc=None, \
         else:
             comm_m = Commodity()
             comm_m.commodity_id = unicode(uuid.uuid4())
+            comm_m.comm_type_id = comm_type_id
             comm_m.comm_name = comm_name
             comm_m.brief_name = brief_name \
                 if brief_name else comm_type

@@ -12,12 +12,38 @@ from townChiHuo.models import commodity
 class Commodity(object):
 
     def GET(self, *path):
+
+        comm_type_root_iter = commodity.get_commodity_type(None)
+        
         web.header('Content-Type', 'text/html')
-        return mako_render('/manage/commodity.tmpl')
+        return mako_render('/manage/commodity.tmpl',
+                           commodity_type_root = comm_type_root_iter,)
+
 
 class CommodityAdd(object):
     def POST(self, *path):
-        pass
+        try: 
+            form = web.input(
+                'commodity_name',
+                commodity_desc=None,
+                commodity_type_id=None)
+            if not form.commodity_name:
+                raise GeneralError(u'请添写商品名称')
+            elif not form.commodity_type_id:
+                raise GeneralError(u'请选择商品类型')
+            
+            commodity_new = commodity.commodity_add(form.commodity_name,
+                                    form.commodity_type_id,
+                                    comm_desc=form.commodity_desc)
+            result = dict( isSucceed = True,
+                           msg = u"添加商品成功")
+        except GeneralError as err:
+            result = dict( isSucceed = False,
+                           msg = err.value )
+            
+        web.header('Content-Type', 'application/json')
+        return json.dumps(result)
+
 
 class CommodityType(object):
     def GET(self, *path):
