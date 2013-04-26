@@ -16,7 +16,7 @@ class Commodity(Model):
     comm_name: 商品名称
     brief_name: 简短名称
     comm_desc: 商品描述
-    comm_type: 商品类型
+    comm_type_id: 商品类型
     comm_params: 商品参数
     comm_figure: 商品图像
 
@@ -43,6 +43,16 @@ class CommodityType(Model):
     def __init__(self, doc=None):
         super(CommodityType, self).__init__(doc=doc)
 
+def get_commodity(*commodity_id):
+    try:
+        comm_c = db_hack.connect(collection=db_schema.COMMODITY)
+        if commodity_id:
+            return comm_c.find({'commodity_id': {'$in': commodity_id}})
+        else:
+            return comm_c.find()
+    finally:
+        del comm_c
+
 
 def commodity_add(comm_name, comm_type_id, brief_name=None, comm_desc=None, \
                       *comm_figure, **comm_params):
@@ -52,7 +62,7 @@ def commodity_add(comm_name, comm_type_id, brief_name=None, comm_desc=None, \
     try:
         comm_c = db_hack.connect(collection=db_schema.COMMODITY)
         comm_name = unicode(comm_name)
-        if not comm_type:
+        if not comm_type_id:
             raise GeneralError(u"商品类型错误")
         elif not comm_name \
                 and None is not comm_c.find_one({"name": comm_name}):
@@ -63,7 +73,7 @@ def commodity_add(comm_name, comm_type_id, brief_name=None, comm_desc=None, \
             comm_m.comm_type_id = comm_type_id
             comm_m.comm_name = comm_name
             comm_m.brief_name = brief_name \
-                if brief_name else comm_type
+                if brief_name else comm_name
             comm_m.comm_desc = comm_desc
             comm_m.comm_figure = comm_figure
             comm_m.comm_params = comm_params

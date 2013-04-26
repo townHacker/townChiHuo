@@ -13,11 +13,20 @@ class Commodity(object):
 
     def GET(self, *path):
 
+        comm_iter = commodity.get_commodity()
+
         comm_type_root_iter = commodity.get_commodity_type(None)
+        
+        comm_type_item = \
+            dict([(t_item['commodity_type_id'], t_item['type_name']) \
+                              for t_item in commodity.get_commodity_type()])
+        
         
         web.header('Content-Type', 'text/html')
         return mako_render('/manage/commodity.tmpl',
-                           commodity_type_root = comm_type_root_iter,)
+                           commodity = comm_iter, 
+                           commodity_type_root = comm_type_root_iter,
+                           comm_type_name = comm_type_item)
 
 
 class CommodityAdd(object):

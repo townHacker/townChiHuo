@@ -1,19 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import string, random
+import string, random, json
 import web
 
 from townChiHuo.util import draw, encrypt
 from townChiHuo import settings
 
-__metaclass__ = type
 
-class StaticFile:
+class StaticFile(object):
     def GET(self, file):
         raise web.seeother('/static/' + file)
 
-class CheckCode:
+class CheckCode(object):
     def GET(self, *path):
         def get_val():
             all_char = string.letters + string.digits
@@ -31,3 +30,26 @@ class CheckCode:
         session['code_ref'] = ecode
         
         return draw.check_code(s, font_file=settings.settings['font'])
+
+
+class UploadFile(object):
+    '''
+    上传文件
+    '''
+    def GET(self, *path):
+        pass
+    
+    def POST(self, *path):
+        
+        form_data = web.input(upload_files={})
+        if not form_data.upload_files:
+            return json.dumps({ 'msg' : 'failed' })
+        else:
+            filename = form_data['upload_files'].file_name \
+                .replace('\\', '/').split('/')[-1]
+
+            import os
+            fout = open(os.path.join(settings['UploadDir'], filename), 'w')
+            fout.write(form_data['upload_files'].file.read())
+
+            return json.dumps({ 'msg' : 'successful' })

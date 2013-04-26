@@ -15,6 +15,7 @@ settings = {
         os.path.join(root_dir, "template")
         ],
     "MakoModuleDir": os.path.join(root_dir, "mako_module"),
+    "UploadDir": os.path.join(root_dir, "upload-files"),
 
     # mongodb setting
     'mongodb.host': 'localhost',
