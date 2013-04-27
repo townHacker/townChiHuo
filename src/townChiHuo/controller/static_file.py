@@ -32,7 +32,7 @@ class CheckCode(object):
         return draw.check_code(s, font_file=settings.settings['font'])
 
 
-class UploadFile(object):
+class FileUpload(object):
     '''
     上传文件
     '''
@@ -42,14 +42,19 @@ class UploadFile(object):
     def POST(self, *path):
         
         form_data = web.input(upload_files={})
-        if not form_data.upload_files:
-            return json.dumps({ 'msg' : 'failed' })
-        else:
-            filename = form_data['upload_files'].file_name \
-                .replace('\\', '/').split('/')[-1]
+        print form_data
+        #if not form_data['upload_files']:
+        #return json.dumps({ 'msg' : 'failed' })
+        #   return u"failed"
+        #        else:
+        filename = form_data['upload_files'] \
+            .filename \
+            .replace('\\', '/').split('/')[-1]
 
-            import os
-            fout = open(os.path.join(settings['UploadDir'], filename), 'w')
-            fout.write(form_data['upload_files'].file.read())
-
-            return json.dumps({ 'msg' : 'successful' })
+        import os
+        fout = open(
+            os.path.join(settings.settings['UploadDir'], filename), 'w')
+        fout.write(form_data['upload_files'].file.read())
+        
+        #return json.dumps({ 'msg' : 'successful' })
+        return u"successful"

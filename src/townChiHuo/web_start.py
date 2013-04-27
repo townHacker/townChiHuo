@@ -30,6 +30,12 @@ from townChiHuo.controller import index
 
 
 if __name__ == '__main__':
+
+    # check upload directory
+    upload_dir = settings.settings['UploadDir']
+    if not os.path.exists(upload_dir):
+        print 'create directory: ', upload_dir
+        os.makedirs(upload_dir)
     
     app = web.application(urls, globals())
 

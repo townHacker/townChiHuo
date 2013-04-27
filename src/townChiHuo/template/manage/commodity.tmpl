@@ -95,7 +95,10 @@
           <img src="/js/holder.js/400x400" />
         </div>
         <div class="row-fluid" style="margin: 5px 0;">
-          <input type="file" id="upload_figure" name="upload_figure" style="display: none;" />
+	  <form name="upload_figure_form" id="upload_figure_form" action="/static_file/upload" method="post" style="display:none;" target="upload_target" enctype="multipart/form-data">
+            <input type="file" id="upload_figure" name="upload_files" style="display: none;" />
+	  </form>
+	  <iframe name="upload_target" id="upload_target" style="display:none; width:0px; height:0px; border:none;" src="about:blank"></iframe>
           <button class="btn" id="btn_upload_figure">上传图像</button>
         </div>
         <div class="row-fluid" >
@@ -117,9 +120,7 @@ $(function() {
     $('#upload_figure').change(function() { // upload figure
         var val = $(this).val();
         if (val) {
-            $.ajax({
-                
-            });
+            $('#upload_figure_form').submit();
         } else {
             alert('请选择上传的图片');
         }
