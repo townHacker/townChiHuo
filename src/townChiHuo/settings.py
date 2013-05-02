@@ -38,6 +38,17 @@ settings = {
 # Action 认证
 action_auth = dict()
 
+
+# file extension to http content type
+content_type = {
+    'jpg': 'image/jpeg',
+    'jpeg': 'image/jpeg',
+    'png': 'image/png',
+    'gif': 'image/gif',
+    'ico': 'image/x-icon',
+    'txt': 'application/octet-stream',
+}
+
 if __name__ == '__main__':
     import sys
     print 'sys.path : ', sys.path

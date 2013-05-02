@@ -4,7 +4,7 @@
 # urls config
 
 urls = (
-    '/static_file/upload', 'controller.static_file.FileUpload', 
+    '/static_file/upload/?(?P<file_name>.*)', 'controller.static_file.FileUpload', 
     '/checkcode/?(.*)', 'controller.static_file.CheckCode',
     '/(?P<file>.*.css|.*.js|.*.jpg|.*.gif|.*.png|.*.ico)', 'controller.static_file.StaticFile',
 

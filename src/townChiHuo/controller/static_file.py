@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import string, random, json
+import string, random, json, os
 import web
 
 from townChiHuo.util import draw, encrypt
@@ -36,25 +36,36 @@ class FileUpload(object):
     '''
     上传文件
     '''
-    def GET(self, *path):
-        pass
+    def GET(self, file_name):
+        ext = file_name.split('.')[-1]
+        content_type = settings.content_type.get(ext)
+        if content_type:
+            web.header('Content-Type', content_type)
+            web.header('Transfer-Encoding', 'chunked')
+        fin = open(os.path.join(settings.settings['UploadDir'],
+                                file_name), 'rb')
+        
+        rb = fin.read(1024)
+        yield rb
+        while rb:
+            rb = fin.read(1024)
+            yield rb
+
     
     def POST(self, *path):
-        
-        form_data = web.input(upload_files={})
-        print form_data
-        #if not form_data['upload_files']:
-        #return json.dumps({ 'msg' : 'failed' })
-        #   return u"failed"
-        #        else:
-        filename = form_data['upload_files'] \
-            .filename \
-            .replace('\\', '/').split('/')[-1]
-
-        import os
-        fout = open(
-            os.path.join(settings.settings['UploadDir'], filename), 'w')
-        fout.write(form_data['upload_files'].file.read())
-        
-        #return json.dumps({ 'msg' : 'successful' })
-        return u"successful"
+        try:
+            form_data = web.input(upload_files={},
+                                  upload_success_script='',
+                                  upload_fail_script='')
+            print form_data
+            filename = form_data['upload_files'] \
+                .filename \
+                .replace('\\', '/').split('/')[-1]
+            
+            fout = open(
+                os.path.join(settings.settings['UploadDir'], filename), 'wb')
+            fout.write(form_data['upload_files'].file.read())
+            
+            return u'<script type="text/javascript">%s</script>' % form_data['upload_success_script']
+        except:
+            return u'<script type="text/javascript">%s</script>' % form_data['upload_fail_script']
