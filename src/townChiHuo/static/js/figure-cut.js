@@ -15,18 +15,16 @@
 	    }
 
 	    var gen_original_img = function() {
-		var img = $('<img id="figure_cut_original">');
+		var img = $('<img id="figure_cut_original" style="max-width: none;">');
 
 		var img_wrap = $('<div>');
 
 		var callbackFunc = function() {
 		    var img_w = parseFloat(img.css('width'));
 		    var img_h = parseFloat(img.css('height'));
-		    alert(img_w.toString() + ' ' + img_h.toString());
 		    
 		    var ctn_w = parseFloat(container.css('width'));
 		    var ctn_h = parseFloat(container.css('height'));
-		    alert(ctn_w.toString() + ' ' + ctn_h.toString());
 		    
 		    var wrp_left = img_w <= ctn_w ? 0 : img_w - ctn_w;
 		    var wrp_top = img_h <= ctn_h ? 0 : img_h - ctn_h;
@@ -46,7 +44,6 @@
 		    });
 		    
 		    img.css({
-			'max-width': 'none', 
 			'position': 'absolute',
 			'left': wrp_left,
 			'top': wrp_top, 

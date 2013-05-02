@@ -37,6 +37,7 @@ class FileUpload(object):
     上传文件
     '''
     def GET(self, file_name):
+        
         ext = file_name.split('.')[-1]
         content_type = settings.content_type.get(ext)
         if content_type:
@@ -44,12 +45,14 @@ class FileUpload(object):
             web.header('Transfer-Encoding', 'chunked')
         fin = open(os.path.join(settings.settings['UploadDir'],
                                 file_name), 'rb')
-        
-        rb = fin.read(1024)
-        yield rb
-        while rb:
+        try:
             rb = fin.read(1024)
             yield rb
+            while rb:
+                rb = fin.read(1024)
+                yield rb
+        finally:
+            fin.close()
 
     
     def POST(self, *path):

@@ -25,7 +25,7 @@ class Model(dict):
 
         
     def __setattr__(self, name, value):
-        '''-
+        '''
         设置属性
         '''
         self.__dict__["_doc"][name] = value
