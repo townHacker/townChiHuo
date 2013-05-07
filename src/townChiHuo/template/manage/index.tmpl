@@ -10,7 +10,8 @@
    session = web.ctx.session
    if 'curr_user' not in session:
        raise web.seeother('/manage/login')
-   curr_user = session['curr_user']
+   import townChiHuo.models.user as user
+   curr_user = user.User(doc=session['curr_user'])
 %>
 
 
