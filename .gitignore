@@ -2,3 +2,4 @@
 *.pypwd
 *.*~
 mako_module/
+python.core
