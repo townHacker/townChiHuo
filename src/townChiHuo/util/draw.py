@@ -34,6 +34,19 @@ def check_code(val, len=4, fmt='PNG', size=(98, 36), font_file=None):
     im.save(io, fmt)
     return io.getvalue()
 
+def figure_cut(img, zoom, top, left, width, height, save_file_name):
+    try:
+        crop_region = (left, top, left + width, top + height)
+        im = Image.open(img)
+        n_size = (im.size[0] * zoom, im.size[1] * zoom)
+        out = im.resize(n_size)
+        out = out.crop(crop_region)
+        out.save(save_file_name, 'PNG')
+    finally:
+        del im
+    
+    
+
 if __name__ == '__main__':
 #    check_code('abcd', font_file='/home/bamboo/townChiHuo/src/townChiHuo/static/fonts/wqy-zenhei.ttc').save('/home/bamboo/Pictures/test.png', 'PNG')
     check_code('abcde').save('/home/bamboo/Pictures/test.png', 'PNG')
