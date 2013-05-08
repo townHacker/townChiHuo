@@ -8,6 +8,7 @@
 
 <%block name="javascript">
 <script type="text/javascript" src="/js/jquery-ui-1.10.2.custom.min.js"></script>
+<script type="text/javascript" src="/libs/ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="/js/figure-cut.js" ></script>
 </%block>
 
@@ -125,7 +126,16 @@
     </div>
   </div>
 </div>
-
+<div class="accordion-group">
+  <div class="accordion-heading">
+    <h4 class="accordion-toggle" >CkEditor</h4>
+  </div>
+  <div>
+    <textarea class="ckeditor" cols="80" id="editor1" name="editor1" rows="10">
+    </textarea>
+    <input type="submit"  class="btn" value="提交"/>
+  </div>
+</div>
 </div>
 
 <script type="text/javascript">
