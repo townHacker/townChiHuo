@@ -69,6 +69,17 @@ class FileUpload(object):
                 os.path.join(settings.settings['UploadDir'], filename), 'wb')
             fout.write(form_data['upload_files'].file.read())
             
-            return u'<script type="text/javascript">%s</script>' % form_data['upload_success_script']
+            return u'<script type="text/javascript">%s</script>' \
+                % 'top.window.upload_success_script("%s");' \
+                % ("/static_file/upload/" + filename)
         except:
-            return u'<script type="text/javascript">%s</script>' % form_data['upload_fail_script']
+            return u'<script type="text/javascript">%s</script>' \
+                % 'top.window.upload_fail_script();'
+
+
+class ImageClip(object):
+    def GET(self, *path):
+        pass
+
+    def POST(self, *path):
+        pass

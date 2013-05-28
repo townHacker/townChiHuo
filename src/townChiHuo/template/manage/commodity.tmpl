@@ -2,18 +2,18 @@
 <%inherit file="/manage/index.tmpl" />
 
 <%block name="top_menu">
-<li class="active"><a href="/manage/commodity">商品管理</a></li>
-<li><a href="/manage/commodity_type">商品类型</a></li>
+  <li class="active"><a href="/manage/commodity">商品管理</a></li>
+  <li><a href="/manage/commodity_type">商品类型</a></li>
 </%block>
 
 <%block name="javascript">
-<script type="text/javascript" src="/js/jquery-ui-1.10.2.custom.min.js"></script>
-<script type="text/javascript" src="/libs/ckeditor/ckeditor.js"></script>
-<script type="text/javascript" src="/js/figure-cut.js" ></script>
+  <script type="text/javascript" src="/js/jquery-ui-1.10.2.custom.min.js"></script>
+  <script type="text/javascript" src="/libs/ckeditor/ckeditor.js"></script>
+  <script type="text/javascript" src="/js/figure-cut.js" ></script>
 </%block>
 
 <%block name="style">
-<link href="/css/themes/jquery-ui-1.10.2.custom.min.css" rel="stylesheet" type="text/css" />
+  <link href="/css/themes/jquery-ui-1.10.2.custom.min.css" rel="stylesheet" type="text/css" />
 </%block>
 
 
@@ -75,9 +75,9 @@
 	      <input type="hidden" name="commodity_type" id="commodity_type" />
               <select name="commodity_type_0" id="commodity_type_0" size="1" class="span4">
                 <option value=""></option>
-		% for t_item in commodity_type_root:
-		<option value="${ t_item['commodity_type_id'] }">${ t_item['type_name'] }</option>
-		% endfor
+		        % for t_item in commodity_type_root:
+		        <option value="${ t_item['commodity_type_id'] }">${ t_item['type_name'] }</option>
+		        % endfor
               </select>
 
               <span class="help-inline label label-important"></span>
@@ -101,20 +101,24 @@
       </div>
 
       <div class="span6 container-fluid" style="border-left: 1px solid #CCC">
-        <div class="row-fluid" id="figure_cut_div" img-src="/static_file/upload/test.jpg"></div>
+        <div class="row-fluid" id="figure_cut_div" style="position: relative;">
+          <img src="/js/holder.js/400x400" />
+        </div>
+        <div class="row_fluid" >
+          <div class="span9" style="display: none; padding-top: 5px;">
+	        <div id="figure_cut_slider" style="display: none;"></div>
+	      </div> 
+        </div>
         <div class="row-fluid" style="margin: 5px 0;">
-	  <div class="span3">
-	    <form name="upload_figure_form" id="upload_figure_form" action="/static_file/upload" method="post" style="display:none;" target="upload_target" enctype="multipart/form-data">
+	      <div class="span9">
+	        <form name="upload_figure_form" id="upload_figure_form" action="/static_file/upload" method="post" style="display:none;" target="upload_target" enctype="multipart/form-data">
               <input type="file" id="upload_figure" name="upload_files" style="display: none;" />
-	      <input type="hidden" id="upload_success_script" name="upload_success_script" />
-	      <input type="hidden" id="upload_fail_script" name="upload_fail_script" />
-	    </form>
-	    <iframe name="upload_target" id="upload_target" style="display:none; width:0px; height:0px; border:none;" src="about:blank"></iframe>
+	        </form>
+	        <iframe name="upload_target" id="upload_target" style="display:none; width:0px; height:0px; border:none;" src="about:blank"></iframe>
             <button class="btn" id="btn_upload_figure">上传图像</button>
-	  </div>
-	  <div class="span9">
-	    <div id="figure_cut_slider"></div>
-	  </div>
+            <button class="btn" id="btn_figure_preview">预览</button>
+            <button class="btn" id="btn_figure_enter">确定</button>
+	      </div>
         </div>
         <div class="row-fluid" >
           <img src="/js/holder.js/200x200" style="vertical-align: top;" />
@@ -140,13 +144,25 @@
 
 <script type="text/javascript">
 $(function() {
+    window.upload_success_script = function() {
+        var file_src = arguments[0];
+        $('#figure_cut_div').figure_cut({
+            slider: "#figure_cut_slider",
+            img_src: file_src,
+        });
+        $('#figure_cut_div').unloading();
+    },
+
+    window.upload_fail_script = function() {
+        alert("failed!");
+    }, 
 
     $('#upload_figure').change(function() { // upload figure
         var val = $(this).val();
         if (val) {
-	    $('#upload_success_script').val('alert("successful!!!");');
-	    $('#upload_fail_script').val('alert("failed!!!");');
-	    $('#upload_figure_form').submit();
+            $('#figure_cut_div').loading();
+            $('#upload_figure_form').submit();
+            $('#upload_figure').val('');
         } else {
             alert('请选择上传的图片');
         }
@@ -157,86 +173,87 @@ $(function() {
     });
     
     $('#commodityAdd_form').submit(function() {
+        
         var form = $(this);
-	$.ajax({
-	    url: form.attr('action'),
-	    type: form.attr('method'),
-	    dataType: 'json',
-	    data: {
-		commodity_name: $('#commodity_name').val(),
-		commodity_type_id: $('#commodity_type').val(),
-		commodity_desc: $('#commodity_desc').val(),
-	    },
-	    success: function(data) {
-		if (data) {
-		    alert(data.msg);
-		}
-	    },
-	    error: function() {
-		alert('AJAX ERROR!!!');
-	    },
-	});
-	return false;
+	    $.ajax({
+	        url: form.attr('action'),
+	        type: form.attr('method'),
+	        dataType: 'json',
+	        data: {
+		        commodity_name: $('#commodity_name').val(),
+		        commodity_type_id: $('#commodity_type').val(),
+		        commodity_desc: $('#commodity_desc').val(),
+	        },
+	        success: function(data) {
+		        if (data) {
+		            alert(data.msg);
+		        }
+	        },
+	        error: function() {
+		        alert('AJAX ERROR!!!');
+	        },
+        });
+	    return false;
     });
     
     
     function createTypeSelect(num, types) {
-	var n_sel = $('<select>');
-	n_sel.attr({
-	    name: 'commodity_type_' + num,
-	    id: 'commodity_type_' + num,
-	    class: 'span4',
-	});
-	
-	var n_opt = $('<option>');
-	n_opt.val('');
-	n_opt.html('');
-	n_opt.attr('selected', 'selected');
-	n_sel.append(n_opt);
-	for (var i=0; i<types.length; i++) {
-	    n_opt = $('<option>');
-	    n_opt.val(types[i].id);
-	    n_opt.html(types[i].name);
+	    var n_sel = $('<select>');
+	    n_sel.attr({
+	        name: 'commodity_type_' + num,
+	        id: 'commodity_type_' + num,
+	        class: 'span4',
+	    });
+	    
+	    var n_opt = $('<option>');
+	    n_opt.val('');
+	    n_opt.html('');
+	    n_opt.attr('selected', 'selected');
 	    n_sel.append(n_opt);
-	}
-	
-	n_sel.change(function() {
-	    commTypeChange_event($(this));
-	});
-	return n_sel;
+	    for (var i=0; i<types.length; i++) {
+	        n_opt = $('<option>');
+	        n_opt.val(types[i].id);
+	        n_opt.html(types[i].name);
+	        n_sel.append(n_opt);
+	    }
+	    
+	    n_sel.change(function() {
+	        commTypeChange_event($(this));
+	    });
+	    return n_sel;
     }
     
     function commTypeChange_event(element) {
-	var sel = $(element);
-	sel.nextAll('select').remove();
-	var val = sel.val();
-	if (val) {
-	    $.ajax({
-		url: '/manage/commodity_type',
-		type: 'post',
-		dataType: 'json',
-		data: { type_parent_id: val },
-		success: function(data) {
-		    if (data) {
-			var num = parseInt(sel.attr('name').split('_')[2]);
-			sel.after(createTypeSelect(num+1, data.types));
-		    }
-		},
-		error: function() {
-		    alert('AJAX ERROR!!!');
-		}, 
-	    });
-	} else { // val = '' or val = 0
-	    val = sel.prev('select').val();
-	}
-	$('#commodity_type').val(val);
+	    var sel = $(element);
+	    sel.nextAll('select').remove();
+	    var val = sel.val();
+	    if (val) {
+	        $.ajax({
+		        url: '/manage/commodity_type',
+		        type: 'post',
+		        dataType: 'json',
+		        data: { type_parent_id: val },
+		        success: function(data) {
+		            if (data) {
+			            var num = parseInt(sel.attr('name').split('_')[2]);
+			            sel.after(createTypeSelect(num+1, data.types));
+		            }
+		        },
+		        error: function() {
+		            alert('AJAX ERROR!!!');
+		        }, 
+	        });
+	    } else { // val = '' or val = 0
+	        val = sel.prev('select').val();
+	    }
+	    $('#commodity_type').val(val);
     }
     
     $('#commodity_type_0').change(function() {
-	commTypeChange_event($(this));
+	    commTypeChange_event($(this));
     });
 
-    $('#figure_cut_div').figure_cut({slider: "#figure_cut_slider"});
+
     
 });
 </script>
