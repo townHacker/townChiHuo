@@ -2,5 +2,6 @@
 *.pypwd
 *.*~
 mako_module/
+upload-files/
 python.core
 uwsgi.core
