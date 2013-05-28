@@ -29,37 +29,38 @@ from townChiHuo import settings
 from townChiHuo.controller import index
 
 
+
+# check upload directory
+upload_dir = settings.settings['UploadDir']
+if not os.path.exists(upload_dir):
+    print 'create directory: ', upload_dir
+    os.makedirs(upload_dir)
+    
+app = web.application(urls, globals())
+
+# use memcached for session store
+mc = memcache.Client(settings.settings['memcached.hosts'])
+
+print 'clear all sessions...'
+mc.flush_all()
+
+mc_store = session.MemcachedStore(mc)
+
+session = web.session.Session(app, mc_store, initializer={'count': 0})
+
+
+def session_hook():
+    web.ctx.session = session
+
+# 添加session处理
+app.add_processor(web.loadhook(session_hook))
+
+# print sys.prefix
+# print urls
+# print sys.path
+# print web.ctx
+# print settings.action_auth
+application = app.wsgifunc()
+
 if __name__ == '__main__':
-
-    # check upload directory
-    upload_dir = settings.settings['UploadDir']
-    if not os.path.exists(upload_dir):
-        print 'create directory: ', upload_dir
-        os.makedirs(upload_dir)
-    
-    app = web.application(urls, globals())
-
-    # use memcached for session store
-    mc = memcache.Client(settings.settings['memcached.hosts'])
-
-    print 'clear all sessions...'
-    mc.flush_all()
-        
-    mc_store = session.MemcachedStore(mc)
-
-    session = web.session.Session(app, mc_store, initializer={'count': 0})
-
-    
-    def session_hook():
-        web.ctx.session = session
-
-    # 添加session处理
-    app.add_processor(web.loadhook(session_hook))
-
-    # print sys.prefix
-    # print urls
-    # print sys.path
-    # print web.ctx
-    # print settings.action_auth
-    
     app.run()

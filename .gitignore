@@ -3,3 +3,4 @@
 *.*~
 mako_module/
 python.core
+uwsgi.core
