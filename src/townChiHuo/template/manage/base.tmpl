@@ -22,108 +22,106 @@
   <!-- 页面顶部 -->
   <div id="page_top">
     <a href="/manage/index"><img alt="TownChiHuo logo" src="/js/holder.js/200x50" title="townChiHuo.com" /></a>
-	<%block name="page_top_left">
-</%block>
+    <%block name="page_top_left">
+    </%block>
+  </div>
 
-</div>
-
-<!-- 页面左部 -->
-<div id="page_left">
+  <!-- 页面左部 -->
+  <div id="page_left">
     <ul class="unstyled nav nav-list side-nav">
       <li><a href="/manage/user">用户管理</a></li>
       <li><a href="/manage/permission">权限管理</a></li>
       <li><a href="/manage/commodity">商品管理</a></li>
       <li><a href="#">xxxxxxxx</a></li>
-	</ul>
-	<ul class="unstyled nav nav-list side-subnav">
-	  <li><a href="#">xxxxxxxxx xxx</a></li>
-	  <li><a href="#">xxxxxx xxx</a></li>
-	  <li><a href="#">xxxx xxx</a></li>
-	  <li><a href="#">xxxx</a></li>
-	</ul>
+    </ul>
+    <ul class="unstyled nav nav-list side-subnav">
+      <li><a href="#">xxxxxxxxx xxx</a></li>
+      <li><a href="#">xxxxxx xxx</a></li>
+      <li><a href="#">xxxx xxx</a></li>
+      <li><a href="#">xxxx</a></li>
+    </ul>
   </div>
-</div>
 
-<!-- 页面主要内容 -->
-<div id="main_container">
-  <div id="main_page_body">
+  <!-- 页面主要内容 -->
+  <div id="main_container">
+    <div id="main_page_body">
 
-	<!-- 主体部分的顶部菜单 -->
-	<div id="mc_top_menu" class="row-fluid">
-	  <div class="span8">
-		<ul class="nav nav-pills inline" style="margin-bottom:0;">
-		  <%block name="top_menu">
-          <li class="active"><a href="#">功能1</a></li>
-          <li><a href="#">功能2</a></li>
-          <li><a href="#">功能3</a></li>
-          </%block>
-		</ul>
-      </div>
-      <div class="span4">
-		<div class="input-append pull-right" style="margin-bottom: 0;">
-          <form class="form-search" name="global_form_search" id="global_form_search" style="margin-bottom: 0;">
-		  <input type="text" placeholder="搜索" />
-		  <button type="button" class="btn"><i class="icon-search"></i></button>
-          </form>
-		</div>
-	  </div>
-    </div>
-    <!-- top menu end -->
-
-	<div class="row-fluid">
-	  
-	  <!-- 主体部分右列 -->
-	  <div class="span pull-right" id="mc_sidebar">
-		<div>
-		  <p>aaaaa aaaaaaaaa aaa aa</p>
-		  <ul class="unstyled">
-			<li><a href="#">xxxxxx xxxx xx</a></li>
-			<li><a href="#">xxxxxx xxxx xx</a></li>
-			<li><a href="#">xxxxxx xxxx xx</a></li>
-			<li><a href="#">xxxxxx xxxx xx</a></li>
-			<li><a href="#">xxxxxx xxxx xx</a></li>
-		  </ul>
-		</div> 
-		<div>
-		  <p>aaaaa aaa a aaaa aa</p>
-		  <ul class="unstyled">
-			<li><a href="#">xxxxxx xxxx xx</a></li>
-			<li><a href="#">xxxxxx xxxx xx</a></li>
-			<li><a href="#">xxxxxx xxxx xx</a></li>
-			<li><a href="#">xxxxxx xxxx xx</a></li>
-			<li><a href="#">xxxxxx xxxx xx</a></li>
-		  </ul>
-		</div> 
-		<div>
-		  <p>aaaaa aaaaaaa aaaaa aa</p>
-		  <ul class="unstyled">
-			<li><a href="#">xxxxxx xxxx xx</a></li>
-			<li><a href="#">xxxxxx xxxx xx</a></li>
-			<li><a href="#">xxxxxx xxxx xx</a></li>
-			<li><a href="#">xxxxxx xxxx xx</a></li>
-			<li><a href="#">xxxxxx xxxx xx</a></li>
-		  </ul>
-		</div>    
-	  </div>
-	  <!-- 主体部分右列 结束 -->
-
-	  
-	  <!-- 主体部分左列 -->
-	  <div id="mc_left_col" class="container-fluid">
-        <div class="span12">
-		  <%block name="main_content"></%block>
-           ${ self.body() }
+      <!-- 主体部分的顶部菜单 -->
+      <div id="mc_top_menu" class="row-fluid">
+	<div class="span8">
+	  <ul class="nav nav-pills inline" style="margin-bottom:0;">
+	    <%block name="top_menu">
+            <li class="active"><a href="#">功能1</a></li>
+            <li><a href="#">功能2</a></li>
+            <li><a href="#">功能3</a></li>
+            </%block>
+          </ul>
         </div>
+        <div class="span4">
+	  <div class="input-append pull-right" style="margin-bottom: 0;">
+            <form class="form-search" name="global_form_search" id="global_form_search" style="margin-bottom: 0;">
+	      <input type="text" placeholder="搜索" />
+	      <button type="button" class="btn"><i class="icon-search"></i></button>
+            </form>
+	  </div>
+	</div>
       </div>
-      <!-- 主体部分左列 结束 -->
+      <!-- top menu end -->
+
+      <div class="row-fluid">
+	  
+	<!-- 主体部分右列 -->
+	<div class="span pull-right" id="mc_sidebar">
+	  <div>
+	    <p>aaaaa aaaaaaaaa aaa aa</p>
+	    <ul class="unstyled">
+	      <li><a href="#">xxxxxx xxxx xx</a></li>
+	      <li><a href="#">xxxxxx xxxx xx</a></li>
+	      <li><a href="#">xxxxxx xxxx xx</a></li>
+	      <li><a href="#">xxxxxx xxxx xx</a></li>
+	      <li><a href="#">xxxxxx xxxx xx</a></li>
+	    </ul>
+	  </div> 
+	  <div>
+	    <p>aaaaa aaa a aaaa aa</p>
+	    <ul class="unstyled">
+	      <li><a href="#">xxxxxx xxxx xx</a></li>
+	      <li><a href="#">xxxxxx xxxx xx</a></li>
+	      <li><a href="#">xxxxxx xxxx xx</a></li>
+	      <li><a href="#">xxxxxx xxxx xx</a></li>
+	      <li><a href="#">xxxxxx xxxx xx</a></li>
+	    </ul>
+	  </div> 
+	  <div>
+	    <p>aaaaa aaaaaaa aaaaa aa</p>
+	    <ul class="unstyled">
+	      <li><a href="#">xxxxxx xxxx xx</a></li>
+	      <li><a href="#">xxxxxx xxxx xx</a></li>
+	      <li><a href="#">xxxxxx xxxx xx</a></li>
+	      <li><a href="#">xxxxxx xxxx xx</a></li>
+	      <li><a href="#">xxxxxx xxxx xx</a></li>
+	    </ul>
+	  </div>    
+	</div>
+	<!-- 主体部分右列 结束 -->
+
+	  
+	<!-- 主体部分左列 -->
+	<div id="mc_left_col" class="container-fluid">
+          <div class="span12">
+	    <%block name="main_content"></%block>
+            ${ self.body() }
+          </div>
+        </div>
+        <!-- 主体部分左列 结束 -->
+      </div>
+    </div>
+
+    <!-- 页面底部 -->
+    <div id="page_footer">
+      <p>CopyRight&copy;版权声明</p>
     </div>
   </div>
-
-<!-- 页面底部 -->
-<div id="page_footer">
-  <p>CopyRight&copy;版权声明</p>
-</div>
-</div>
 
 </body>
 </html>

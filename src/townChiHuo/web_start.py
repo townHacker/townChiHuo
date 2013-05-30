@@ -63,4 +63,5 @@ app.add_processor(web.loadhook(session_hook))
 application = app.wsgifunc()
 
 if __name__ == '__main__':
+    print "Running ..."
     app.run()

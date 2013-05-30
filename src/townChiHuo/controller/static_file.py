@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import string, random, json, os
+import string, random, json, os, sys
 import web
 
 from townChiHuo.util import draw, encrypt
@@ -60,21 +60,24 @@ class FileUpload(object):
             form_data = web.input(upload_files={},
                                   upload_success_script='',
                                   upload_fail_script='')
-            print form_data
+            
             filename = form_data['upload_files'] \
                 .filename \
                 .replace('\\', '/').split('/')[-1]
-            
+            print '-- upload file: %s' % filename
             fout = open(
                 os.path.join(settings.settings['UploadDir'], filename), 'wb')
             fout.write(form_data['upload_files'].file.read())
             
-            return u'<script type="text/javascript">%s</script>' \
-                % 'top.window.upload_success_script("%s");' \
-                % ("/static_file/upload/" + filename)
-        except:
-            return u'<script type="text/javascript">%s</script>' \
-                % 'top.window.upload_fail_script();'
+            return json.dumps(dict(
+                isSucceed = True,
+                file = u"/static_file/upload/%s" % unicode(filename, 'utf8'),))
+        except Exception as e:
+            print sys.exc_info()[0], e.args
+            return json.dumps(dict(
+                isSucceed = False,
+                file = None,))
+
 
 
 class ImageClip(object):
