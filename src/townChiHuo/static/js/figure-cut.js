@@ -133,14 +133,17 @@
 
 		n_div.resizable({ containment: "parent" });
 		n_div.resize(function() {
-		    container.attr('cut_width', $(this).width());
-		    container.attr('cut_height', $(this).height());
+		    container.attr('cut-width', $(this).width());
+		    container.attr('cut-height', $(this).height());
 		});
 
 		
 		n_div.css({ opacity: .4 });
 		container.css('position', 'relative');
 		container.append(n_div);
+
+		container.attr('cut-width', 200);
+		container.attr('cut-height', 200);
 	    };
 
 	    var gen_original_img = function() {
@@ -216,6 +219,11 @@
 		gen_original_img();
 		gen_slice();
 		gen_slider();
+
+		container.attr('figure-top', 0);
+		container.attr('figure-left', 0);
+		container.attr('figure-zoom', 1);
+		container.attr('figure-img', option.img_src.split(/\//).pop());
 	    }
 
 	    _init();

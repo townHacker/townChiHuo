@@ -55,9 +55,18 @@ def figure_cut(img, zoom, top, left, width, height,
         im = Image.open(img)
         n_size = (int(im.size[0] * zoom), int(im.size[1] * zoom))
         region =  im.resize(n_size).crop(crop_region)
+
+        act_size = (width, height)
+        rate_width = float(width) / n_width
+        rate_height = float(height) / n_height
+        rate = max(rate_width, rate_height)
+        if rate > 1:
+            act_size = (int(act_size[0] / rate), int(act_size[1] / rate))
+        region = region.resize(act_size)
+        
         mask = Image.new('L', (n_width, n_height), color=0)
-        box = ((n_width - width) /2, (n_height - height) /2,
-               (n_width - width) / 2 + width, (n_height - height) / 2 + height)
+        box = ((n_width - act_size[0]) /2, (n_height - act_size[1]) /2,
+               (n_width - act_size[0]) / 2 + act_size[0], (n_height - act_size[1]) / 2 + act_size[1])
         draw = ImageDraw.Draw(mask)
         draw.rectangle(box, fill=255)
         new_im = Image.new(im.mode, (n_width, n_height))
@@ -74,7 +83,7 @@ def figure_cut(img, zoom, top, left, width, height,
 if __name__ == '__main__':
     # check_code('abcd', font_file='/home/bamboo/townChiHuo/src/townChiHuo/static/fonts/wqy-zenhei.ttc').save('/home/bamboo/Pictures/test.png', 'PNG')
     # check_code('abcde').save('/home/bamboo/Pictures/test.png', 'PNG')
-    figure_cut('/home/bamboo/Project/test.jpg', .5, 10, 10, 150, 150, 200, 200,
+    figure_cut('/home/bamboo/Project/test.jpg', .5, 10, 10, 150, 150, 100, 100,
                '/home/bamboo/Project/test_reault.png')
         
     

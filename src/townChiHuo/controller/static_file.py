@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import string, random, json, os, sys
+import string, random, json, os, sys, uuid
 import web
 
 from townChiHuo.util import draw, encrypt
@@ -82,7 +82,37 @@ class FileUpload(object):
 
 class ImageClip(object):
     def GET(self, *path):
-        pass
+        form_data = web.input('img_file', 'zoom', 'top', 'left', 'width', 'height')
+        zoom, top, left, width, height = float(form_data['zoom']), \
+                                         int(float(form_data['top'])), \
+                                         int(float(form_data['left'])), \
+                                         int(float(form_data['width'])), \
+                                         int(float(form_data['height']))
+        
+        upload_dir = settings.settings['UploadDir']
+        src_path = u"/static_file/upload/%s"
+        img_path = os.path.join(upload_dir, form_data['img_file'])
+        
+        f_name = unicode(uuid.uuid4())
+        f_name_200 = f_name + u'_200x200.png'
+        f_name_100 = f_name + u'_100x100.png'
+        f_name_50 = f_name + u'_50x50.png'
+
+        result = {}
+        if draw.figure_cut(img_path, zoom, top, left, width, height,
+                           200, 200, os.path.join(upload_dir, f_name_200)):
+            result['200x200'] = src_path % f_name_200
+            
+        if draw.figure_cut(img_path, zoom, top, left, width, height,
+                           100, 100, os.path.join(upload_dir, f_name_100)):
+            result['100x100'] = src_path % f_name_100
+
+        if draw.figure_cut(img_path, zoom, top, left, width, height,
+                           50, 50, os.path.join(upload_dir, f_name_50)):
+            result['50x50'] = src_path % f_name_50
+                
+        return json.dumps(result)
+                              
 
     def POST(self, *path):
         pass

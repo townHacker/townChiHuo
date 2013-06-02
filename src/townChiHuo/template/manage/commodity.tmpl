@@ -122,9 +122,9 @@
 	      </div>
         </div>
         <div class="row-fluid" >
-          <img src="/js/holder.js/200x200" style="vertical-align: top;" />
-          <img src="/js/holder.js/100x100" style="vertical-align: top;" />
-          <img src="/js/holder.js/50x50" style="vertical-align: top;" />
+          <img id="figure_preview_200" src="/js/holder.js/200x200" style="vertical-align: top; margin: 2px;" />
+          <img id="figure_preview_100" src="/js/holder.js/100x100" style="vertical-align: top; margin: 2px;" />
+          <img id="figure_preview_50" src="/js/holder.js/50x50" style="vertical-align: top; margin: 2px;" />
         </div>
       </div>
       
@@ -145,6 +145,33 @@
 
 <script type="text/javascript">
 $(function() {
+    $('#btn_figure_preview').click(function() {
+	var container = $('#figure_cut_div');
+	var img_file = container.attr('figure-img');
+	if (img_file) {
+	    var zoom = container.attr('figure-zoom'),
+	        top = container.attr('figure-top'),
+	        left = container.attr('figure-left'),
+	        width = container.attr('cut-width'),
+	        height = container.attr('cut-height');
+	    
+	    $.get('/static_file/imageclip',
+		  { img_file: img_file, zoom: zoom, top: top,
+		    left: left, width: width, height: height },
+		  function(data) {
+		      if (data['200x200'])
+			  $('#figure_preview_200').attr('src', data['200x200']);
+		      if (data['100x100'])
+			  $('#figure_preview_100').attr('src', data['100x100']);
+		      if (data['50x50'])
+			  $('#figure_preview_50').attr('src', data['50x50']);
+		  }, 'json');
+		  
+	} else {
+	    alert('未上传图片!');
+	}
+    });
+
 
     $('#upload_figure').fileupload({
 	dataType: 'json',
