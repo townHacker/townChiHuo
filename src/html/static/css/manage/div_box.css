@@ -1,0 +1,62 @@
+/* div box style */
+.div-box {
+    padding: 0;
+    margin: 0;
+}
+
+.div-box~.div-box {
+    margin-top: 5px;
+}
+
+.div-box .div-box-title {
+    padding: 5px;
+    margin: 0;
+    border: none;
+    border: solid 1px #3B5998;
+    border-bottom: solid 1px #CCCCCC;
+    background-color: #3B5998;
+    color: #FFFFFF !important;
+    vertical-align: middle;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.div-box .div-box-content {
+    border: solid 1px #CCCCCC;
+    border-top: none;
+    position: relative;
+    padding: 2px;
+    overflow: auto;
+}
+
+.div-box input, .div-box textarea, .div-box select {
+    vertical-align: middle;
+}
+
+.div-box select {
+    min-width: 150px;
+}
+
+
+/*************** Simple Form Style **************/
+.simple-form {
+	margin: 5px;
+}
+
+.simple-form-line {
+	margin-bottom: 2px;
+	display: block;
+	vertical-align: middle;
+}
+
+.simple-form-cell {
+	margin-bottom: 2px;
+	display: inline-block;
+	vertical-align: top;
+	text-align: left;
+}
+
+#edit-box{
+	display:none;
+}
+

@@ -1,0 +1,119 @@
+/**
+   黄色: #F6C96E
+   橙色: #F28B6C
+   褐色: #267C98
+   粉色: #F6D0E9
+   灰色: #D8DBCA
+   蓝色: #3B5998
+*/
+* {
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+
+html body {
+    color: #444444;
+    background-color: rgb(250, 250, 250);
+    font-size: 12px;
+    font-family: Tahoma, sans-serif, serif;
+}
+
+img {
+    border: none;
+}
+
+p {
+	text-indent: 2em;
+	color: #999;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    outline: none;
+}
+
+a:hover, a:active, a:visited {
+  color: inherit;
+}
+
+a.a-link:hover {
+    text-decoration: underline;
+}
+
+ul {
+    list-style: none;
+}
+
+input {
+    font-size: 12px;
+    line-height: 20px;
+    border: 1px solid #CCC;
+    height: 20px;
+    vertical-align: middle;
+}
+
+input[type="button"], input[type="submit"] {
+    height: 20px;
+    padding: 0 .8em 0 .8em;
+}
+
+input[type="button"]:active, input[type="submit"]:active {
+    line-height: 22px;
+    color: #000000;
+}
+
+textarea {
+    resize: none;
+}
+
+.button {
+    font-size: 12px;
+    display: inline-block;
+    height: 18px;
+    line-height: 18px;
+    text-align: justify;
+    vertical-align: top;
+    text-shadow: 1px 1px 1px #FEFEFE;
+    border: 1px solid rgb(204, 204, 204);
+    border-right: 1px solid rgb(200, 200, 200);
+    border-bottom: 1px solid rgb(199, 199, 199);
+    background-color: rgb(221, 221, 221);
+    padding: 0 .8em 0 .8em;
+    color: #444444 !important;
+}
+
+.button:hover {
+    color: #000000 !important;
+}
+
+.button:active {
+    line-height: 20px;
+}
+
+.horizontal-seperate {
+    height: 2px;
+    background-color: #8BE28B;
+    border: none;
+}
+
+.clear {
+    clear: both;
+}
+
+.relative {
+    position: relative;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.float-L {
+	float: left;
+}
+
+.float-R {
+	float: right;
+}
