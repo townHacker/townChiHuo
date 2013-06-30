@@ -1,0 +1,9 @@
+/* commodity details page style */
+.commodity_page {
+    margin-left: auto;
+    margin-right: auto;
+
+    /* for test */
+    background-color: grey;
+    min-height: 600px;
+}
