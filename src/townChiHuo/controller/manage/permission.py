@@ -109,8 +109,10 @@ class Role(object):
         import math
         page_count = int(math.ceil(float(count) / i.size)) 
 
-        i.page = i.page if i.page >= 0 else 0
-        i.page = i.page if i.page < page_count else page_count-1
+        i.page = i.page if i.page > 0 else 0
+        i.page = i.page if i.page < page_count \
+                 else max(page_count-1, 0)
+        
 
         limit, skip = i.size, i.page * i.size
         a_roles = role.get_roles(limit=limit, skip=skip)
@@ -119,7 +121,7 @@ class Role(object):
         return mako_render('/manage/permission/role.tmpl', \
                                roles=a_roles, \
                                all_roles=all_roles, \
-                               page_count=page_count, \
+                               page_count=max(page_count, 1), \
                                page=i.page)
 
 

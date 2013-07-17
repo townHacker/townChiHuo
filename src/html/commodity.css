@@ -4,6 +4,56 @@
     margin-right: auto;
 
     /* for test */
-    background-color: grey;
     min-height: 600px;
 }
+
+.commodity_head {
+    position: relative;
+
+    padding-left: 350px;
+}
+
+.commodity_figure {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.commodity_property {
+
+    /* for test */
+    background-color: lightblue;
+    min-height: 400px;
+}
+
+.commodity_body {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    position: relative;
+
+    /* for test */
+    background-color: orange;
+    min-height: 600px;
+}
+
+.commodity_body_left {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 20%;
+    display: block;
+
+    /* for test */
+    background-color: orangeRed;
+    min-height: 600px;
+}
+
+.commodity_body_main {
+    display: block;
+    margin-left: 20%;
+    
+    /* for test */
+    min-height: 600px;
+    background-color: lightgrey;
+}
+
