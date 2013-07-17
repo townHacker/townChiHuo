@@ -24,8 +24,9 @@ img {
 }
 
 p {
-	text-indent: 2em;
-	color: #999;
+    word-wrap: break-word;
+    text-indent: 2em;
+    /*color: #999;*/
 }
 
 a {
@@ -105,3 +106,15 @@ input[type="button"]:active, input[type="submit"]:active {
 .text-center {
     text-align: center;
 }
+
+.break-word {
+    word-wrap: break-word;
+}
+
+
+/***
+HTML Character Entities ***/
+.ce-yen {
+    font-family: arial;
+}
+

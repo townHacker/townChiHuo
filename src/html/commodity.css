@@ -1,5 +1,5 @@
 /* commodity details page style */
-.commodity_page {
+.comm-page {
     margin-left: auto;
     margin-right: auto;
 
@@ -7,26 +7,26 @@
     min-height: 600px;
 }
 
-.commodity_head {
+.comm-head {
     position: relative;
 
     padding-left: 350px;
 }
 
-.commodity_figure {
+.comm-figure {
     position: absolute;
     top: 0px;
     left: 0px;
 }
 
-.commodity_property {
+.comm-property {
 
     /* for test */
     background-color: lightblue;
     min-height: 400px;
 }
 
-.commodity_body {
+.comm-body {
     margin-top: 5px;
     margin-bottom: 5px;
     position: relative;
@@ -36,7 +36,7 @@
     min-height: 600px;
 }
 
-.commodity_body_left {
+.comm-body-left {
     position: absolute;
     top: 0px;
     left: 0px;
@@ -48,7 +48,7 @@
     min-height: 600px;
 }
 
-.commodity_body_main {
+.comm-body-main {
     display: block;
     margin-left: 20%;
     
