@@ -113,6 +113,18 @@ input[type="button"]:active, input[type="submit"]:active {
 
 
 /***
+List Define ***/
+ul.float-l li {
+    float: left;
+}
+
+ul.float-r li {
+    float: right;
+}
+
+
+
+/***
 HTML Character Entities ***/
 .ce-yen {
     font-family: arial;
@@ -120,3 +132,17 @@ HTML Character Entities ***/
     padding: 0 4px 0 4px;
 }
 
+/***
+解决子元素浮动父元素失去高度的问题 ***/
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0px;
+    width: 0px;
+    clear: both;
+    visibility: hidden;
+}
+
+.clearfix {
+    display: inline-blcok;
+}
