@@ -116,5 +116,7 @@ input[type="button"]:active, input[type="submit"]:active {
 HTML Character Entities ***/
 .ce-yen {
     font-family: arial;
+    font-size: 14px;
+    padding: 0 4px 0 4px;
 }
 

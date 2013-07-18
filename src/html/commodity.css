@@ -13,17 +13,44 @@
     padding-left: 350px;
 }
 
-.comm-figure {
+.comm-head-l {
     position: absolute;
     top: 0px;
-    left: 0px;
+    left: 0px;    
+}
+
+.comm-figure {
+
+}
+
+.comm-head-r {
+    /* for test 
+    background-color: lightblue; 
+    min-height: 400px;    */
 }
 
 .comm-property {
+    padding: 5px;
+}
 
-    /* for test */
-    background-color: lightblue;
-    min-height: 400px;
+.comm-title {
+    padding: 5px;
+    line-height: 30px;
+    font: bold 18px arial;
+    text-decoration: underline;
+}
+
+.comm-prop {
+    margin: 5px 0 5px 0;
+    line-height: 30px;
+}
+
+.comm-prop .comm-prop-n {
+    padding: 2px 20px 5px 5px;
+}
+
+.comm-prop img {
+    vertical-align: middle;
 }
 
 .comm-body {
@@ -55,5 +82,37 @@
     /* for test */
     min-height: 600px;
     background-color: lightgrey;
+}
+
+
+span.price {
+    font: 600 28px arial;
+    color: red;
+}
+
+span.old-price {
+    font-weight: bold;
+    text-decoration: line-through;
+}
+
+
+.comm-pick, .comm-pay-info {
+    margin: 5px;
+
+    border-top: 1px solid #CCCCCC;
+}
+
+.comm-submit {
+    padding: 10px 0 10px 100px;
+}
+
+.comm-submit #comm_btn_addCart, .comm-submit #comm_btn_buyIm {
+    width: 150px;
+    height: 30px;
+    border: none;
+    background-color: orangered;
+    font: 600 16px arial;
+    color: white;
+    cursor: pointer;
 }
 
