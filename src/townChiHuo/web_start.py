@@ -55,6 +55,16 @@ def session_hook():
 # 添加session处理
 app.add_processor(web.loadhook(session_hook))
 
+
+# web.py web.config.debug=False 配置web.py的调试功能
+if settings.settings['web.config.debug'].tolower() != 'true':
+    web.config.debug = False
+else:
+    web.config.debug = True
+
+print 'web.config.debug(web.py 调试功能): ', web.config.debug
+
+
 # print sys.prefix
 # print urls
 # print sys.path

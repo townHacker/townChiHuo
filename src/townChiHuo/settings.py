@@ -32,7 +32,10 @@ settings = {
     # memcached
     'memcached.hosts': [
         '127.0.0.1:11211'
-        ]
+        ],
+
+    # web.py config
+    'web.config.debug': 'True', 
 }
 
 # Action 认证

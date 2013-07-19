@@ -10,13 +10,19 @@
     margin: 0px;
     padding: 0px;
     vertical-align: baseline;
+    font-family: Tahoma, arial, sans-serif, serif;
 }
 
 html body {
     color: #444444;
     background-color: rgb(250, 250, 250);
     font-size: 12px;
-    font-family: Tahoma, sans-serif, serif;
+    font-family: Tahoma, arial, sans-serif, serif;
+}
+
+div {
+    word-break: break-all;
+    word-wrap: break-word;
 }
 
 img {
@@ -24,6 +30,7 @@ img {
 }
 
 p {
+    break-word: break-all;
     word-wrap: break-word;
     text-indent: 2em;
     /*color: #999;*/
@@ -67,7 +74,7 @@ input[type="button"]:active, input[type="submit"]:active {
 
 .button {
     font-size: 12px;
-    display: inline-block;
+    dilay: inline-block;
     height: 18px;
     line-height: 18px;
     text-align: justify;
@@ -108,7 +115,33 @@ input[type="button"]:active, input[type="submit"]:active {
 }
 
 .break-word {
+    word-break: break-all;
     word-wrap: break-word;
+}
+
+.shadow-box {
+    box-shadow: 1px 1px 1px #888888;
+}
+
+.shadow-text {
+    text-shadow: 1px 1px 1px #888888;
+}
+
+
+/***
+ 文本省略 ***/
+.text-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.text-clip {
+    overflow: hidden;
+    text-overflow: clip;
+}
+
+.text-nowrap {
+    white-space: nowrap;
 }
 
 
@@ -145,4 +178,7 @@ HTML Character Entities ***/
 
 .clearfix {
     display: inline-blcok;
+    overflow: hidden;
+    zoom: 1.0;
+    _zoom: 1.0;
 }

@@ -36,7 +36,8 @@
 .comm-title {
     padding: 5px;
     line-height: 30px;
-    font: bold 18px arial;
+    font-weight: bold;
+    font-size: 18px;
     text-decoration: underline;
 }
 
@@ -86,7 +87,8 @@
 
 
 span.price {
-    font: 600 28px arial;
+    font-weight: 600;
+    font-size: 28px;
     color: red;
 }
 
@@ -111,13 +113,14 @@ span.old-price {
     height: 30px;
     border: none;
     background-color: orangered;
-    font: 600 16px arial;
+    font-weight: 600;
+    font-size: 16px;
     color: white;
     cursor: pointer;
 }
 
 /*******
-搴楅摵淇℃伅 ***************/
+店铺信息  ***************/
 .shop-info-d {
     border: 1px solid #CCCCCC;
 
@@ -126,8 +129,9 @@ span.old-price {
 
 
 .shop-info-d .shop-info-d-title {
-    line-height: 30px;
-    font: 600 16px arial;
+    line-height: 24px;
+    font-weight: 600;
+    font-size: 16px;
     background-color: #EEEEEE;
     padding: 5px;
 }
@@ -140,7 +144,8 @@ span.old-price {
 
 .shop-info-d-ctn .shop-name {
     line-height: 20px;
-    font: bold 16px arial;
+    font-weight: bold;
+    font-size: 16px;
     padding: 2px 2px 2px 5px;
 }
 
@@ -151,26 +156,32 @@ span.old-price {
 }
 
 /***
-鍟嗗搧鎺ㄨ崘 ****/
+组合套餐, 商品推荐 ****/
+.comm-shop-combo,
 .comm-recommend {
     border: 1px solid #CCCCCC;
+    margin-bottom: 10px;
 
     background-color: #FFFFFF;
 }
 
 
+.comm-shop-combo .comm-shop-combo-title,
 .comm-recommend .comm-recommend-title {
-    line-height: 30px;
-    font: 600 16px arial;
+    line-height: 24px;
+    font-weight: 600;
+    font-size: 16px;
     background-color: #EEEEEE;
     padding: 5px;
 }
 
 
+.comm-shop-combo .comm-shop-combo-ctn, 
 .comm-recommend .comm-recommend-ctn {
     
 }
 
+.comm-shop-combo-ctn ul.comm-shop-combo-list li, 
 .comm-recommend-ctn ul.comm-recommend-list li {
     margin: 5px;
 }
