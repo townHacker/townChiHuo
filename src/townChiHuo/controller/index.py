@@ -26,13 +26,14 @@ class Index:
                                default_permission=_def_permission)
     def GET(self, *path):
         web.header('Content-Type', 'text/html')
-        return mako_render('index/index.tmpl')
+        print 'index'
+        return mako_render('/index/index.tmpl')
 
 
 class Register:
     def GET(self, *path):
         web.header('Content-Type', 'text/html')
-        return mako_render('index/register.tmpl')
+        return mako_render('/index/register.tmpl')
     
     def POST(self, *path):
         web.header('Content-Type', 'text/plain')
@@ -58,7 +59,7 @@ class Login:
         action_id = self.GET.get_action_id()
         action_code = self.GET.get_action_code()
         permission = self.GET.get_default_permission()
-        return mako_render('index/login.tmpl')
+        return mako_render('/index/login.tmpl')
 
     @action_auth_decorator(action_id=u'7b969732-eb44-427a-8bb9-88c7665d7993', \
                                action_name=u'登录请求', \
@@ -76,3 +77,9 @@ class Login:
             return u'登录成功'
         else:
             return u'登录失败'
+
+
+class Commodity:
+    def GET(self, *path):
+        web.header('Content-Type', 'text/html')
+        return mako_render('/index/commodity.tmpl')

@@ -33,6 +33,8 @@ urls = (
 	
     #'/login/?(.*)', 'controller.index.Login',
     '/register/?(.*)', 'controller.index.Register',
+
+    '/commodity/?(.*)', 'controller.index.Commodity', 
     
     '/(.*)', 'controller.index.Index',
 )

@@ -1,0 +1,187 @@
+/* commodity details page style */
+.comm-page {
+    margin-left: auto;
+    margin-right: auto;
+
+    /* for test */
+    min-height: 600px;
+}
+
+.comm-head {
+    position: relative;
+
+    padding-left: 350px;
+}
+
+.comm-head-l {
+    position: absolute;
+    top: 0px;
+    left: 0px;    
+}
+
+.comm-figure {
+
+}
+
+.comm-head-r {
+    /* for test 
+    background-color: lightblue; 
+    min-height: 400px;    */
+}
+
+.comm-property {
+    padding: 5px;
+}
+
+.comm-title {
+    padding: 5px;
+    line-height: 30px;
+    font-weight: bold;
+    font-size: 18px;
+    text-decoration: underline;
+}
+
+.comm-prop {
+    margin: 5px 0 5px 0;
+    line-height: 30px;
+}
+
+.comm-prop .comm-prop-n {
+    padding: 2px 20px 5px 5px;
+}
+
+.comm-prop img {
+    vertical-align: middle;
+}
+
+.comm-body {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    position: relative;
+
+    /* for test 
+    background-color: orange;
+    min-height: 600px; */
+}
+
+.comm-body-left {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 20em;
+    display: block;
+
+    /* for test 
+    background-color: orangeRed;
+    min-height: 600px; */
+}
+
+.comm-body-main {
+    display: block;
+    margin-left: 21em;
+    
+    /* for test 
+    min-height: 600px;
+    background-color: lightgrey; */
+}
+
+
+span.price {
+    font-weight: 600;
+    font-size: 28px;
+    color: red;
+}
+
+span.old-price {
+    font-weight: bold;
+    text-decoration: line-through;
+}
+
+
+.comm-pick, .comm-pay-info {
+    margin: 5px;
+
+    border-top: 1px solid #CCCCCC;
+}
+
+.comm-submit {
+    padding: 10px 0 10px 100px;
+}
+
+.comm-submit #comm_btn_addCart, .comm-submit #comm_btn_buyIm {
+    width: 150px;
+    height: 30px;
+    border: none;
+    background-color: orangered;
+    font-weight: 600;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+}
+
+/*******
+店铺信息  ***************/
+.shop-info-d {
+    border: 1px solid #CCCCCC;
+
+    background-color: #FFFFFF;
+}
+
+
+.shop-info-d .shop-info-d-title {
+    line-height: 24px;
+    font-weight: 600;
+    font-size: 16px;
+    background-color: #EEEEEE;
+    padding: 5px;
+}
+
+
+.shop-info-d .shop-info-d-ctn {
+    
+}
+
+
+.shop-info-d-ctn .shop-name {
+    line-height: 20px;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 2px 2px 2px 5px;
+}
+
+
+.shop-info-d-ctn .shop-info {
+    line-height: 20px;
+    padding: 2px 2px 2px 10px;
+}
+
+/***
+组合套餐, 商品推荐 ****/
+.comm-shop-combo,
+.comm-recommend {
+    border: 1px solid #CCCCCC;
+    margin-bottom: 10px;
+
+    background-color: #FFFFFF;
+}
+
+
+.comm-shop-combo .comm-shop-combo-title,
+.comm-recommend .comm-recommend-title {
+    line-height: 24px;
+    font-weight: 600;
+    font-size: 16px;
+    background-color: #EEEEEE;
+    padding: 5px;
+}
+
+
+.comm-shop-combo .comm-shop-combo-ctn, 
+.comm-recommend .comm-recommend-ctn {
+    
+}
+
+.comm-shop-combo-ctn ul.comm-shop-combo-list li, 
+.comm-recommend-ctn ul.comm-recommend-list li {
+    margin: 5px;
+}

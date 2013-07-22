@@ -72,9 +72,13 @@ input[type="button"]:active, input[type="submit"]:active {
     color: #000000;
 }
 
+textarea {
+    resize: none;
+}
+
 .button {
     font-size: 12px;
-    dilay: inline-block;
+    display: inline-block;
     height: 18px;
     line-height: 18px;
     text-align: justify;
@@ -114,6 +118,14 @@ input[type="button"]:active, input[type="submit"]:active {
     text-align: center;
 }
 
+.float-L {
+	float: left;
+}
+
+.float-R {
+	float: right;
+}
+
 .break-word {
     word-break: break-all;
     word-wrap: break-word;
@@ -147,11 +159,11 @@ input[type="button"]:active, input[type="submit"]:active {
 
 /***
 List Define ***/
-ul.float-l li {
+ul.list-float-l li {
     float: left;
 }
 
-ul.float-r li {
+ul.list-float-r li {
     float: right;
 }
 

@@ -57,7 +57,7 @@ app.add_processor(web.loadhook(session_hook))
 
 
 # web.py web.config.debug=False 配置web.py的调试功能
-if settings.settings['web.config.debug'].tolower() != 'true':
+if settings.settings['web.config.debug'].lower() != 'true':
     web.config.debug = False
 else:
     web.config.debug = True
