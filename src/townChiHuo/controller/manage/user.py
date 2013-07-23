@@ -111,3 +111,12 @@ class Login(object):
         web.header('Content-Type', 'application/json')
         return json.dumps(result)
         
+
+class Logout(object):
+    '''
+    注销
+    '''
+    def GET(self, *path):
+        del web.ctx.session['curr_user']
+        print 'logout: ', web.ctx.session
+        raise web.seeother('/')

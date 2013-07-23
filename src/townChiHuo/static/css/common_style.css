@@ -76,6 +76,10 @@ textarea {
     resize: none;
 }
 
+table td, table th {
+    vertical-align: middle;
+}
+
 .button {
     font-size: 12px;
     display: inline-block;

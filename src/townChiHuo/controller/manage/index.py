@@ -15,7 +15,7 @@ class Index(object):
     def GET(self, *path):
         s = web.ctx.session
         if "curr_user" not in s:
-            raise web.seeother('/manage/login')
+            raise web.seeother('/login')
         curr_user = s['curr_user']
         web.header('Content-Type', 'text/html')
         return mako_render('/manage/index.tmpl')

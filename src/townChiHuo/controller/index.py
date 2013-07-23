@@ -26,7 +26,6 @@ class Index:
                                default_permission=_def_permission)
     def GET(self, *path):
         web.header('Content-Type', 'text/html')
-        print 'index'
         return mako_render('/index/index.tmpl')
 
 

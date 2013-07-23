@@ -38,6 +38,7 @@
             <th>商品类型</th>
             <th>商品名称</th>
             <th>缩略图</th>
+	   <th>操作</th>
           </tr>
         </thead>
         <tbody>
@@ -48,6 +49,10 @@
             <td style="vertical-align: middle;">${ comm_type_name[comm_item['comm_type_id']] }</td>
             <td style="vertical-align: middle;">${ comm_item['comm_name'] }</td>
             <td><img src="/js/holder.js/50x50" /></td>
+	   <td>
+	     <a href="#"><img src="/images/icons/16x16/reply.png" alt="编辑" title="编辑" width="16" height="16" /></a>
+	     <a href="#"><img src="/images/icons/16x16/action_delete.png" alt="删除" title="删除" width="16" height="16" /></a>
+	   </td>
           </tr>
           % endfor
         </tbody>
