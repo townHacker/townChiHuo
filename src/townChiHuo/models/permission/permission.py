@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import townChiHuo.models.model as model
+from mongoengine import *
+
+from townChiHuo.model.permission.role import Role
 
 
 READABLE = 0x01 # 可读
@@ -63,14 +65,21 @@ def is_executable(permission_code):
     '''
     return bool(permission_code & EXECUTABLE)
 
-class Permission(model.Model):
+class Permission(EmbeddedDocument):
     '''
     权限
     resource: 权限针对的资源
     permission_code: 权限码
     target: 权限限制的目标
     '''
-    pass
+    
+
+class RolePermission(EmbeddedDocument):
+    '''
+    角色权限
+    '''
+    role = ReferenceField(Role)
+    permission_code = IntField()
 
 class PermisssionGroup(object):
     '''

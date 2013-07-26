@@ -3,91 +3,95 @@
 
 import itertools
 
+from mongoengine import *
+
 import townChiHuo.models.model as model
 from townChiHuo.models.error import GeneralError
 from townChiHuo.models.permission.role import Role
 import townChiHuo.db_schema as db_schema
 from townChiHuo.util import mongodb_hack as db_hack
+from townChiHuo.model.permission.permission import RolePermission
 
-class Action(model.Model):
+
+class Action(Document):
     '''
     action 动作
     action_id: action id
     action_name: action 名称
     action_code: action 代码
     default_permission: 默认权限
-    permissions: 权限 -- tuple of { role_id, permission_code }
+    permissions: 权限 -- list of { role_id, permission_code }
     '''
-    def __init__(self, doc=None):
-        super(Action, self).__init__(doc=doc)
+    
+    action_id = UUIDField(binary=False, required=True, unique=True)
+    action_name = StringField(max_length=200, required=True)
+    action_code = IntField()
+    default_permission = IntField()
+    permissions = ListField(EmbeddedDocumentField(RolePermission), default=[])
 
+    meta = { 'collection': db_schema.ACTION }
 
-def add_permission(action_id, *role_permission_args):
-    '''
-    添加action的权限设置
-    '''
-    action_c = db_hack.connect(collection=db_schema.ACTION) # 获取action集合
-    try:
-        action_doc = action_c.find_one({'action_id': action_id})
-        if action_doc:
-            if not action_doc.get('permissions'):
-                action_doc['permissions'] = []
+    
+    def add_permission(self, *role_permission_args):
+        '''
+        添加action的权限设置
+        '''
+        if not self.permissions:
+            self.permissions = []
+        if not len(role_permission_args):
+            return
 
-            if not len(role_permission_args):
-                return
+        # 构建新的action权限数据
+        new_permissions = []
+        for perm in itertools.dropwhile( \
+            lambda x:x.role.id in \
+                [ a.role.id for a in role_permission_args], \
+                    self.permissions):
+            new_permissions.append(perm)
 
-            # 构建新的 action 的权限数组
-            new_permissions = []
-            for perm in itertools.dropwhile( \
-                lambda x:x['role_id'] in \
-                    [a['role_id'] for a in role_permission_args], \
-                    action_doc['permissions']):
-                new_permissions.append(perm)
-                
-            new_permissions[len(action_doc['permissions']):] \
-                = role_permission_args
+        new_permissions[len(self.permissions):] \
+            = role_permission_args
 
-            action_doc['permissions'] = new_permissions
+        self.permissions = new_permissions
 
-            action_c.save(action_doc)
-        else:
-            raise GeneralError(u'指定的action_id不存在')
-    finally:
-        del action_c
-
-
-def get_permissions(action_id):
-    '''
-    获取指定action的所有权限设置
-    '''
-    def get_role_name(role_c, role_id):
-        return role_c.find_one({'role_id': role_id})['name']
+        self.save()
+        self.reload()
         
-    action_c = db_hack.connect(collection=db_schema.ACTION)
-    role_c = db_hack.connect(collection=db_schema.ROLE)
-    try:
-        all_act = action_c.aggregate([
+
+
+
+    def get_permissions(self):
+        '''
+        获取指定action的所有权限设置
+        '''
+        def get_role_name(role_c, role_id):
+            return role_c.find_one({'role_id': role_id})['name']
+        
+        action_c = Action._get_collection()
+        role_c = Role._get_collection()
+        try:
+            all_act = action_c.aggregate([
                 {"$match": {
-                        'action_id': action_id
-                        }}, 
+                    'action_id': self.action_id
+                }}, 
                 {"$unwind": "$permissions"},
                 {"$project": {
-                        'action_id': 1,
-                        'action_name': 1,
-                        'default_permission': 1,
-                        'role_id': '$permissions.role_id',
-                        'permission_code': '$permissions.permission_code', 
-                        }},
-                ])
+                    'action_id': 1,
+                    'action_name': 1,
+                    'default_permission': 1,
+                    'role_id': '$permissions.role.id',
+                    'permission_code': '$permissions.permission_code', 
+                }},
+            ])
 
 
-        for a_item in all_act['result']:
-            a_item['role_name'] = get_role_name(role_c, a_item['role_id'])
+            for a_item in all_act['result']:
+                a_item['role_name'] = get_role_name(role_c, a_item['role_id'])
 
-        return all_act['result']
-    finally:
-        del action_c
-        del role_c
+            return all_act['result']
+        finally:
+            del action_c
+            del role_c
 
 
             
