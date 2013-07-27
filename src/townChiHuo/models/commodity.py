@@ -39,9 +39,28 @@ class CommodityType(Model):
     disabled # 禁用/启用
     disabled_date # 禁用时间
     disabled_desc # 禁用描述
+
+    type_params # 类型参数
     '''
     def __init__(self, doc=None):
         super(CommodityType, self).__init__(doc=doc)
+
+
+class CommodityParam(Model):
+    '''
+    商品参数
+    param_name: 参数名称
+    param_value: 参数值
+    param_type: 参数类型
+        - str 字符类型
+        - num 数值类型
+    optional_value: 可选值 （用于单选或多选） a list []
+    is_multiple: 是否多选    True or False, 当且仅当 optional_value 不为空时
+    '''
+    def __init__(self, doc=None):
+        super(CommodityProp, self).__init__(doc=doc)
+
+        
 
 def get_commodity(*commodity_id):
     try:
@@ -126,6 +145,12 @@ def get_commodity_type(*type_parent_id, **type_id):
         del comm_type_c
 
 
-        
-        
+def commodity_param_add(comm_type_id, type_param):
+    '''
+    向商品类型中添加商品参数
+    '''
+    
+    pass
+    
+
 
