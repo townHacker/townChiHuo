@@ -73,6 +73,7 @@ class Permission(EmbeddedDocument):
     target: 权限限制的目标
     '''
     
+    
 
 class RolePermission(EmbeddedDocument):
     '''
