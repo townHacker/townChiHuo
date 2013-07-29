@@ -15,7 +15,14 @@ import townChiHuo.db_schema as db_schema
 
 __md5key = settings.settings['password.md5key']
 
-class User(model.Model):
+class LoginInfo(EmbeddedDocument):
+    '''
+    登录信息
+    '''
+    login_timestamp = IntField()
+    last_login_dt = DateTimeField()
+
+class User(Document):
     '''
     用户
     user_id = None
@@ -30,32 +37,40 @@ class User(model.Model):
 
     disabled #禁用/启用
     '''
-    def __init__(self, doc=None):
-        super(User, self).__init__(doc=doc)
 
+    user_id = UUIDField(binary=False, required=True,
+                        unique=True, default=uuid.uuid4())
+    name = StringField(max_length=200, required=True)
+    email = StringField(max_length=100, required=True)
+    password = StringField(required=True)
+    last_name = StringField()
+    first_name = StringField()
+    gender = StringField()
+    role = ReferenceField(Roel)
+    login_info = EmbeddedDocumentField(LoginInfo)
+    disabled = BooleanField()
+
+    meta = { 'collection': db_schema.USER }
+    
         
 def user_add(name, password):
     '''
     添加用户
     '''
-    users = db_hack.connect(collection=db_schema.USER)
-    try:
-        name = unicode(name)
-        user = users.find_one({'name': name})
-        if user is not None:
-            # 用户名已存在
-            raise GeneralError(u'用户名已存在')
-        else:
-            # 添加用户
-            user = User()
-            user.user_id = unicode(uuid.uuid4())
-            user.name = name
-            user.password = encrypt.md5(password, __md5key)
-            
-            objectId = users.insert(user.get_doc())
-            return User(doc=users.find({'_id': objectId}))
-    finally:
-        del users
+    name = unicode(name)
+    user = User.objects(__raw__={'name': name}).first()
+    if user is not None:
+        # 用户名已存在
+        raise GeneralError(u'用户名已存在')
+    else:
+        # 添加用户
+        user = User()
+        user.user_id = unicode(uuid.uuid4())
+        user.name = name
+        user.password = encrypt.md5(password, __md5key)
+        user.save()
+        
+        return user
         
        
 def login(u_name, password, timestamp=None, record=False):
@@ -69,25 +84,23 @@ def login(u_name, password, timestamp=None, record=False):
     if not u_name or not password:
         raise GeneralError(u'请填写正确的用户名密码')
     
-    users = db_hack.connect(collection=db_schema.USER)
-    user = users.find_one({'name': unicode(u_name), \
-             'password': encrypt.md5(password, __md5key)})
+    user = User.objects(__raw__={'name': unicode(u_name), \
+             'password': encrypt.md5(password, __md5key)}).first()
     if user is None:
         # 用户名密码不正确或用户不存在
         raise GeneralError(u'用户名密码不正确或用户不存在')
     else:
         # 验证登录时间戳
-        user = User(doc=user) # User object
         is_succeed = False
         if user.login_info and \
-                user.login_info.get('login_timestamp'):
-            is_succeed = user.login_info['login_timestamp'] == timestamp
+                user.login_info.login_timestamp:
+            is_succeed = user.login_info.login_timestamp == timestamp
         else:
             is_succeed = True
             
         if is_succeed:
             update_login_info(user, record)
-            users.save(user.get_doc())
+            user.save()
         else:
             raise GeneralError(u'登录失败')
             
@@ -100,21 +113,17 @@ def register(email, password):
     email: 邮箱
     password: 密码
     '''
-    users = db_hack.connect(collection=db_schema.USER)
-    try:
-        if None is not \
-                users.find_one({'email': unicode(email)}):
-            raise GeneralError(u'该邮箱已经注册过，请使用其它邮箱注册.')
-        else:
-            user = User()
-            user.user_id = unicode(uuid.uuid4())
-            user.email, user.name = unicode(email), unicode(email)
-            user.password = encrypt.md5(password, __md5key)
-            
-            objectId = users.insert(user.get_doc())
-            return User(doc=users.find({'_id': objectId}))
-    finally:
-        del users
+    if None is not \
+       User.objects(__raw__={'email': unicode(email)}).first():
+        raise GeneralError(u'该邮箱已经注册过，请使用其它邮箱注册.')
+    else:
+        user = User()
+        user.user_id = unicode(uuid.uuid4())
+        user.email, user.name = unicode(email), unicode(email)
+        user.password = encrypt.md5(password, __md5key)
+        
+        user.save()
+        return user
         
     
                 
@@ -122,38 +131,34 @@ def update_login_info(user, record=False):
     '''
     更新最后登录时间， 登录时间戳
     '''
-    user.login_info = {'last_login_dt': datetime.datetime.now()}
+    user.login_info.last_login_dt = datetime.datetime.now()
     if record:
-        user.login_info['login_timestamp'] = \
-            time.mktime(user.login_info['last_login_dt'].timetuple())
+        user.login_info.login_timestamp = \
+            time.mktime(user.login_info.last_login_dt.timetuple())
 			
 			
 			
-def set_user_available(disabled,*user_ids):
+def set_user_available(disabled, *user_ids):
     '''
     禁用用户, 设置 disabled = True
     启用用户, 设置 disabled = False
     '''
     if user_ids is None:
         raise GeneralError(u'参数错误.')
-    user_c = db_hack.connect(collection=db_schema.USER)
-    try:
-        result = user_c.update(
-            {'user_id': {'$in': user_ids}},
-            {'$set': {
-                    'disabled': disabled
-                    }}
-            )
-        return result['n']
-    finally:
-        del user_c
+    result = User.objects().update(__raw__=
+        {'user_id': {'$in': user_ids}},
+        {'$set': {
+            'disabled': disabled
+        }}
+    )
+    return result['n']
+    
 
 def user_edit(user_id,name,email,password,last_name,first_name,sex):
     '''
     编辑用户
     '''
-    user_c = db_hack.connect(collection=db_schema.USER)
-    user=user_c.find_one({'user_id':user_id})
+    user=User.objects(__raw__={'user_id':user_id}).first()
     if user is None:
         raise GeneralError(u'用户不存在')
 	

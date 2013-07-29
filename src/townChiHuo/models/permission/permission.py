@@ -72,7 +72,9 @@ class Permission(EmbeddedDocument):
     permission_code: 权限码
     target: 权限限制的目标
     '''
-    
+    resource = GeneralReferenceField()
+    permission_code = IntField()
+    target = GeneralReferenceField()
     
 
 class RolePermission(EmbeddedDocument):
