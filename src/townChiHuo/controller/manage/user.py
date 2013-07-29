@@ -97,7 +97,7 @@ class Login(object):
             curr_user = user.login(u_name=i.name, \
                                        password=i.password)
 
-            s['curr_user'] = curr_user.get_doc() # session中保存当前用户
+            s['curr_user'] = curr_user # session中保存当前用户
             del s['code_ref'] # 删除验证码
             result = dict(
                 isSucceed = True,

@@ -12,21 +12,17 @@ def action_auth_decorator(action_id, \
                               default_permission):
     def wrap(func):
 
-        action_c = db_hack.connect(collection=db_schema.ACTION)
-
         print '----> action_auth_decorator --------------------------'
         
-        action_doc = action_c.find_one({ 'action_id': action_id })
-        if action_doc:
-            action_m = Action(doc=action_doc)
-        else:
+        action_m = Action.objects(__raw__={ 'action_id': action_id }).first()
+        if not action_m:
             action_m = Action()
             action_m.action_id = action_id
             action_m.action_name = action_name
             action_m.action_code = action_code
             action_m.default_permission = default_permission
 
-            action_c.save(action_m.get_doc())
+            action_m.save()
 
         if action_id not in action_auth:
             action_auth[action_id] = action_m

@@ -11,6 +11,53 @@ from townChiHuo.util import mongodb_hack as db_hack
 from townChiHuo.models.error import GeneralError
 
 
+class CommodityParam(EmbeddedDocument):
+    '''
+    商品参数
+    param_name: 参数名称
+    param_value: 参数值
+    param_type: 参数类型
+        - str 字符类型
+        - num 数值类型
+    optional_value: 可选值 （用于单选或多选） a list []
+    is_multiple: 是否多选    True or False, 当且仅当 optional_value 不为空时
+    '''
+    param_name = StringField(max_length=200, required=True, unique=True)
+    param_value = DynamicField()
+    param_type = StringField(choices=['str', 'num'])
+    optional_value = ListField(DynamicField())
+    is_multiple = BooleanField()
+    
+
+    
+class CommodityType(Document):
+    '''
+    商品类型
+    commodity_type_id: 商品类型id
+    type_name: 类型名称
+    type_desc: 类型描述
+    type_parent_id: 父类型Id
+
+    disabled # 禁用/启用
+    disabled_date # 禁用时间
+    disabled_desc # 禁用描述
+
+    type_params # 类型参数
+    '''
+    commodity_type_id = UUIDField(binary=False, required=True,
+                             unique=True, default=uuid.uuid4())
+    type_name = StringField(max_length=200, required=True)
+    type_desc = StringField(max_length=1000, required=True)
+    type_parent = ReferenceField('self')
+    disabled = BooleanField()
+    disabled_date = DateTimeField()
+    disabled_desc = StringField()
+
+    type_params = ListField(EmbeddedDocumentField(CommodityParam))
+
+    meta = { 'collection' : db_schema.COMMODITY_TYPE }
+
+
 class Commodity(Document):
     '''
     商品
@@ -28,12 +75,12 @@ class Commodity(Document):
     '''
 
     commodity_id = UUIDField(binary=False, required=True,
-                             unique=True, defualt=uuid.uuid4())
+                             unique=True, default=uuid.uuid4())
     comm_name = StringField(max_length=200, required=True)
     brief_name = StringField(max_length=100)
     comm_desc = StringField()
     comm_type = ReferenceField(CommodityType)
-    comm_params = ListField(EmbeddedDocument(CommodityParam))
+    comm_params = ListField(EmbeddedDocumentField(CommodityParam))
     comm_figure = StringField()
     disabled = BooleanField()
     disabled_date = DateTimeField()
@@ -42,51 +89,8 @@ class Commodity(Document):
     meta = { 'collection' : db_schema.COMMODITY }
     
 
-class CommodityType(Document):
-    '''
-    商品类型
-    commodity_type_id: 商品类型id
-    type_name: 类型名称
-    type_desc: 类型描述
-    type_parent_id: 父类型Id
-
-    disabled # 禁用/启用
-    disabled_date # 禁用时间
-    disabled_desc # 禁用描述
-
-    type_params # 类型参数
-    '''
-    commodity_type_id = UUID(binary=False, required=True,
-                             unique=True, default=uuid.uuid4())
-    type_name = StringField(max_length=200, required=True)
-    type_desc = StringField(max_length=1000, required=True)
-    type_parent = ReferenceField(CommodityType)
-    disabled = BooleanField()
-    disabled_date = DateTimeField()
-    disabled_desc = StringField()
-
-    type_params = ListField(EmbeddedDocument(CommodityParam))
-
-    meta = { 'collection' : db_schema.COMMODITY_TYPE }
 
 
-class CommodityParam(EmbeddedDocument):
-    '''
-    商品参数
-    param_name: 参数名称
-    param_value: 参数值
-    param_type: 参数类型
-        - str 字符类型
-        - num 数值类型
-    optional_value: 可选值 （用于单选或多选） a list []
-    is_multiple: 是否多选    True or False, 当且仅当 optional_value 不为空时
-    '''
-    param_name = StringField(max_length=200, required=True, unique=True)
-    param_value = DynamicField()
-    param_type = StringField(choise=['str', 'num'])
-    optional_value = ListField(DynamicField())
-    is_multiple = BooleanField()
-    
 
 def get_commodity(*commodity_id):
     if commodity_id:

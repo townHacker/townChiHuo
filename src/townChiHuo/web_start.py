@@ -21,14 +21,24 @@ sys.path.append(os.path.dirname(os.path.abspath(os.curdir)))
 
 #print sys.path
 
-import townChiHuo
 
+import mongoengine
+
+from townChiHuo import settings
+
+# connect mongodb -- use mongoengine
+# lower layer is pymongo
+mongodb_host = settings.settings['mongodb.host']
+mongodb_port = settings.settings['mongodb.port']
+mongodb_db   = settings.settings['mongodb.db']
+mongoengine.connect(mongodb_db, host=mongodb_host, port=mongodb_port)
+mongoengine.register_connection('default', mongodb_db)
+
+
+import townChiHuo
 import townChiHuo.urls as urls
 from townChiHuo.util import session
-from townChiHuo import settings
-from townChiHuo.controller import index
-
-
+from townChiHuo.controller import *
 
 # check upload directory
 upload_dir = settings.settings['UploadDir']

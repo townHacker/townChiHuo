@@ -3,7 +3,7 @@
 
 from mongoengine import *
 
-from townChiHuo.model.permission.role import Role
+from townChiHuo.models.permission import Role
 
 
 READABLE = 0x01 # 可读
@@ -72,9 +72,9 @@ class Permission(EmbeddedDocument):
     permission_code: 权限码
     target: 权限限制的目标
     '''
-    resource = GeneralReferenceField()
+    resource = GenericReferenceField()
     permission_code = IntField()
-    target = GeneralReferenceField()
+    target = GenericReferenceField()
     
 
 class RolePermission(EmbeddedDocument):

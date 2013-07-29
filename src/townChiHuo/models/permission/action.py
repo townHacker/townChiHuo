@@ -5,12 +5,11 @@ import itertools
 
 from mongoengine import *
 
-import townChiHuo.models.model as model
 from townChiHuo.models.error import GeneralError
 from townChiHuo.models.permission.role import Role
 import townChiHuo.db_schema as db_schema
 from townChiHuo.util import mongodb_hack as db_hack
-from townChiHuo.model.permission.permission import RolePermission
+from townChiHuo.models.permission.permission import RolePermission
 
 
 class Action(Document):
@@ -25,7 +24,7 @@ class Action(Document):
     
     action_id = UUIDField(binary=False, required=True, unique=True)
     action_name = StringField(max_length=200, required=True)
-    action_code = IntField()
+    action_code = StringField()
     default_permission = IntField()
     permissions = ListField(EmbeddedDocumentField(RolePermission), default=[])
 

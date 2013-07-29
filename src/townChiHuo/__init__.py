@@ -13,7 +13,7 @@ __all__ = [
 
 try:
 
-    from controller import *
+#    from controller import *
     from models import *
     from util import *
 except ImportError as e:

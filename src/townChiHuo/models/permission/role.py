@@ -25,7 +25,7 @@ class Role(Document):
                         unique=True, default=uuid.uuid4())
     name = StringField(max_length=200, required=True)
     description = StringField(max_length=1000)
-    parent_roles = ListField(ReferenceField(Role))
+    parent_roles = ListField(ReferenceField('self'))
     disabled = BooleanField()
     
 

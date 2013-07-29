@@ -20,7 +20,7 @@ settings = {
     # mongodb setting
     'mongodb.host': 'localhost',
     'mongodb.port': 27017,
-    'mongodb.db': 'townChiHuo',
+    'mongodb.db': 'benpig',
 
     # md5加密
     'password.md5key': '704f8303-85e5-4eac-ab54-49d7f301500e',

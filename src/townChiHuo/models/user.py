@@ -6,7 +6,9 @@ import uuid
 import datetime
 import time
 
-from townChiHuo.models import model
+from mongoengine import *
+
+from townChiHuo.models.permission import Role
 from townChiHuo.models.error import GeneralError
 from townChiHuo.util import encrypt
 from townChiHuo.util import mongodb_hack as db_hack
@@ -46,7 +48,7 @@ class User(Document):
     last_name = StringField()
     first_name = StringField()
     gender = StringField()
-    role = ReferenceField(Roel)
+    role = ReferenceField(Role)
     login_info = EmbeddedDocumentField(LoginInfo)
     disabled = BooleanField()
 
@@ -131,6 +133,8 @@ def update_login_info(user, record=False):
     '''
     更新最后登录时间， 登录时间戳
     '''
+    if not user.login_info:
+        user.login_info = LoginInfo()
     user.login_info.last_login_dt = datetime.datetime.now()
     if record:
         user.login_info.login_timestamp = \
@@ -146,10 +150,12 @@ def set_user_available(disabled, *user_ids):
     if user_ids is None:
         raise GeneralError(u'参数错误.')
     result = User.objects().update(__raw__=
-        {'user_id': {'$in': user_ids}},
-        {'$set': {
-            'disabled': disabled
-        }}
+        {
+            {'user_id': {'$in': user_ids}},
+            {'$set': {
+                'disabled': disabled
+            }}
+        }
     )
     return result['n']
     
