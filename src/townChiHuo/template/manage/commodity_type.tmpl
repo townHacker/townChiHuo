@@ -30,7 +30,7 @@
           <tr>
             <td>${ type_item["commodity_type_id"] }</td>
             <td>${ type_item["type_name"] }</td>
-            <td>${ commodity_type_name.get(type_item["type_parent_id"]) }</td>
+            <td>${ commodity_type_name.get(None if None is type_item["type_parent"] else type_item["type_parent"]["commodity_type_id"]) }</td>
           </tr>
           % endfor
         </tbody>

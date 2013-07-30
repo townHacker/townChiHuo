@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import itertools
+import uuid
 
 from mongoengine import *
 
@@ -21,8 +22,6 @@ class Action(Document):
     default_permission: 默认权限
     permissions: 权限 -- list of { role_id, permission_code }
     '''
-    
-    action_id = UUIDField(binary=False, required=True, unique=True)
     action_name = StringField(max_length=200, required=True)
     action_code = StringField()
     default_permission = IntField()

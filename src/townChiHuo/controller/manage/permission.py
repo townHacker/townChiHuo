@@ -37,7 +37,7 @@ class Permission(object):
         all_perm = []
         for a_item in get_action():
             all_perm[len(all_perm):] = \
-                list(action.get_permissions(a_item['action_id']))
+                list(a_item.get_permissions())
         
         web.header('Content-Type', 'text/html')
         return mako_render('/manage/permission/permission.tmpl', \

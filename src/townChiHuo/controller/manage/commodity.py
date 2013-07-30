@@ -20,8 +20,7 @@ class Commodity(object):
         comm_type_item = \
             dict([(t_item['commodity_type_id'], t_item['type_name']) \
                               for t_item in commodity.get_commodity_type()])
-        
-        
+                
         web.header('Content-Type', 'text/html')
         return mako_render('/manage/commodity.tmpl',
                            commodity = comm_iter, 
@@ -32,10 +31,8 @@ class Commodity(object):
 class CommodityAdd(object):
     def POST(self, *path):
         try: 
-            form = web.input(
-                'commodity_name',
-                commodity_desc=None,
-                commodity_type_id=None)
+            form = web.input('commodity_name', commodity_desc=None,
+                             commodity_type_id=None)
             if not form.commodity_name:
                 raise GeneralError(u'请添写商品名称')
             elif not form.commodity_type_id:
@@ -62,17 +59,18 @@ class CommodityType(object):
             dict([(item['commodity_type_id'], item['type_name']) \
                             for item in comm_type_iter1])
         comm_type_root_iter = commodity.get_commodity_type(None)
-        
+
         web.header('Content-Type', 'text/html')
         return mako_render('/manage/commodity_type.tmpl',
                            commodity_type =comm_type_iter,
                            commodity_type_root =comm_type_root_iter,
-                           commodity_type_name = comm_type_name, 
+                           commodity_type_name = comm_type_name
                            )
 
     def POST(self, *path):
         p_in = web.input('type_parent_id')
-        comm_type_iter = commodity.get_commodity_type(p_in.type_parent_id)
+        parent_type = commodity.CommodityType.objects(commodity_type_id=p_in.type_parent_id).first()
+        comm_type_iter = parent_type.get_child_commType()
         comm_types = [{'id': item['commodity_type_id'],
                        'name': item['type_name'] } for item in comm_type_iter]
         
@@ -86,9 +84,8 @@ class CommodityTypeAdd(object):
         try:
             if form_in.type_parent_id:
                 type_parent = \
-                    commodity.CommodityType(
-                    doc=commodity.get_commodity_type(
-                        commodity_type_id=form_in.type_parent_id)[0])
+                    commodity.get_commodity_type(
+                        commodity_type_id=form_in.type_parent_id)[0]
             else:
                 type_parent = None
 

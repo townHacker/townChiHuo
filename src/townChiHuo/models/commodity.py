@@ -4,6 +4,7 @@
 import uuid
 
 from mongoengine import *
+from mongoengine.context_managers import no_dereference
 
 from townChiHuo.models.model import Model
 from townChiHuo import db_schema
@@ -44,8 +45,6 @@ class CommodityType(Document):
 
     type_params # 类型参数
     '''
-    commodity_type_id = UUIDField(binary=False, required=True,
-                             unique=True, default=uuid.uuid4())
     type_name = StringField(max_length=200, required=True)
     type_desc = StringField(max_length=1000, required=True)
     type_parent = ReferenceField('self')
@@ -55,7 +54,22 @@ class CommodityType(Document):
 
     type_params = ListField(EmbeddedDocumentField(CommodityParam))
 
-    meta = { 'collection' : db_schema.COMMODITY_TYPE }
+    meta = {
+        'collection' : db_schema.COMMODITY_TYPE,
+        'allow_inheritance': True
+    }
+
+    
+    def get_child_commType(self, include_disabled=False):
+        '''
+        得到所有商品子类型
+        include_disabled = True 将包含已被禁用的子类型, 默认为 False
+        '''
+        with no_dereference(self.__class__) as CommodityType:
+            return CommodityType.objects(__raw__={
+                'type_parent' : self.id
+            })
+        
 
 
 class Commodity(Document):
@@ -73,15 +87,12 @@ class Commodity(Document):
     disabled_date # 禁用时间
     disabled_desc # 禁用描述
     '''
-
-    commodity_id = UUIDField(binary=False, required=True,
-                             unique=True, default=uuid.uuid4())
     comm_name = StringField(max_length=200, required=True)
     brief_name = StringField(max_length=100)
     comm_desc = StringField()
     comm_type = ReferenceField(CommodityType)
     comm_params = ListField(EmbeddedDocumentField(CommodityParam))
-    comm_figure = StringField()
+    comm_figure = ListField(StringField())
     disabled = BooleanField()
     disabled_date = DateTimeField()
     disabled_desc = StringField()
@@ -91,11 +102,10 @@ class Commodity(Document):
 
 
 
-
 def get_commodity(*commodity_id):
     if commodity_id:
         return Commodity.objects(
-            __raw__={'commodity_id': {'$in': commodity_id}}).first()
+            __raw__={'id': {'$in': commodity_id}})
     else:
         return Commodity.objects()
 
@@ -103,7 +113,7 @@ def get_commodity(*commodity_id):
 
 def commodity_add(comm_name, comm_type_id,
                   brief_name=None, comm_desc=None,
-                  *comm_figure, **comm_params):
+                  comm_figure=[], comm_params=[]):
     '''
     商品添加
     '''
@@ -116,8 +126,8 @@ def commodity_add(comm_name, comm_type_id,
         raise GeneralError(u"已存在相同的商品名称")
     else:
         comm_m = Commodity()
-        comm_m.commodity_id = unicode(uuid.uuid4())
-        comm_m.comm_type_id = comm_type_id
+        comm_m.comm_type = \
+            CommodityType.objects(id=comm_type_id).first()
         comm_m.comm_name = comm_name
         comm_m.brief_name = brief_name \
             if brief_name else comm_name
@@ -141,7 +151,6 @@ def commodity_type_add(type_name, type_desc=None, type_parent=None):
         raise GeneralError(u"已存在相同的商品类型名称")
     else: # 商品类型名称不存在, 添加
         comm_type_m = CommodityType()
-        comm_type_m.commodity_type_id = unicode(uuid.uuid4())
         comm_type_m.type_name = type_name
         comm_type_m.type_desc = type_desc
         comm_type_m.type_parent = type_parent
@@ -150,15 +159,17 @@ def commodity_type_add(type_name, type_desc=None, type_parent=None):
         return comm_type_m
          
 
-def get_commodity_type(*type_parent_id, **type_id):
+def get_commodity_type(type_id=None, *type_parent_id):
     '''
     获取商品类型, 或通过指定的商品类型, 获取所有的子类型
     '''
     if type_id:
-        return CommodityType.objects(__raw__=type_id)
+        return CommodityType.objects(__raw__={
+            
+        })
     elif type_parent_id:
         return CommodityType.objects(__raw__={
-            "type_parent.id": { "$in": type_parent_id }, 
+            "type_parent": { "$in": type_parent_id }, 
         })
     else:
         return CommodityType.objects()
@@ -168,7 +179,6 @@ def commodity_param_add(comm_type_id, type_param):
     '''
     向商品类型中添加商品参数
     '''
-    
     pass
     
 

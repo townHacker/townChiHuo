@@ -20,14 +20,15 @@ class Role(Document):
     parent_roles # 父级角色
 
     disabled # 是否禁用
+    disabled_desc # 禁用描述
+    disabled_date # 禁用日期
     '''
-    role_id = UUIDField(binary=False, required=True,
-                        unique=True, default=uuid.uuid4())
     name = StringField(max_length=200, required=True)
     description = StringField(max_length=1000)
     parent_roles = ListField(ReferenceField('self'))
     disabled = BooleanField()
-    
+    disabled_desc = StringField()
+    disabled_date = DateTimeField()
 
     meta = { 'collection': db_schema.ROLE }
 

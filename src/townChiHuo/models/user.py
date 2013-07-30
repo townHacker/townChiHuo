@@ -39,9 +39,6 @@ class User(Document):
 
     disabled #禁用/启用
     '''
-
-    user_id = UUIDField(binary=False, required=True,
-                        unique=True, default=uuid.uuid4())
     name = StringField(max_length=200, required=True)
     email = StringField(max_length=100, required=True)
     password = StringField(required=True)
@@ -67,7 +64,6 @@ def user_add(name, password):
     else:
         # 添加用户
         user = User()
-        user.user_id = unicode(uuid.uuid4())
         user.name = name
         user.password = encrypt.md5(password, __md5key)
         user.save()
@@ -120,7 +116,6 @@ def register(email, password):
         raise GeneralError(u'该邮箱已经注册过，请使用其它邮箱注册.')
     else:
         user = User()
-        user.user_id = unicode(uuid.uuid4())
         user.email, user.name = unicode(email), unicode(email)
         user.password = encrypt.md5(password, __md5key)
         

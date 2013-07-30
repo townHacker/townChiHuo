@@ -11,7 +11,7 @@
    if 'curr_user' not in session:
        raise web.seeother('/manage/login')
    import townChiHuo.models.user as user
-   curr_user = user.User(doc=session['curr_user'])
+   curr_user = session['curr_user']
 %>
 
 
