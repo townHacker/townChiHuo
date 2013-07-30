@@ -97,7 +97,10 @@ class Commodity(Document):
     disabled_date = DateTimeField()
     disabled_desc = StringField()
 
-    meta = { 'collection' : db_schema.COMMODITY }
+    meta = {
+        'collection': db_schema.COMMODITY,
+        'allow_inheritance': True
+    }
     
 
 

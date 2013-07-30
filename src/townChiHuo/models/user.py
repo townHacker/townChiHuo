@@ -38,6 +38,8 @@ class User(Document):
     login_info # 用户登录信息
 
     disabled #禁用/启用
+    disabled_desc # 禁用描述
+    disabled_date # 禁用日期
     '''
     name = StringField(max_length=200, required=True)
     email = StringField(max_length=100, required=True)
@@ -48,8 +50,13 @@ class User(Document):
     role = ReferenceField(Role)
     login_info = EmbeddedDocumentField(LoginInfo)
     disabled = BooleanField()
+    disabled_desc = StringField()
+    disabled_date = DateTimeField()
 
-    meta = { 'collection': db_schema.USER }
+    meta = {
+        'collection': db_schema.USER,
+        'allow_inheritance': True
+    }
     
         
 def user_add(name, password):
