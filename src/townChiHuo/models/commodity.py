@@ -72,6 +72,19 @@ class CommodityType(Document):
             })
         
 
+    def add_commodityParam(self, *comm_params):
+        '''
+        添加商品参数
+        '''
+        if self.type_params:
+            comm_params[len(comm_params):] = self.type_params
+            
+        self.type_params = comm_params
+        self.save()
+        self.reload()
+
+        
+
 
 class Commodity(Document):
     '''

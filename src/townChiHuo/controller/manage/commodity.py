@@ -105,3 +105,9 @@ class CommodityTypeAdd(object):
 
         web.header('Content-Type', 'application/json')
         return json.dumps(result)
+
+
+class CommodityParamAdd(object):
+    def POST(self, *path):
+        form_in = web.input("type_id", "params")
+        
