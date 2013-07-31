@@ -3,6 +3,7 @@
 
 import uuid
 
+from pymongo.bson.objectid import ObjectId
 from mongoengine import *
 from mongoengine.context_managers import no_dereference
 
@@ -130,7 +131,7 @@ def commodity_add(comm_name, comm_type_id,
     else:
         comm_m = Commodity()
         comm_m.comm_type = \
-            CommodityType.objects(id=comm_type_id).first()
+            CommodityType.objects(id=ObjectId(comm_type_id)).first()
         comm_m.comm_name = comm_name
         comm_m.brief_name = brief_name \
             if brief_name else comm_name
@@ -162,15 +163,11 @@ def commodity_type_add(type_name, type_desc=None, type_parent=None):
         return comm_type_m
          
 
-def get_commodity_type(type_id=None, *type_parent_id):
+def get_commodity_type(*type_parent_id):
     '''
     获取商品类型, 或通过指定的商品类型, 获取所有的子类型
     '''
-    if type_id:
-        return CommodityType.objects(__raw__={
-            
-        })
-    elif type_parent_id:
+    if type_parent_id:
         return CommodityType.objects(__raw__={
             "type_parent": { "$in": type_parent_id }, 
         })

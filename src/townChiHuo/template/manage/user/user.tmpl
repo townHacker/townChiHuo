@@ -26,11 +26,11 @@
           <tbody>
             % for u in users:
             <tr>
-              <td>${u.user_id}</td>
+              <td>${unicode(u.id)}</td>
               <td>${u.name}</td>
-              <td><a class="edit-user" href="javascript:void(0);" name="${u.user_id}">编辑</a>|
+              <td><a class="edit-user" href="javascript:void(0);" name="${unicode(u.id)}">编辑</a>|
 			    <a class="disabled-user" href="javascript:void(0);" data-disabled=${u.disabled}
-                   name="${u.user_id}">${ u"启用" if u.disabled else u"禁用"}</a>
+                   name="${unicode(u.id)}">${ u"启用" if u.disabled else u"禁用"}</a>
 		      </td>
             </tr>
             % endfor

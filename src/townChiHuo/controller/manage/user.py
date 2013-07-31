@@ -5,8 +5,9 @@
 import json
 import web
 
+from pymongo.bson.objectid import ObjectId
+
 from townChiHuo.util.mako_render import mako_render
-from townChiHuo.util import mongodb_hack as db_hack
 from townChiHuo.util import encrypt
 from townChiHuo.util.decorator import action_auth_decorator
 from townChiHuo.settings import settings
@@ -23,8 +24,7 @@ _def_permission = 0 \
 
 class Index(object):
     def GET(self, *path):
-        users = db_hack.connect(collection='users')
-        u_iter = model.iter(users.find())
+        u_iter = user.User.objects()
         web.header('Content-Type', 'text/html')
         return mako_render('/manage/user/user.tmpl', users=u_iter)
 
@@ -62,15 +62,11 @@ class Delete(object):
         try:
             user.set_user_available(\
                 False if i.disabled==u"True" else True,
-                i.id)
+                ObjectId(i.id))
 
-            result=dict( \
-                Succeed=True,
-                Message=u'操作成功！')
+            result=dict(Succeed=True, Message=u'操作成功！')
         except GeneralError as err:
-            result=dict( \
-                Succeed=False,
-                Message=unicode(err.value))
+            result=dict(Succeed=False, Message=unicode(err.value))
 
         web.header('Content-Type','application/json')
         return json.dumps(result)
@@ -95,19 +91,13 @@ class Login(object):
                 raise GeneralError(u"验证码错误")
             
             curr_user = user.login(u_name=i.name, \
-                                       password=i.password)
+                                   password=i.password)
 
             s['curr_user'] = curr_user # session中保存当前用户
             del s['code_ref'] # 删除验证码
-            result = dict(
-                isSucceed = True,
-                msg = '登录成功'
-                )
+            result = dict(isSucceed = True, msg = u'登录成功')
         except GeneralError as e:
-            result = dict(
-                isSucceed = False, 
-                msg = e.value
-                )
+            result = dict(isSucceed = False, msg = e.value)
         web.header('Content-Type', 'application/json')
         return json.dumps(result)
         

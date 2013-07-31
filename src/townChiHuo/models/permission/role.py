@@ -36,7 +36,6 @@ def get_roles_count():
     return Role.objects(__raw__={'disabled': {'$ne': True}}).count()
 
 def get_roles(limit=None, skip=0):
-
     if limit or limit == 0:
         cursor = Role.objects(__raw__={'disabled': { '$ne': True }}).limit(limit).skip(skip)
     else:
@@ -103,7 +102,7 @@ def role_remove(*role_ids):
         raise GeneralError(u"参数错误")
 
     result = Role.objects().update(
-        {'role_id': {'$in': role_ids}},
+        {'id': {'$in': role_ids}},
         {'$set': {
             'disabled': True
         }}

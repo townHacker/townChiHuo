@@ -51,7 +51,7 @@
             <div class="controls">
               <select name="permission_role" id="permission_role" size="5" multiple="multiple">
                 % for r in roles:
-                <option value="${ r.role_id }">${ r.name }</option>
+                <option value="${ unicode(r.role_id) }">${ r.name }</option>
                 % endfor
               </select>
             </div>
@@ -61,7 +61,7 @@
             <div class="controls">
               <select name="permission_action" id="permission_action" size="5" multiple="multiple">
                 % for a in actions:
-                <option value="${ a['action_id'] }">${ a['action_name'] }</option>
+                <option value="${ unicode(a['id']) }">${ a['action_name'] }</option>
                 % endfor 
               </select>
             </div>

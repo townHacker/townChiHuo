@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import json
-
 import web
+
+from pymongo.bson.objectid import ObjectId
 
 from townChiHuo.util.mako_render import mako_render
 from townChiHuo.util.decorator import action_auth_decorator
@@ -83,10 +84,12 @@ class AddActionPermission(object):
             for a_item in i.permission_action:
                 permissions = []
                 for r_item in i.permission_role:
-                    permissions.append({
-                            'role_id': r_item,
-                            'permission_code': p_code })
-                action.add_permission(a_item, *permissions)
+                    permissions.append(permission.RolePermission(
+                        role=role.Role.objects(id=ObjectId(r_item)).first(),
+                        permission_code=p_code))
+                    
+                action.Action.objects(id=ObjectId(a_item)).first() \
+                    .add_permission(*permissions)
 
             result = dict(
                 isSucceed = True,
@@ -112,7 +115,6 @@ class Role(object):
         i.page = i.page if i.page > 0 else 0
         i.page = i.page if i.page < page_count \
                  else max(page_count-1, 0)
-        
 
         limit, skip = i.size, i.page * i.size
         a_roles = role.get_roles(limit=limit, skip=skip)
@@ -149,8 +151,8 @@ class AddRole(object):
             i = web.input('role_name', role_desc=None, parent_role=[])
             print i.role_desc
             new_role = role.role_add(i.role_name, \
-                                         i.role_desc, \
-                                         *i.parent_role)
+                                     i.role_desc, \
+                                     *i.parent_role)
             result = dict(
                 isSucceed= True,
                 msg= u"添加角色成功",
@@ -175,7 +177,7 @@ class DeleteRole(object):
     def GET(self, *path):
         try :
             i = web.input('role_id')
-            d_num = role.role_remove(i.role_id)
+            d_num = role.role_remove(ObjectId(i.role_id))
             result = dict(
                 isSucceed = True,
                 msg = u"成功删除{:d}个角色".format(d_num),

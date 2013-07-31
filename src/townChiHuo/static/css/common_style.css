@@ -19,6 +19,7 @@ html body {
     background-color: rgb(250, 250, 250);
     font-size: 12px;
     font-family: Tahoma, arial, sans-serif, serif;
+    background-image: url("/images/cream_pixels.png");
 }
 
 div {

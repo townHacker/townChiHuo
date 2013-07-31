@@ -59,7 +59,7 @@ class CommodityType(object):
         comm_type_iter = commodity.get_commodity_type()
         comm_type_iter, comm_type_iter1 = itertools.tee(comm_type_iter)
         comm_type_name = \
-            dict([(item['commodity_type_id'], item['type_name']) \
+            dict([(item['id'], item['type_name']) \
                             for item in comm_type_iter1])
         comm_type_root_iter = commodity.get_commodity_type(None)
 
@@ -72,9 +72,10 @@ class CommodityType(object):
 
     def POST(self, *path):
         p_in = web.input('type_parent_id')
-        parent_type = commodity.CommodityType.objects(commodity_type_id=p_in.type_parent_id).first()
+        parent_type = commodity.CommodityType.objects(
+            id=ObjectId(p_in.type_parent_id)).first()
         comm_type_iter = parent_type.get_child_commType()
-        comm_types = [{'id': item['commodity_type_id'],
+        comm_types = [{'id': item['id'],
                        'name': item['type_name'] } for item in comm_type_iter]
         
         web.header('Content-Type', 'application/json')
@@ -87,8 +88,8 @@ class CommodityTypeAdd(object):
         try:
             if form_in.type_parent_id:
                 type_parent = \
-                    commodity.get_commodity_type(
-                        commodity_type_id=form_in.type_parent_id)[0]
+                    commodity.CommodityType.objects(
+                        id=ObjectId(form_in.type_parent_id)).first()
             else:
                 type_parent = None
 

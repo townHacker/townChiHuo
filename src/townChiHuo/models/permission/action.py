@@ -22,6 +22,8 @@ class Action(Document):
     default_permission: 默认权限
     permissions: 权限 -- list of { role_id, permission_code }
     '''
+    action_id = StringField(required=True, unique=True,
+                          default=unicode(uuid.uuid4()))
     action_name = StringField(max_length=200, required=True)
     action_code = StringField()
     default_permission = IntField()
@@ -63,18 +65,18 @@ class Action(Document):
         获取指定action的所有权限设置
         '''
         def get_role_name(role_c, role_id):
-            return role_c.find_one({'role_id': role_id})['name']
+            return role_c.find_one({'id': role_id})['name']
         
         action_c = Action._get_collection()
         role_c = Role._get_collection()
         try:
             all_act = action_c.aggregate([
                 {"$match": {
-                    'action_id': self.action_id
+                    'id': self.id
                 }}, 
                 {"$unwind": "$permissions"},
                 {"$project": {
-                    'action_id': 1,
+                    'id': 1,
                     'action_name': 1,
                     'default_permission': 1,
                     'role_id': '$permissions.role.id',

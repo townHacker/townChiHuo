@@ -153,7 +153,7 @@ def set_user_available(disabled, *user_ids):
         raise GeneralError(u'参数错误.')
     result = User.objects().update(__raw__=
         {
-            {'user_id': {'$in': user_ids}},
+            {'id': {'$in': user_ids}},
             {'$set': {
                 'disabled': disabled
             }}
