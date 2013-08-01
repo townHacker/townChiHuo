@@ -60,9 +60,7 @@ class Delete(object):
     def POST(self,*path):
         i=web.input('id')
         try:
-            user.set_user_available(\
-                False if i.disabled==u"True" else True,
-                ObjectId(i.id))
+            user.set_user_available(False, ObjectId(i.id))
 
             result=dict(Succeed=True, Message=u'操作成功！')
         except GeneralError as err:
