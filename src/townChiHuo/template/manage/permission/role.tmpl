@@ -30,12 +30,12 @@
           <tbody>
 		    % for r in roles:
 		    <tr>
-			  <td>${ r.role_id }</td>
-			  <td>${ r.name }</td>
-			  <td>
-                <a href="/manage/role/edit?role_id=${ r.role_id }" title="编辑"><img src="/images/icons/16x16/reply.png" alt="编辑" tilte="编辑" /></a>
-                <a class="ajax_get_href" href="/manage/role/delete?role_id=${ r.role_id }" title="删除"><img src="/images/icons/16x16/action_delete.png" alt="删除" title="删除" /></a>
-              </td>
+		      <td>${ r.id }</td>
+		      <td>${ r.name }</td>
+		      <td>
+			<a href="/manage/role/edit?role_id=${ r.id }" title="编辑"><img src="/images/icons/16x16/reply.png" alt="编辑" tilte="编辑" /></a>
+			<a class="ajax_get_href" href="/manage/role/delete?role_id=${ r.id }" title="删除"><img src="/images/icons/16x16/action_delete.png" alt="删除" title="删除" /></a>
+		      </td>
 		    </tr>
 		    % endfor
             <tr>
@@ -101,7 +101,7 @@ $(function() {
           <div class="controls">
 		    <select name="select_parent_role" size="1" id="select_parent_role">
 			  % for r in all_roles:
-			  <option value="${ r.role_id }">${ r.name }</option>
+			  <option value="${ r.id }">${ r.name }</option>
 			  % endfor
 		    </select>
 		    <input type="button" class="btn" value="添加" id="btn_addParentRole" />

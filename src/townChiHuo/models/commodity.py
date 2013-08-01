@@ -3,7 +3,7 @@
 
 import uuid
 
-from pymongo.bson.objectid import ObjectId
+from bson.objectid import ObjectId
 from mongoengine import *
 from mongoengine.context_managers import no_dereference
 

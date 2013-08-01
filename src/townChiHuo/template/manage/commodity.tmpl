@@ -44,9 +44,9 @@
         <tbody>
           % for comm_item in commodity:
           <tr>
-            <td style="vertical-align: middle;">${ comm_item['commodity_id'] }</td>
+            <td style="vertical-align: middle;">${ comm_item['id'] }</td>
             <td style="vertical-align: middle;">${ comm_item['brief_name'] }</td>
-            <td style="vertical-align: middle;">${ comm_type_name[comm_item['comm_type_id']] }</td>
+            <td style="vertical-align: middle;">${ comm_type_name[unicode(comm_item['comm_type'])] }</td>
             <td style="vertical-align: middle;">${ comm_item['comm_name'] }</td>
             <td><img src="/js/holder.js/50x50" /></td>
 	   <td>
@@ -84,7 +84,7 @@
               <select name="commodity_type_0" id="commodity_type_0" size="1" class="span4">
                 <option value=""></option>
 		        % for t_item in commodity_type_root:
-		        <option value="${ t_item['commodity_type_id'] }">${ t_item['type_name'] }</option>
+		        <option value="${ t_item['id'] }">${ t_item['type_name'] }</option>
 		        % endfor
               </select>
 

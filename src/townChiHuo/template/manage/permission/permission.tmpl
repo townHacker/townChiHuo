@@ -51,7 +51,7 @@
             <div class="controls">
               <select name="permission_role" id="permission_role" size="5" multiple="multiple">
                 % for r in roles:
-                <option value="${ unicode(r.role_id) }">${ r.name }</option>
+                <option value="${ r.id }">${ r.name }</option>
                 % endfor
               </select>
             </div>
@@ -86,7 +86,7 @@
           </div>
 
           <div class="controls">
-            <input type="submit" class="button" value="添加权限" />
+            <input type="submit" class="btn" value="添加权限" />
           </div>
           
         </form>

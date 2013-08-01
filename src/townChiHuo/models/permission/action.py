@@ -7,7 +7,7 @@ import uuid
 from mongoengine import *
 
 from townChiHuo.models.error import GeneralError
-from townChiHuo.models.permission.role import Role
+from townChiHuo.models.permission import Role
 import townChiHuo.db_schema as db_schema
 from townChiHuo.util import mongodb_hack as db_hack
 from townChiHuo.models.permission.permission import RolePermission
@@ -58,41 +58,30 @@ class Action(Document):
         self.reload()
         
 
-
-
     def get_permissions(self):
         '''
         获取指定action的所有权限设置
         '''
-        def get_role_name(role_c, role_id):
-            return role_c.find_one({'id': role_id})['name']
-        
         action_c = Action._get_collection()
-        role_c = Role._get_collection()
         try:
             all_act = action_c.aggregate([
                 {"$match": {
-                    'id': self.id
+                    '_id': self.id
                 }}, 
                 {"$unwind": "$permissions"},
                 {"$project": {
-                    'id': 1,
+                    'id': '$_id',
                     'action_name': 1,
                     'default_permission': 1,
-                    'role_id': '$permissions.role.id',
+                    'role_id': '$permissions.role',
                     'permission_code': '$permissions.permission_code', 
                 }},
             ])
 
-
             for a_item in all_act['result']:
-                a_item['role_name'] = get_role_name(role_c, a_item['role_id'])
+                a_item['role_name'] = \
+                    Role.objects(id=a_item['role_id']).first().name
 
             return all_act['result']
         finally:
             del action_c
-            del role_c
-
-
-            
-

@@ -5,6 +5,8 @@ import web
 import json
 import itertools
 
+from bson.objectid import ObjectId
+
 from townChiHuo.util.mako_render import mako_render
 from townChiHuo.models.error import GeneralError
 from townChiHuo.models import commodity
@@ -13,7 +15,7 @@ class Commodity(object):
 
     def GET(self, *path):
 
-        comm_iter = commodity.CommodityType.objects()
+        comm_iter = commodity.Commodity.objects()
 
         comm_type_root_iter = \
             commodity.CommodityType.objects(type_parent=None)
@@ -107,6 +109,10 @@ class CommodityTypeAdd(object):
         return json.dumps(result)
 
 
+class CommodityParam(object):
+    def GET(self, *path):
+        pass
+        
 class CommodityParamAdd(object):
     def POST(self, *path):
         form_in = web.input("type_id", "params")

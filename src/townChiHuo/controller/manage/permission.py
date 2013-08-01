@@ -4,7 +4,7 @@
 import json
 import web
 
-from pymongo.bson.objectid import ObjectId
+from bson.objectid import ObjectId
 
 from townChiHuo.util.mako_render import mako_render
 from townChiHuo.util.decorator import action_auth_decorator
@@ -37,9 +37,8 @@ class Permission(object):
 
         all_perm = []
         for a_item in get_action():
-            all_perm[len(all_perm):] = \
-                list(a_item.get_permissions())
-        
+            all_perm[len(all_perm):] = list(a_item.get_permissions())
+
         web.header('Content-Type', 'text/html')
         return mako_render('/manage/permission/permission.tmpl', \
                                roles=all_roles, \
@@ -85,7 +84,7 @@ class AddActionPermission(object):
                 permissions = []
                 for r_item in i.permission_role:
                     permissions.append(permission.RolePermission(
-                        role=role.Role.objects(id=ObjectId(r_item)).first(),
+                        role=role.Role.objects(id=ObjectId(r_item)).first().to_dbref(),
                         permission_code=p_code))
                     
                 action.Action.objects(id=ObjectId(a_item)).first() \

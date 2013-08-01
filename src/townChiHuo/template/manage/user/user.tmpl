@@ -28,10 +28,10 @@
             <tr>
               <td>${unicode(u.id)}</td>
               <td>${u.name}</td>
-              <td><a class="edit-user" href="javascript:void(0);" name="${unicode(u.id)}">编辑</a>|
-			    <a class="disabled-user" href="javascript:void(0);" data-disabled=${u.disabled}
-                   name="${unicode(u.id)}">${ u"启用" if u.disabled else u"禁用"}</a>
-		      </td>
+              <td>
+		<a class="edit-user" href="javascript:void(0);" name="${unicode(u.id)}"><img src="/images/icons/16x16/reply.png" alt="编辑" title="编辑" /></a>
+		<a class="disabled-user" href="javascript:void(0);" name="${unicode(u.id)}" disabled="${ True if not u.disabled else False }"><img src="/images/icons/16x16/action_delete.png" alt="删除" title="删除" /></a>
+	      </td>
             </tr>
             % endfor
           </tbody>

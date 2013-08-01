@@ -28,9 +28,9 @@
         <tbody>
           % for type_item in commodity_type:
           <tr>
-            <td>${ type_item["commodity_type_id"] }</td>
+            <td>${ type_item["id"] }</td>
             <td>${ type_item["type_name"] }</td>
-            <td>${ commodity_type_name.get(None if None is type_item["type_parent"] else type_item["type_parent"]["commodity_type_id"]) }</td>
+            <td>${ commodity_type_name.get(None if None is type_item["type_parent"] else type_item["type_parent"]["id"]) }</td>
           </tr>
           % endfor
         </tbody>
@@ -62,7 +62,7 @@
             <select name="type_parent_0" id="commodity_type_parent_0" size="1" class="span3" >
               <option value=""></option>
               % for item in commodity_type_root:
-              <option value="${ item['commodity_type_id'] }">${ item['type_name'] }</option>
+              <option value="${ item['id'] }">${ item['type_name'] }</option>
               % endfor
             </select>
             <span class="help-inline label label-important"></span>
@@ -81,6 +81,17 @@
           <input type="submit" class="btn" value="添加商品类型" />
         </div>
       </form>
+      
+    </div>
+  </div>
+</div>
+
+<div class="accordion-group">
+  <div class="accordion-heading">
+    <h4 class="accordion-toggle" data-toggle="collapse" href="#commodity_params_manage">商品参数管理</h4>
+  </div>
+  <div id="comodity_params_manage" class="accordion-body collapse in">
+    <div class="accordion-inner">
       
     </div>
   </div>

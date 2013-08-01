@@ -74,7 +74,7 @@ def role_add(role_name, role_desc, *role_parent_ids):
     '''
     添加角色
     '''
-    if Role.object(__raw__={'name': role_name}).first() \
+    if Role.objects(__raw__={'name': role_name}).first() \
        is not None:
         # 角色名存在
         raise GeneralError(u'角色名称已存在')

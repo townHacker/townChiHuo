@@ -5,7 +5,7 @@
 import json
 import web
 
-from pymongo.bson.objectid import ObjectId
+from bson.objectid import ObjectId
 
 from townChiHuo.util.mako_render import mako_render
 from townChiHuo.util import encrypt
