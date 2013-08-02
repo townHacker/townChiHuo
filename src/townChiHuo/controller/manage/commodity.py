@@ -23,7 +23,7 @@ class Commodity(object):
         iters = itertools.tee(comm_iter, 2)
         
         comm_type_item = \
-            dict([(unicode(t_item['id']), t_item['type_name']) \
+            dict([(unicode(t_item['id']), t_item['comm_type']['type_name']) \
                               for t_item in iters[0]])
                 
         web.header('Content-Type', 'text/html')
@@ -88,6 +88,9 @@ class CommodityTypeAdd(object):
     def POST(self, *path):
         form_in = web.input("type_name", "type_parent_id", type_desc=None)
         try:
+            if not form_in.type_name:
+                raise GeneralError("请填写类型名称")
+                
             if form_in.type_parent_id:
                 type_parent = \
                     commodity.CommodityType.objects(
