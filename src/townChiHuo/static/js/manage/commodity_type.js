@@ -20,4 +20,7 @@
     comm_type_collection.on('refresh', function() {
 	comm_type_collection.trigger('render');
     });
+
+    
+
 })()
